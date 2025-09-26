@@ -1,8 +1,10 @@
 package co.edu.uniquindio.pr2.proyectofinal.model;
 
-public class Usuario {
+public class Usuario extends Persona {
     private String idUsuario;
-    private String nombre;
-    private String correo;
-    private String telefono;
+
+    public Usuario(String nombre, String correo, String telefono, String idUsuario) {
+        super(nombre, correo, telefono);
+        this.idUsuario = idUsuario;
+    }
 }
