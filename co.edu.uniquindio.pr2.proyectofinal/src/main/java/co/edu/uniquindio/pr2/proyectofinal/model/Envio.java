@@ -4,68 +4,116 @@ import java.time.LocalDate;
 
 public class Envio {
     private String idEnvio;
-    private String origen;
-    private String destino;
-    private double pesoEnvio;
+    private Direccion origen;
+    private Direccion destino;
+    private double peso;
+    private double largo;
+    private double ancho;
+    private double alto;
     private double costo;
-    private LocalDate empaquetado;
-    private LocalDate fechaEnvio;
+    private LocalDate fechaCreacion;
+    private LocalDate fechaEstimadaEntrega;
     private EstadoEnvio estado;
+    private Repartidor repartidor;
+    private Usuario usuario;
 
-    public Envio(String idEnvio,String origen,String destino,double pesoEnvio, double costo,LocalDate empaquetado,LocalDate fechaEnvio,EstadoEnvio estado) {
+    public Envio(String idEnvio, Direccion origen, Direccion destino, double peso, double largo, double ancho, double alto, LocalDate fechaCreacion, LocalDate fechaEstimadaEntrega,
+                 EstadoEnvio estado) {
         this.idEnvio = idEnvio;
         this.origen = origen;
         this.destino = destino;
-        this.pesoEnvio = pesoEnvio;
-        this.costo = costo;
-        this.empaquetado = empaquetado;
-        this.fechaEnvio = fechaEnvio;
+        this.peso = peso;
+        this.largo = largo;
+        this.ancho = ancho;
+        this.alto = alto;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.estado = estado;
+        this.costo = 0.0;
     }
+
+    public Direccion getOrigen() {return origen;}
+
+    public void setOrigen(Direccion origen) {this.origen = origen;}
+
+    public Direccion getDestino() {return destino;}
+
+    public void setDestino(Direccion destino) {this.destino = destino;}
+
+    public double getLargo() {return largo;}
+
+    public void setLargo(double largo) {this.largo = largo;}
+
+    public double getPeso() {return peso;}
+
+    public void setPeso(double peso) {this.peso = peso;}
+
+    public double getAlto() {return alto;}
+
+    public void setAlto(double alto) {this.alto = alto;}
+
+    public double getAncho() {return ancho;}
+
+    public void setAncho(double ancho) {this.ancho = ancho;}
+
+    public LocalDate getFechaCreacion() {return fechaCreacion;}
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {this.fechaCreacion = fechaCreacion;}
+
+    public LocalDate getFechaEstimadaEntrega() {return fechaEstimadaEntrega;}
+
+    public void setFechaEstimadaEntrega(LocalDate fechaEstimadaEntrega) {this.fechaEstimadaEntrega = fechaEstimadaEntrega;}
+
+    public Repartidor getRepartidor() {return repartidor;}
+
+    public void setRepartidor(Repartidor repartidor) {this.repartidor = repartidor;}
+
+    public Usuario getUsuario() {return usuario;}
+
+    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
 
     public String getIdEnvio() {return idEnvio;}
 
     public void setIdEnvio(String idEnvio) {this.idEnvio = idEnvio;}
 
-    public String getOrigen() {return origen;}
+    public double getPesoEnvio() {return peso;}
 
-    public void setOrigen(String origen) {this.origen = origen;}
-
-    public String getDestino() {return destino;}
-
-    public void setDestino(String destino) {this.destino = destino;}
-
-    public double getPesoEnvio() {return pesoEnvio;}
-
-    public void setPesoEnvio(double pesoEnvio) {this.pesoEnvio = pesoEnvio;}
+    public void setPesoEnvio(double pesoEnvio) {this.peso = peso;}
 
     public double getCosto() {return costo;}
 
     public void setCosto(double costo) {this.costo = costo;}
 
-    public LocalDate getEmpaquetado() {return empaquetado;}
-
-    public void setEmpaquetado(LocalDate empaquetado) {this.empaquetado = empaquetado;}
-
-    public LocalDate getFechaEnvio() {return fechaEnvio;}
-
-    public void setFechaEnvio(LocalDate fechaEnvio) {this.fechaEnvio = fechaEnvio;}
-
     public EstadoEnvio getEstado() {return estado;}
 
     public void setEstado(EstadoEnvio estado) {this.estado = estado;}
 
+    public double calcularVolumen(){
+        return largo*ancho*alto;
+    }
+
+    public double calcularCosto(){
+        double base = 500;
+        double costoPeso = peso * 1500;
+        double costoVolumen = calcularCosto() * 3000;
+        double total =  base + costoPeso + costoVolumen;
+        this.costo = Math.round(total * 100.0) / 100.0;
+        return this.costo;
+    }
+
     @Override
     public String toString() {
         return "Envio{" +
-                "id del envio='" + idEnvio + '\'' +
-                ", origen='" + origen + '\'' +
-                ", destino='" + destino + '\'' +
-                ", peso del envio=" + pesoEnvio +
+                "idEnvio='" + idEnvio + '\'' +
+                ", origen=" + origen +
+                ", destino=" + destino +
+                ", peso=" + peso +
+                ", volumen=" + calcularVolumen() +
                 ", costo=" + costo +
-                ", empaquetado=" + empaquetado +
-                ", fechaEnvio=" + fechaEnvio +
                 ", estado=" + estado +
+                ", fechaCreacion=" + fechaCreacion +
+                ", fechaEstimadaEntrega=" + fechaEstimadaEntrega +
                 '}';
     }
+
 }
