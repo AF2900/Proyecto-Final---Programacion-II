@@ -2,11 +2,27 @@ package co.edu.uniquindio.pr2.proyectofinal.model;
 
 public class Repartidor extends Persona{
     private String idRepartidor;
-    private String nombreRepartidor;
 
-    public Repartidor(String nombre, String correo, String telefono, String idRepartidor, String identificacion) {
+    public Repartidor(String nombre, String correo, String telefono, String idRepartidor) {
         super(nombre, correo, telefono);
         this.idRepartidor = idRepartidor;
-        this.nombreRepartidor = nombre;
+    }
+
+    public String getIdRepartidor() {
+        return idRepartidor;
+    }
+
+    public void setIdRepartidor(String idRepartidor) {
+        this.idRepartidor = idRepartidor;
+    }
+
+    @Override
+    public String toString() {
+        return "Repartidor{" +
+                "idRepartidor='" + idRepartidor + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono='" + telefono + '\'' +
+                '}';
     }
 }
