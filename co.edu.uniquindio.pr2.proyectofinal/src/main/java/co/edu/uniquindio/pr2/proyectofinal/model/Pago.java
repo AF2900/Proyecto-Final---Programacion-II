@@ -4,46 +4,56 @@ import java.time.LocalDate;
 
 public class Pago{
     private String idPago;
-    private double deposito;
+    private double monto;
     private LocalDate fecha;
     private MetodoPago metodoPago;
-    private String resultadoPago;
+    private String resultado;
 
-    public Pago(String idPago, double deposito, LocalDate fecha, MetodoPago metodoPago, String resultadoPago) {
+    public Pago(String idPago, double monto, LocalDate fecha, MetodoPago metodoPago, String resultado) {
         this.idPago = idPago;
-        this.deposito = deposito;
+        this.monto = monto;
         this.fecha = fecha;
         this.metodoPago = metodoPago;
-        this.resultadoPago = resultadoPago;
+        this.resultado = resultado;
 
     }
 
-    public String getIdPago() {return idPago;}
+    public double getMonto() {return monto;}
+    public void setMonto(double monto) {this.monto = monto;}
 
+    public String getResultado() {return resultado;}
+    public void setResultado(String resultado) {this.resultado = resultado;}
+
+    public String getIdPago() {return idPago;}
     public void setIdPago(String idPago) {this.idPago = idPago;}
 
-    public double getDeposito() {return deposito;}
-
-    public void setDeposito(double deposito) {this.deposito = deposito;}
 
     public LocalDate getFecha() {return fecha;}
-
     public void setFecha(LocalDate fecha) {this.fecha = fecha;}
 
     public MetodoPago getMetodoPago() {return metodoPago;}
-
     public void setMetodoPago(MetodoPago metodoPago) {this.metodoPago = metodoPago;}
 
-    public String getResultadoPago() {return resultadoPago;}
+    public boolean esPagoAprobado(){
+        return "APROBADO".equalsIgnoreCase(resultado);
+    }
 
-    public void setResultadoPago(String resultadoPago) {this.resultadoPago = resultadoPago;}
+    public void validarPago(){
+        if(monto>0){
+            this.resultado = "APROBADO";
+        }else {
+            this.resultado = "RECHAZADO";
+        }
+    }
 
     @Override
     public String toString() {
-        return "id del pago=" + idPago + '\''+
-                "Deposito =" + deposito + '\''+
-                "Fecha del envio="+ fecha +'\''+
-                "Seleccione metodo de pago"+ metodoPago + '\''+
-                "Resultado"+ resultadoPago;
+        return "Pago{" +
+                "idPago='" + idPago + '\'' +
+                ", monto=" + monto +
+                ", fecha=" + fecha +
+                ", metodoPago=" + metodoPago +
+                ", resultado='" + resultado + '\'' +
+                '}';
     }
 }

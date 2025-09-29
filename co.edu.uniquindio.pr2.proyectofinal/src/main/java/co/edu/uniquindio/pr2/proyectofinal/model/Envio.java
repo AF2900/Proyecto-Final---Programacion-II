@@ -95,9 +95,9 @@ public class Envio {
     public double calcularCosto(){
         double base = 500;
         double costoPeso = peso * 1500;
-        double costoVolumen = calcularCosto() * 3000;
+        double costoVolumen = calcularVolumen() * 3000;
         double total =  base + costoPeso + costoVolumen;
-        this.costo = Math.round(total * 100.0) / 100.0;
+        this.costo = Math.round(total * 100) / 100.0;
         return this.costo;
     }
 

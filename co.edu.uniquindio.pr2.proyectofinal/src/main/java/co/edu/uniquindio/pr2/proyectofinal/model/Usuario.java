@@ -9,7 +9,7 @@ public class Usuario extends Persona {
     private List<Direccion> direcciones;
 
 
-    public Usuario(String idUsuario, String nombre, String correo, String telefono, String cedula) {
+    public Usuario(String idUsuario, String nombre, String correo, String telefono) {
         super(nombre, correo, telefono);
         this.idUsuario = idUsuario;
         this.cedula = "";
@@ -42,9 +42,9 @@ public class Usuario extends Persona {
         return "Usuario{" +
                 "idUsuario='" + idUsuario + '\'' +
                 ", cedula='" + cedula + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", correo='" + correo + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono='" + telefono + '\'' +
                 '}';
     }
 }
