@@ -18,32 +18,44 @@ public class Pago{
 
     }
 
-    public double getMonto() {return monto;}
-    public void setMonto(double monto) {this.monto = monto;}
-
-    public String getResultado() {return resultado;}
-    public void setResultado(String resultado) {this.resultado = resultado;}
-
-    public String getIdPago() {return idPago;}
-    public void setIdPago(String idPago) {this.idPago = idPago;}
-
-
-    public LocalDate getFecha() {return fecha;}
-    public void setFecha(LocalDate fecha) {this.fecha = fecha;}
-
-    public MetodoPago getMetodoPago() {return metodoPago;}
-    public void setMetodoPago(MetodoPago metodoPago) {this.metodoPago = metodoPago;}
-
-    public boolean esPagoAprobado(){
-        return "APROBADO".equalsIgnoreCase(resultado);
+    public String getIdPago() {
+        return idPago;
     }
 
-    public void validarPago(){
-        if(monto>0){
-            this.resultado = "APROBADO";
-        }else {
-            this.resultado = "RECHAZADO";
-        }
+    public void setIdPago(String idPago) {
+        this.idPago = idPago;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public MetodoPago getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
     }
 
     @Override

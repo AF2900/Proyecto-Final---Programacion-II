@@ -7,62 +7,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.event.ActionEvent;
-
-
 public class UsuarioController {
 
-    @FXML
-    private TextField txtIdUsuario;
-    @FXML
-    private Button btnActualizarUsuario;
-
-    @FXML
-    private Button btnAgregarUsuario;
-
-    @FXML
-    private Button btnEliminarUsuario;
-
-    @FXML
-    private Button btnLimpiarCampos;
-
-    @FXML
-    private TextField txtNombre;
-
-    @FXML
-    private TextField txtCorreo;
-
-    @FXML
-    private TextField txtTelefono;
-
-    @FXML
-    private TableView<Usuario> tablaUsuarios;
-
-    @FXML
-    private TableColumn<Usuario, String> colIdUsuario;
-
-    @FXML
-    private TableColumn<Usuario, String> colNombre;
-
-    @FXML
-    private TableColumn<Usuario, String> colCorreo;
-
-    @FXML
-    private TableColumn<Usuario, String> colTelefono;
-
-    @FXML
-    private Label lblCorreoUsuario;
-
-    @FXML
-    private Label lblIdUsuario;
-
-    @FXML
-    private Label lblNombreUsuario;
-
-    @FXML
-    private Label lblTelefonoUsuario;
-
-
+    @FXML private TextField txtIdUsuario;
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtCorreo;
+    @FXML private TextField txtTelefono;
+    @FXML private Button btnAgregarUsuario;
+    @FXML private Button btnActualizarUsuario;
+    @FXML private Button btnEliminarUsuario;
+    @FXML private Button btnLimpiarCampos;
+    @FXML private TableView<Usuario> tablaUsuarios;
+    @FXML private TableColumn<Usuario, String> colIdUsuario;
+    @FXML private TableColumn<Usuario, String> colNombre;
+    @FXML private TableColumn<Usuario, String> colCorreo;
+    @FXML private TableColumn<Usuario, String> colTelefono;
 
     private ObservableList<Usuario> listaUsuarios;
 
@@ -77,6 +36,7 @@ public class UsuarioController {
 
         tablaUsuarios.setItems(listaUsuarios);
     }
+
     @FXML
     private void OnAgregarUsuario() {
         Usuario u = new Usuario(

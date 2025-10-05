@@ -19,14 +19,6 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public String getCorreo() {
         return correo;
     }
@@ -35,12 +27,11 @@ public class Persona {
         this.correo = correo;
     }
 
-    @Override
-    public String toString() {
-        return "Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", correo='" + correo + '\'' +
-                ", telefono='" + telefono + '\'' +
-                '}';
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }
