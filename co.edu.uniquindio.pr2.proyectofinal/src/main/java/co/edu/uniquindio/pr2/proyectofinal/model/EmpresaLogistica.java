@@ -1,13 +1,13 @@
 package co.edu.uniquindio.pr2.proyectofinal.model;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
-import co.edu.uniquindio.pr2.proyectofinal.services.GestionEnvios;
-import co.edu.uniquindio.pr2.proyectofinal.services.GestionUsuarios;
-import co.edu.uniquindio.pr2.proyectofinal.services.GestionPagos;
+import co.edu.uniquindio.pr2.proyectofinal.services.IGestionEnvios;
+import co.edu.uniquindio.pr2.proyectofinal.services.IGestionUsuarios;
+import co.edu.uniquindio.pr2.proyectofinal.services.IGestionPagos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlataformaLogistica implements GestionEnvios, GestionUsuarios, GestionPagos {
+public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGestionPagos {
     private final ModelFactory modelFactory;
     private List<Usuario> usuarios;
     private List<Repartidor> repartidores;
@@ -17,7 +17,7 @@ public class PlataformaLogistica implements GestionEnvios, GestionUsuarios, Gest
     private List<Incidencia> incidencias;
     private List<ServicioAdicional> serviciosAdicionales;
 
-    public PlataformaLogistica() {
+    public EmpresaLogistica() {
         this.modelFactory = ModelFactory.getInstance();
         this.usuarios = new ArrayList<>();
         this.repartidores = new ArrayList<>();

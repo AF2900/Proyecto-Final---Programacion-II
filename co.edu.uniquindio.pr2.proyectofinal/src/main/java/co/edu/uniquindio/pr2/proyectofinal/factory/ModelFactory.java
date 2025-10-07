@@ -5,10 +5,10 @@ import co.edu.uniquindio.pr2.proyectofinal.builder.*;
 import java.time.LocalDate;
 
 public class ModelFactory {
-    private final PlataformaLogistica plataforma;
+    private final EmpresaLogistica plataforma;
 
     private ModelFactory() {
-        this.plataforma = new PlataformaLogistica();
+        this.plataforma = new EmpresaLogistica();
     }
 
     private static class Holder {
@@ -19,7 +19,7 @@ public class ModelFactory {
         return Holder.INSTANCE;
     }
 
-    public PlataformaLogistica getPlataforma() {
+    public EmpresaLogistica getPlataforma() {
         return plataforma;
     }
 
