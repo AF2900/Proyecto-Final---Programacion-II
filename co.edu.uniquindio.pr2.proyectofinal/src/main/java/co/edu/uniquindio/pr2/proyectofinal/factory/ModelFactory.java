@@ -134,12 +134,14 @@ public class ModelFactory {
                 .nombre("Douglas Albeiro")
                 .correo("douglassandias@correo.com")
                 .telefono("31344666566")
+                .idAdministrador("456")
                 .build();
 
         Administrador administrador2 = new AdministradorBuilder()
                 .nombre("Sofia Lopez")
                 .correo("sofil099@correo.com")
                 .telefono("32234557432")
+                .idAdministrador("789")
                 .build();
 
         plataforma.getAdministradores().add(administrador1);
@@ -154,5 +156,6 @@ public class ModelFactory {
         plataforma.getTarifas().clear();
         plataforma.getIncidencias().clear();
         plataforma.getServiciosAdicionales().clear();
+        plataforma.getAdministradores().clear();
     }
 }

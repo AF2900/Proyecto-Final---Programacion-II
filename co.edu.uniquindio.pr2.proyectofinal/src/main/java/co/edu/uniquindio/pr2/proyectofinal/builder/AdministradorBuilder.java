@@ -5,6 +5,7 @@ import co.edu.uniquindio.pr2.proyectofinal.model.Administrador;
 public class AdministradorBuilder {
     private String nombre;
     private String correo;
+    private String idAdministrador;
     private String telefono;
 
     public AdministradorBuilder nombre(String nombre) {
@@ -22,7 +23,12 @@ public class AdministradorBuilder {
         return this;
     }
 
+    public AdministradorBuilder idAdministrador(String idAdministrador) {
+        this.idAdministrador = idAdministrador;
+        return this;
+    }
+
     public Administrador build() {
-        return new Administrador(nombre, correo, telefono);
+        return new Administrador(nombre, correo, telefono, idAdministrador);
     }
 }
