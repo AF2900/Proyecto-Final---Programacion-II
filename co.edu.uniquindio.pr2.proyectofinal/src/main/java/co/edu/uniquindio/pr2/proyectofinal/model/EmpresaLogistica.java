@@ -16,6 +16,7 @@ public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGest
     private List<Tarifa> tarifas;
     private List<Incidencia> incidencias;
     private List<ServicioAdicional> serviciosAdicionales;
+    private List<Administrador> administradores;
 
     public EmpresaLogistica() {
         this.modelFactory = ModelFactory.getInstance();
@@ -26,6 +27,7 @@ public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGest
         this.tarifas = new ArrayList<>();
         this.incidencias = new ArrayList<>();
         this.serviciosAdicionales = new ArrayList<>();
+        this.administradores = new ArrayList<>();
     }
 
     @Override
@@ -140,5 +142,13 @@ public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGest
 
     public List<ServicioAdicional> getServiciosAdicionales() {
         return serviciosAdicionales;
+    }
+
+    public List<Administrador> getAdministradores() {
+        return administradores;
+    }
+
+    public void setAdministradores(List<Administrador> administradores) {
+        this.administradores = administradores;
     }
 }

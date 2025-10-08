@@ -129,6 +129,21 @@ public class ModelFactory {
 
         plataforma.getIncidencias().add(incidencia1);
         repartidor1.getEnviosAsignados().add(envio1);
+
+        Administrador administrador1 = new AdministradorBuilder()
+                .nombre("Douglas Albeiro")
+                .correo("douglassandias@correo.com")
+                .telefono("31344666566")
+                .build();
+
+        Administrador administrador2 = new AdministradorBuilder()
+                .nombre("Sofia Lopez")
+                .correo("sofil099@correo.com")
+                .telefono("32234557432")
+                .build();
+
+        plataforma.getAdministradores().add(administrador1);
+        plataforma.getAdministradores().add(administrador2);
     }
 
     public void resetAll() {
