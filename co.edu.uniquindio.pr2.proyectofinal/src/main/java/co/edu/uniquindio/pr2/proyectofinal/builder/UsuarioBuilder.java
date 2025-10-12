@@ -7,6 +7,7 @@ public class UsuarioBuilder {
     private String nombre;
     private String correo;
     private String telefono;
+    private String password;
 
     public UsuarioBuilder idUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
@@ -28,7 +29,21 @@ public class UsuarioBuilder {
         return this;
     }
 
+    public UsuarioBuilder password(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UsuarioBuilder from(Usuario u) {
+        this.idUsuario = u.getIdUsuario();
+        this.nombre = u.getNombre();
+        this.correo = u.getCorreo();
+        this.telefono = u.getTelefono();
+        this.password = u.getPassword();
+        return this;
+    }
+
     public Usuario build() {
-        return new Usuario(idUsuario, nombre, correo, telefono);
+        return new Usuario(idUsuario, password, nombre, correo, telefono);
     }
 }

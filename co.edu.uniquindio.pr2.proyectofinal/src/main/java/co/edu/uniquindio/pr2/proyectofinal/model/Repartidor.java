@@ -13,9 +13,10 @@ public class Repartidor extends Persona {
                       String correo,
                       String telefono,
                       String idRepartidor,
+                      String password,
                       DisponibilidadRepartidor disponibilidadRepartidor,
                       String zonaCobertura) {
-        super(nombre, correo, telefono);
+        super(nombre, correo, telefono, password);
         this.idRepartidor = idRepartidor;
         this.disponibilidadRepartidor = disponibilidadRepartidor;
         this.zonaCobertura = zonaCobertura;

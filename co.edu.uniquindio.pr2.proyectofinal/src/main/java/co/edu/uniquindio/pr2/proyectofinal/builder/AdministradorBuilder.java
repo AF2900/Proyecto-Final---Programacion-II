@@ -6,6 +6,7 @@ public class AdministradorBuilder {
     private String nombre;
     private String correo;
     private String telefono;
+    private String password;
     private String idAdministrador;
 
     public AdministradorBuilder nombre(String nombre) {
@@ -23,12 +24,26 @@ public class AdministradorBuilder {
         return this;
     }
 
+    public AdministradorBuilder password(String password) {
+        this.password = password;
+        return this;
+    }
+
     public AdministradorBuilder idAdministrador(String idAdministrador) {
         this.idAdministrador = idAdministrador;
         return this;
     }
 
+    public AdministradorBuilder from(Administrador a) {
+        this.idAdministrador = a.getIdAdministrador();
+        this.nombre = a.getNombre();
+        this.correo = a.getCorreo();
+        this.telefono = a.getTelefono();
+        this.password = a.getPassword();
+        return this;
+    }
+
     public Administrador build() {
-        return new Administrador(nombre, correo, telefono, idAdministrador);
+        return new Administrador(nombre, correo, telefono, password, idAdministrador);
     }
 }

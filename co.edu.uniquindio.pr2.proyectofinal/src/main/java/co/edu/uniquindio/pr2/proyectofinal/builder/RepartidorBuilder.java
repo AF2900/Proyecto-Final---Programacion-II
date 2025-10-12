@@ -12,6 +12,7 @@ public class RepartidorBuilder {
     private String correo;
     private String telefono;
     private String idRepartidor;
+    private String password;
     private DisponibilidadRepartidor disponibilidadRepartidor;
     private String zonaCobertura;
     private List<Envio> enviosAsignados = new ArrayList<>();
@@ -36,6 +37,11 @@ public class RepartidorBuilder {
         return this;
     }
 
+    public RepartidorBuilder password(String password) {
+        this.password = password;
+        return this;
+    }
+
     public RepartidorBuilder disponibilidadRepartidor(DisponibilidadRepartidor disponibilidadRepartidor) {
         this.disponibilidadRepartidor = disponibilidadRepartidor;
         return this;
@@ -51,12 +57,25 @@ public class RepartidorBuilder {
         return this;
     }
 
+    public RepartidorBuilder from(Repartidor r) {
+        this.idRepartidor = r.getIdRepartidor();
+        this.nombre = r.getNombre();
+        this.correo = r.getCorreo();
+        this.telefono = r.getTelefono();
+        this.password = r.getPassword();
+        this.disponibilidadRepartidor = r.getDisponibilidadRepartidor();
+        this.zonaCobertura = r.getZonaCobertura();
+        this.enviosAsignados = r.getEnviosAsignados();
+        return this;
+    }
+
     public Repartidor build() {
         Repartidor r = new Repartidor(
                 nombre,
                 correo,
                 telefono,
                 idRepartidor,
+                password,
                 disponibilidadRepartidor,
                 zonaCobertura
         );

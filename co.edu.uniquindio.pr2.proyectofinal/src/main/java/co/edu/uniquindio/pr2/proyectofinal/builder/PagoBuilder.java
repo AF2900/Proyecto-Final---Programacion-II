@@ -37,6 +37,15 @@ public class PagoBuilder {
         return this;
     }
 
+    public PagoBuilder from(Pago p) {
+        this.idPago = p.getIdPago();
+        this.monto = p.getMonto();
+        this.fecha = p.getFecha();
+        this.metodoPago = p.getMetodoPago();
+        this.resultado = p.getResultado();
+        return this;
+    }
+
     public Pago build() {
         return new Pago(idPago, monto, fecha, metodoPago, resultado);
     }

@@ -4,11 +4,13 @@ public class Persona {
     protected String nombre;
     protected String correo;
     protected String telefono;
+    protected String password;
 
-    public Persona(String nombre, String correo, String telefono) {
+    public Persona(String nombre, String correo, String telefono, String password) {
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
+        this.password = password;
     }
 
     public String getNombre() {
@@ -33,5 +35,13 @@ public class Persona {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

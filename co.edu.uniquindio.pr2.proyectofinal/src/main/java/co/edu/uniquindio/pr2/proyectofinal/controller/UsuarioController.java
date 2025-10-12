@@ -1,6 +1,7 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
+import co.edu.uniquindio.pr2.proyectofinal.builder.UsuarioBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,37 +36,97 @@ public class UsuarioController {
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
         tablaUsuarios.setItems(listaUsuarios);
+
+        tablaUsuarios.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                txtIdUsuario.setText(newSel.getIdUsuario());
+                txtNombre.setText(newSel.getNombre());
+                txtCorreo.setText(newSel.getCorreo());
+                txtTelefono.setText(newSel.getTelefono());
+            }
+        });
     }
 
     @FXML
     private void OnAgregarUsuario() {
-        Usuario u = new Usuario(
-                txtIdUsuario.getText(),
-                txtNombre.getText(),
-                txtCorreo.getText(),
-                txtTelefono.getText()
-        );
+        if (camposVacios()) {
+            mostrarAlerta("Error", "Todos los campos son obligatorios.");
+            return;
+        }
+
+        String id = txtIdUsuario.getText();
+        boolean existe = listaUsuarios.stream().anyMatch(u -> u.getIdUsuario().equals(id));
+        if (existe) {
+            mostrarAlerta("Error", "Ya existe un usuario con el ID: " + id);
+            return;
+        }
+
+        Usuario u = new UsuarioBuilder()
+                .idUsuario(txtIdUsuario.getText())
+                .nombre(txtNombre.getText())
+                .correo(txtCorreo.getText())
+                .telefono(txtTelefono.getText())
+                .password("1234")
+                .build();
+
         listaUsuarios.add(u);
+        tablaUsuarios.refresh();
         OnLimpiarCampos();
+        mostrarInfo("Usuario agregado correctamente.");
     }
 
     @FXML
     private void OnActualizarUsuario() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            seleccionado.setNombre(txtNombre.getText());
-            seleccionado.setCorreo(txtCorreo.getText());
-            seleccionado.setTelefono(txtTelefono.getText());
-            tablaUsuarios.refresh();
+        if (seleccionado == null) {
+            mostrarAlerta("Error", "Debe seleccionar un usuario para actualizar.");
+            return;
         }
+
+        if (camposVacios()) {
+            mostrarAlerta("Error", "Todos los campos son obligatorios para actualizar.");
+            return;
+        }
+
+        String nuevoId = txtIdUsuario.getText();
+        if (!nuevoId.equals(seleccionado.getIdUsuario())) {
+            boolean idExiste = listaUsuarios.stream()
+                    .anyMatch(u -> u.getIdUsuario().equals(nuevoId));
+            if (idExiste) {
+                mostrarAlerta("Error", "Ya existe otro usuario con el ID: " + nuevoId);
+                return;
+            }
+        }
+
+        seleccionado.setIdUsuario(nuevoId);
+        seleccionado.setNombre(txtNombre.getText());
+        seleccionado.setCorreo(txtCorreo.getText());
+        seleccionado.setTelefono(txtTelefono.getText());
+
+        tablaUsuarios.refresh();
+        OnLimpiarCampos();
+        mostrarInfo("Usuario actualizado correctamente.");
     }
 
     @FXML
     private void OnEliminarUsuario() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            listaUsuarios.remove(seleccionado);
+        if (seleccionado == null) {
+            mostrarAlerta("Error", "Debe seleccionar un usuario para eliminar.");
+            return;
         }
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar eliminación");
+        confirmacion.setHeaderText(null);
+        confirmacion.setContentText("¿Está seguro de eliminar al usuario seleccionado?");
+        confirmacion.showAndWait().ifPresent(respuesta -> {
+            if (respuesta == ButtonType.OK) {
+                listaUsuarios.remove(seleccionado);
+                OnLimpiarCampos();
+                mostrarInfo("Usuario eliminado correctamente.");
+            }
+        });
     }
 
     @FXML
@@ -75,5 +136,28 @@ public class UsuarioController {
         txtCorreo.clear();
         txtTelefono.clear();
         tablaUsuarios.getSelectionModel().clearSelection();
+    }
+
+    private boolean camposVacios() {
+        return txtIdUsuario.getText().isEmpty() ||
+                txtNombre.getText().isEmpty() ||
+                txtCorreo.getText().isEmpty() ||
+                txtTelefono.getText().isEmpty();
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    private void mostrarInfo(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

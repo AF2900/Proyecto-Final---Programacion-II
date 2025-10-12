@@ -30,6 +30,14 @@ public class ServicioAdicionalBuilder {
         return this;
     }
 
+    public ServicioAdicionalBuilder from(ServicioAdicional s) {
+        this.idServicioAdd = s.getIdServicioAdd();
+        this.tipoServicio = s.getTipoServicio();
+        this.costoServicioAdd = s.getCostoServicioAdd();
+        this.envioAsociado = s.getEnvioAsociado();
+        return this;
+    }
+
     public ServicioAdicional build() {
         ServicioAdicional servicio = new ServicioAdicional(idServicioAdd, tipoServicio, costoServicioAdd);
         servicio.setEnvioAsociado(envioAsociado);

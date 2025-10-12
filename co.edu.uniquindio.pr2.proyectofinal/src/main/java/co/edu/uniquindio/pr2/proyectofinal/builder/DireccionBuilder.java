@@ -41,6 +41,16 @@ public class DireccionBuilder {
         return this;
     }
 
+    public DireccionBuilder from(Direccion d) {
+        this.idDireccion = d.getIdDireccion();
+        this.alias = d.getAlias();
+        this.calle = d.getCalle();
+        this.ciudad = d.getCiudad();
+        this.latitud = d.getLatitud();
+        this.longitud = d.getLongitud();
+        return this;
+    }
+
     public Direccion build() {
         return new Direccion(idDireccion, alias, calle, ciudad, latitud, longitud);
     }

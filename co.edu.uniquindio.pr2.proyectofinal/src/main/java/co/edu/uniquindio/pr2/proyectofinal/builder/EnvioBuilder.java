@@ -97,6 +97,26 @@ public class EnvioBuilder {
         return this;
     }
 
+    public EnvioBuilder from(Envio e) {
+        this.idEnvio = e.getIdEnvio();
+        this.origen = e.getOrigen();
+        this.destino = e.getDestino();
+        this.peso = e.getPeso();
+        this.largo = e.getLargo();
+        this.ancho = e.getAncho();
+        this.alto = e.getAlto();
+        this.costo = e.getCosto();
+        this.fechaCreacion = e.getFechaCreacion();
+        this.fechaEstimadaEntrega = e.getFechaEstimadaEntrega();
+        this.estado = e.getEstado();
+        this.repartidor = e.getRepartidor();
+        this.usuario = e.getUsuario();
+        this.listaServiciosAdicionales = e.getListaServiciosAdicionales();
+        this.listaIncidencias = e.getListaIncidencias();
+        return this;
+    }
+
+
     public Envio build() {
         Envio envio = new Envio(
                 idEnvio,

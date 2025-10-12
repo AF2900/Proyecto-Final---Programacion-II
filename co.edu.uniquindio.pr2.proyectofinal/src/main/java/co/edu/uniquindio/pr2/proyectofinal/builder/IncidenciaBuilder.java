@@ -37,6 +37,15 @@ public class IncidenciaBuilder {
         return this;
     }
 
+    public IncidenciaBuilder from(Incidencia i) {
+        this.idIncidencia = i.getIdIncidencia();
+        this.descripcion = i.getDescripcion();
+        this.fecha = i.getFecha();
+        this.estadoIncidencia = i.getEstadoIncidencia();
+        this.envioAsociado = i.getEnvioAsociado();
+        return this;
+    }
+
     public Incidencia build() {
         Incidencia incidencia = new Incidencia(idIncidencia, descripcion, fecha, estadoIncidencia);
         incidencia.setEnvioAsociado(envioAsociado);

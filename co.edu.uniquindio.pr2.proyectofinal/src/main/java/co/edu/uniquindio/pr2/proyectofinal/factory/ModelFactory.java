@@ -5,10 +5,10 @@ import co.edu.uniquindio.pr2.proyectofinal.builder.*;
 import java.time.LocalDate;
 
 public class ModelFactory {
-    private final EmpresaLogistica plataforma;
+    private EmpresaLogistica empresaLogistica;
 
     private ModelFactory() {
-        this.plataforma = new EmpresaLogistica();
+        this.empresaLogistica = new EmpresaLogistica();
     }
 
     private static class Holder {
@@ -19,12 +19,12 @@ public class ModelFactory {
         return Holder.INSTANCE;
     }
 
-    public EmpresaLogistica getPlataforma() {
-        return plataforma;
+    public EmpresaLogistica getEmpresaLogistica() {
+        return empresaLogistica;
     }
 
     public void inicializarDatos() {
-        if (!plataforma.getUsuarios().isEmpty()) return;
+        if (!empresaLogistica.getUsuarios().isEmpty()) return;
 
         Direccion dirCasa = new DireccionBuilder()
                 .idDireccion("D001")
@@ -47,40 +47,43 @@ public class ModelFactory {
         Usuario usuario1 = new UsuarioBuilder()
                 .idUsuario("U001")
                 .nombre("Juan Pérez")
-                .correo("juan@correo.com")
+                .correo("juanuser@gmail.com")
                 .telefono("3101112233")
+                .password("1234")
                 .build();
 
         Usuario usuario2 = new UsuarioBuilder()
                 .idUsuario("U002")
                 .nombre("Ana Gómez")
-                .correo("ana@correo.com")
+                .correo("anauser@gmail.com")
                 .telefono("3124455667")
+                .password("2233")
                 .build();
 
         usuario1.getDirecciones().add(dirCasa);
         usuario2.getDirecciones().add(dirOficina);
 
-        plataforma.getUsuarios().add(usuario1);
-        plataforma.getUsuarios().add(usuario2);
+        empresaLogistica.getUsuarios().add(usuario1);
+        empresaLogistica.getUsuarios().add(usuario2);
 
         Repartidor repartidor1 = new RepartidorBuilder()
                 .nombre("Carlos Ruiz")
-                .correo("carlos@correo.com")
+                .correo("carlosdealer@gmail.com")
                 .telefono("3001234567")
                 .idRepartidor("R001")
+                .password("22679")
                 .disponibilidadRepartidor(DisponibilidadRepartidor.DISPONIBLE)
                 .zonaCobertura("Eje Cafetero")
                 .build();
 
-        plataforma.getRepartidores().add(repartidor1);
+        empresaLogistica.getRepartidores().add(repartidor1);
 
         Tarifa tarifa1 = new TarifaBuilder()
                 .idTarifa("T001")
                 .precio(15000)
                 .build();
 
-        plataforma.getTarifas().add(tarifa1);
+        empresaLogistica.getTarifas().add(tarifa1);
 
         Envio envio1 = new EnvioBuilder()
                 .idEnvio("E001")
@@ -98,7 +101,7 @@ public class ModelFactory {
                 .usuario(usuario1)
                 .build();
 
-        plataforma.getEnvios().add(envio1);
+        empresaLogistica.getEnvios().add(envio1);
 
         Pago pago1 = new PagoBuilder()
                 .idPago("P001")
@@ -108,7 +111,7 @@ public class ModelFactory {
                 .resultado("APROBADO")
                 .build();
 
-        plataforma.getPagos().add(pago1);
+        empresaLogistica.getPagos().add(pago1);
 
         ServicioAdicional servicio1 = new ServicioAdicionalBuilder()
                 .idServicioAdd("S001")
@@ -117,7 +120,7 @@ public class ModelFactory {
                 .envioAsociado(envio1)
                 .build();
 
-        plataforma.getServiciosAdicionales().add(servicio1);
+        empresaLogistica.getServiciosAdicionales().add(servicio1);
 
         Incidencia incidencia1 = new IncidenciaBuilder()
                 .idIncidencia("I001")
@@ -127,35 +130,57 @@ public class ModelFactory {
                 .envioAsociado(envio1)
                 .build();
 
-        plataforma.getIncidencias().add(incidencia1);
+        empresaLogistica.getIncidencias().add(incidencia1);
         repartidor1.getEnviosAsignados().add(envio1);
 
         Administrador administrador1 = new AdministradorBuilder()
                 .nombre("Douglas Albeiro")
-                .correo("douglassandias@correo.com")
+                .correo("douglasadmin@gmail.com")
                 .telefono("31344666566")
+                .password("admin")
                 .idAdministrador("456")
                 .build();
 
         Administrador administrador2 = new AdministradorBuilder()
                 .nombre("Sofia Lopez")
-                .correo("sofil099@correo.com")
+                .correo("sofiaadmin@gmail.com")
                 .telefono("32234557432")
+                .password("admin233")
                 .idAdministrador("789")
                 .build();
 
-        plataforma.getAdministradores().add(administrador1);
-        plataforma.getAdministradores().add(administrador2);
+        empresaLogistica.getAdministradores().add(administrador1);
+        empresaLogistica.getAdministradores().add(administrador2);
+    }
+
+    private Usuario usuarioActual;
+
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    public void setUsuarioActual(Usuario usuarioActual) {
+        this.usuarioActual = usuarioActual;
+    }
+
+    private Administrador administradorActual;
+
+    public Administrador getAdministradorActual() {
+        return administradorActual;
+    }
+
+    public void setAdministradorActual(Administrador administradorActual) {
+        this.administradorActual = administradorActual;
     }
 
     public void resetAll() {
-        plataforma.getUsuarios().clear();
-        plataforma.getRepartidores().clear();
-        plataforma.getEnvios().clear();
-        plataforma.getPagos().clear();
-        plataforma.getTarifas().clear();
-        plataforma.getIncidencias().clear();
-        plataforma.getServiciosAdicionales().clear();
-        plataforma.getAdministradores().clear();
+        empresaLogistica.getUsuarios().clear();
+        empresaLogistica.getRepartidores().clear();
+        empresaLogistica.getEnvios().clear();
+        empresaLogistica.getPagos().clear();
+        empresaLogistica.getTarifas().clear();
+        empresaLogistica.getIncidencias().clear();
+        empresaLogistica.getServiciosAdicionales().clear();
+        empresaLogistica.getAdministradores().clear();
     }
 }

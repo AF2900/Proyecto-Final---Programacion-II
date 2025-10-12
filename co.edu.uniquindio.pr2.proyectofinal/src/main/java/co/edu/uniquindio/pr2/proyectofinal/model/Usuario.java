@@ -8,8 +8,8 @@ public class Usuario extends Persona {
     private String idUsuario;
     private List<Direccion> direcciones;
 
-    public Usuario(String idUsuario, String nombre, String correo, String telefono) {
-        super(nombre, correo, telefono);
+    public Usuario(String idUsuario, String password, String nombre, String correo, String telefono) {
+        super(nombre, correo, telefono, password);
         this.idUsuario = idUsuario;
         this.direcciones = new ArrayList<>();
     }
@@ -34,10 +34,11 @@ public class Usuario extends Persona {
     public String toString() {
         return "Usuario{" +
                 "idUsuario='" + idUsuario + '\'' +
-                ", nombre='" + getNombre() + '\'' +
-                ", correo='" + getCorreo() + '\'' +
-                ", telefono='" + getTelefono() + '\'' +
-                ", direcciones=" + direcciones.size() +
+                ", direcciones=" + direcciones +
+                ", nombre='" + nombre + '\'' +
+                ", password='" + password + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono='" + telefono + '\'' +
                 '}';
     }
 }

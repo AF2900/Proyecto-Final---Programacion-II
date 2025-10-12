@@ -17,6 +17,12 @@ public class TarifaBuilder {
         return this;
     }
 
+    public TarifaBuilder from(Tarifa t) {
+        this.idTarifa = t.getIdTarifa();
+        this.precio = t.getPrecio();
+        return this;
+    }
+
     public Tarifa build() {
         return new Tarifa(idTarifa, precio);
     }
