@@ -47,11 +47,29 @@ public class LoginController {
         String password = txtPassword.getText().trim();
 
         if (correo.isEmpty() || password.isEmpty()) {
-            lblMensaje.setText("Por favor ingrese su correo y contraseña.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos vacíos");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingrese su correo y contraseña.");
+            alert.showAndWait();
             return;
         }
 
         Usuario usuario = modelFactory.getEmpresaLogistica().buscarUsuarioPorCorreo(correo);
+        Administrador admin = modelFactory.getEmpresaLogistica().buscarAdministradorPorCorreo(correo);
+
+        if ((usuario == null && admin == null) ||
+                (usuario != null && !usuario.getPassword().equals(password)) ||
+                (admin != null && !admin.getPassword().equals(password))) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de inicio de sesión");
+            alert.setHeaderText(null);
+            alert.setContentText("El correo o la contraseña son incorrectos.");
+            alert.showAndWait();
+            return;
+        }
+
         if (usuario != null && usuario.getPassword().equals(password)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Bienvenido");
@@ -64,7 +82,6 @@ public class LoginController {
             return;
         }
 
-        Administrador admin = modelFactory.getEmpresaLogistica().buscarAdministradorPorCorreo(correo);
         if (admin != null && admin.getPassword().equals(password)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Bienvenido Administrador");
@@ -74,10 +91,7 @@ public class LoginController {
 
             lblMensaje.setText("Bienvenid@ Administrador " + admin.getNombre());
             abrirVentanas("adminMenu.fxml", "Panel Administrador");
-            return;
         }
-
-        lblMensaje.setText("Credenciales inválidas.");
     }
 
     private void abrirVentanas(String fxml, String titulo) {
