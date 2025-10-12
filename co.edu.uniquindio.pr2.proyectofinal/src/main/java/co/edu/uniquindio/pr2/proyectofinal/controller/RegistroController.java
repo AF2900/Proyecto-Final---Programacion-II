@@ -28,7 +28,7 @@ public class RegistroController {
     void handleGoToLogin(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("login.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(scene);

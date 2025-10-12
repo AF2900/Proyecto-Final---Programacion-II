@@ -119,7 +119,7 @@ public class LoginController {
     public void handleRegister() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("registro.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 900, 800);
+            Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setTitle("Registro");
             stage.setScene(scene);
