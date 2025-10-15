@@ -102,7 +102,7 @@ public class AdminMenuController {
     void handleLogout(ActionEvent event) {
         modelFactory.setUsuarioActual(null);
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);

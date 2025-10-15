@@ -48,7 +48,7 @@ public class UsuarioMenuController {
     void handleLogout(ActionEvent event) {
         try {
             modelFactory.setUsuarioActual(null);
-            FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Inicio de Sesión");

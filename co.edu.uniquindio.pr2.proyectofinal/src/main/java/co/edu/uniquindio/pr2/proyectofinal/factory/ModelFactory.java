@@ -47,7 +47,7 @@ public class ModelFactory {
         Usuario usuario1 = new UsuarioBuilder()
                 .idUsuario("U001")
                 .nombre("Juan Pérez")
-                .correo("juanuser@gmail.com")
+                .correo("juanpe@gmail.com")
                 .telefono("3101112233")
                 .password("1234")
                 .build();
@@ -55,7 +55,7 @@ public class ModelFactory {
         Usuario usuario2 = new UsuarioBuilder()
                 .idUsuario("U002")
                 .nombre("Ana Gómez")
-                .correo("anauser@gmail.com")
+                .correo("anagomez21@gmail.com")
                 .telefono("3124455667")
                 .password("2233")
                 .build();
@@ -68,7 +68,7 @@ public class ModelFactory {
 
         Repartidor repartidor1 = new RepartidorBuilder()
                 .nombre("Carlos Ruiz")
-                .correo("carlosdealer@gmail.com")
+                .correo("carlosru@gmail.com")
                 .telefono("3001234567")
                 .idRepartidor("R001")
                 .password("22679")
@@ -135,7 +135,7 @@ public class ModelFactory {
 
         Administrador administrador1 = new AdministradorBuilder()
                 .nombre("Douglas Albeiro")
-                .correo("douglasadmin@gmail.com")
+                .correo("douglasmanias@gmail.com")
                 .telefono("31344666566")
                 .password("admin")
                 .idAdministrador("456")
@@ -143,7 +143,7 @@ public class ModelFactory {
 
         Administrador administrador2 = new AdministradorBuilder()
                 .nombre("Sofia Lopez")
-                .correo("sofiaadmin@gmail.com")
+                .correo("sofialop@gmail.com")
                 .telefono("32234557432")
                 .password("admin233")
                 .idAdministrador("789")

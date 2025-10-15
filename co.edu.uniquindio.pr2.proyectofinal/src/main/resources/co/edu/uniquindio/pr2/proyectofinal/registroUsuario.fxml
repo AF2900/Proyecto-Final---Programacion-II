@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RegistroUsuarioController">
+
+    <center>
+        <HBox alignment="CENTER" style="-fx-background-color: #6178df;">
+            <children>
+                <VBox alignment="CENTER"
+                      style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <children>
+                        <ImageView fitHeight="120.0" fitWidth="120.0" preserveRatio="true">
+                            <image>
+                                <Image url="@/rastreador-entrega-o-gps-telefono_317810-4465.jpg" />
+                            </image>
+                        </ImageView>
+                        <Label text="Únete a LogiExpress" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Crea tu cuenta y comienza a enviar" textFill="#e8eaf6" wrapText="true">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                    </padding>
+                </VBox>
+
+                <VBox alignment="TOP_CENTER" style="-fx-background-color: white;">
+                    <children>
+
+                        <HBox alignment="TOP_LEFT">
+                            <padding>
+                                <Insets top="20.0" right="20.0" bottom="0.0" left="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="¿Ya tienes cuenta?" textFill="#7f8c8d">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Hyperlink fx:id="loginLink" onAction="#handleGoToLogin"
+                                           text="Inicia sesión aquí" textFill="#667eea">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Hyperlink>
+                            </children>
+                        </HBox>
+
+                        <VBox alignment="CENTER" maxWidth="350.0" spacing="25.0">
+                            <children>
+                                <VBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Label text="Crear Cuenta" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="32.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Completa tus datos para registrarte" textFill="#7f8c8d" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="20.0">
+                                    <children>
+
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label text="Nombre Completo" textFill="#34495e" />
+                                                <TextField fx:id="nombreField" promptText="Ingresa tu nombre completo"
+                                                           style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                                                                  -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;" />
+                                                <Label fx:id="nombreError" textFill="#e74c3c" visible="false" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label text="Correo Electrónico" textFill="#34495e" />
+                                                <TextField fx:id="emailField" promptText="ejemplo@correo.com"
+                                                           style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                                                                  -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;" />
+                                                <Label fx:id="emailError" textFill="#e74c3c" visible="false" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label text="Número de Teléfono" textFill="#34495e" />
+                                                <TextField fx:id="telefonoField" promptText="+57 300 123 4567"
+                                                           style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                                                                  -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;" />
+                                                <Label fx:id="telefonoError" textFill="#e74c3c" visible="false" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label text="Contraseña" textFill="#34495e" />
+                                                <PasswordField fx:id="passwordField" promptText="Mínimo 8 caracteres"
+                                                               style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                                                                      -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;" />
+                                                <Label fx:id="passwordError" textFill="#e74c3c" visible="false" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label text="Confirmar Contraseña" textFill="#34495e" />
+                                                <PasswordField fx:id="confirmPasswordField" promptText="Repite tu contraseña"
+                                                               style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                                                                      -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;" />
+                                                <Label fx:id="confirmPasswordError" textFill="#e74c3c" visible="false" />
+                                            </children>
+                                        </VBox>
+
+                                        <Button fx:id="registerButton" text="Crear Cuenta"
+                                                onAction="#handleRegister"
+                                                maxWidth="1.7976931348623157E308"
+                                                style="-fx-background-color: #667eea; -fx-text-fill: white;
+                                                       -fx-background-radius: 8; -fx-padding: 15;
+                                                       -fx-font-weight: bold; -fx-font-size: 16;">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </Button>
+
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+</BorderPane>

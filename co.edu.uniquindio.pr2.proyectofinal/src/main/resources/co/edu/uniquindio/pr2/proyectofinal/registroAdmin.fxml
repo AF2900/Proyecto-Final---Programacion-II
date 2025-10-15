@@ -9,12 +9,12 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RegistroController">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RegistroAdminController">
 
     <center>
         <HBox alignment="CENTER" style="-fx-background-color: #6178df;">
             <children>
-                <VBox alignment="CENTER" prefWidth="400.0"
+                <VBox alignment="CENTER"
                       style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <children>
                         <ImageView fitHeight="120.0" fitWidth="120.0" preserveRatio="true">
@@ -22,7 +22,7 @@
                                 <Image url="@/rastreador-entrega-o-gps-telefono_317810-4465.jpg" />
                             </image>
                         </ImageView>
-                        <Label text="Únete a LogiExpress" textFill="WHITE">
+                        <Label text="Panel de Administrador" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="28.0" />
                             </font>
@@ -30,7 +30,7 @@
                                 <Insets top="20.0" />
                             </VBox.margin>
                         </Label>
-                        <Label text="Crea tu cuenta y comienza a enviar" textFill="#e8eaf6" wrapText="true">
+                        <Label text="Crea tu cuenta administrativa" textFill="#e8eaf6" wrapText="true">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -41,12 +41,25 @@
                     </padding>
                 </VBox>
 
-                <VBox alignment="TOP_CENTER" prefWidth="450.0" style="-fx-background-color: white;">
+                <VBox alignment="TOP_CENTER" style="-fx-background-color: white;">
                     <children>
-                        <HBox alignment="TOP_LEFT" prefWidth="450.0">
+
+                        <HBox alignment="TOP_LEFT">
+                            <padding>
+                                <Insets top="20.0" right="20.0" bottom="0.0" left="20.0" />
+                            </padding>
                             <children>
-                                <Button text="⮌ Volver" onAction="#handleGoToLogin"
-                                        style="-fx-background-color: transparent; -fx-text-fill: #667eea; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10 0 0 20;" />
+                                <Label text="¿Ya eres administrador?" textFill="#7f8c8d">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Hyperlink fx:id="linkLogin" onAction="#handleGoToLoginAdmin"
+                                           text="Inicia sesión aquí" textFill="#667eea">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Hyperlink>
                             </children>
                         </HBox>
 
@@ -54,7 +67,7 @@
                             <children>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Label text="Crear Cuenta" textFill="#2c3e50">
+                                        <Label text="Registro Administrador" textFill="#2c3e50">
                                             <font>
                                                 <Font name="System Bold" size="32.0" />
                                             </font>
@@ -65,6 +78,7 @@
 
                                 <VBox spacing="20.0">
                                     <children>
+
                                         <VBox spacing="8.0">
                                             <children>
                                                 <Label text="Nombre Completo" textFill="#34495e" />
@@ -116,30 +130,16 @@
                                         </VBox>
 
                                         <Button fx:id="registerButton" text="Crear Cuenta"
-                                                onAction="#handleRegister"
+                                                onAction="#handleRegisterAdmin"
                                                 maxWidth="1.7976931348623157E308"
                                                 style="-fx-background-color: #667eea; -fx-text-fill: white;
                                                        -fx-background-radius: 8; -fx-padding: 15;
-                                                       -fx-font-weight: bold; -fx-font-size: 16;" >
+                                                       -fx-font-weight: bold; -fx-font-size: 16;">
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Button>
 
-                                        <HBox fx:id="loadingBox" alignment="CENTER" spacing="10.0" visible="false">
-                                            <children>
-                                                <ProgressIndicator prefHeight="20.0" prefWidth="20.0" />
-                                                <Label text="Creando cuenta..." textFill="#667eea" />
-                                            </children>
-                                        </HBox>
-
-                                        <HBox alignment="CENTER" spacing="5.0">
-                                            <children>
-                                                <Label text="¿Ya tienes cuenta?" textFill="#7f8c8d" />
-                                                <Hyperlink fx:id="loginLink" onAction="#handleGoToLogin"
-                                                           text="Iniciar Sesión" textFill="#667eea" />
-                                            </children>
-                                        </HBox>
                                     </children>
                                 </VBox>
                             </children>

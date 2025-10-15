@@ -13,7 +13,7 @@ public class LogisticaApplication extends Application {
     public void start(Stage stage) throws IOException {
         ModelFactory.getInstance().inicializarDatos();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
         stage.setTitle("Sistema de Empresa Logística");
