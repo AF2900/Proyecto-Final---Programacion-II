@@ -9,6 +9,7 @@ import java.util.List;
 
 public class RepartidorBuilder {
     private String nombre;
+    private String correo;
     private String cedula;
     private String telefono;
     private String idRepartidor;
@@ -22,8 +23,13 @@ public class RepartidorBuilder {
         return this;
     }
 
-    public RepartidorBuilder cedula(String correo) {
+    public RepartidorBuilder cedula(String cedula) {
         this.cedula = cedula;
+        return this;
+    }
+
+    public RepartidorBuilder correo(String correo) {
+        this.correo = correo;
         return this;
     }
 
@@ -60,6 +66,7 @@ public class RepartidorBuilder {
     public RepartidorBuilder from(Repartidor r) {
         this.idRepartidor = r.getIdRepartidor();
         this.nombre = r.getNombre();
+        this.correo = r.getCorreo();
         this.cedula = r.getCedula();
         this.telefono = r.getTelefono();
         this.password = r.getPassword();
@@ -72,12 +79,14 @@ public class RepartidorBuilder {
     public Repartidor build() {
         Repartidor r = new Repartidor(
                 nombre,
-                cedula,
+                correo,
                 telefono,
-                idRepartidor,
                 password,
+                cedula,
+                idRepartidor,
+                zonaCobertura,
                 disponibilidadRepartidor,
-                zonaCobertura
+                enviosAsignados
         );
         if (enviosAsignados != null && !enviosAsignados.isEmpty()) {
             r.getEnviosAsignados().addAll(enviosAsignados);

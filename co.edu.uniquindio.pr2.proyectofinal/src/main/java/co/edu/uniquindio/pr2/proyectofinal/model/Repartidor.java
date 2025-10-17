@@ -1,26 +1,44 @@
 package co.edu.uniquindio.pr2.proyectofinal.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Repartidor extends Persona {
+
+    private String cedula;
+
     private String idRepartidor;
+
     private DisponibilidadRepartidor disponibilidadRepartidor;
+
     private String zonaCobertura;
+
     private List<Envio> enviosAsignados;
 
     public Repartidor(String nombre,
-                      String cedula,
+                      String correo,
                       String telefono,
-                      String idRepartidor,
                       String password,
+                      String cedula,
+                      String idRepartidor,
+                      String zonaCobertura,
                       DisponibilidadRepartidor disponibilidadRepartidor,
-                      String zonaCobertura) {
-        super(nombre, cedula, telefono, password);
+                      List<Envio> enviosAsignados) {
+
+        super(nombre, correo, telefono, password);
+        this.cedula = cedula;
         this.idRepartidor = idRepartidor;
-        this.disponibilidadRepartidor = disponibilidadRepartidor;
         this.zonaCobertura = zonaCobertura;
-        this.enviosAsignados = new ArrayList<>();
+        this.disponibilidadRepartidor = disponibilidadRepartidor;
+        this.enviosAsignados = enviosAsignados;
+
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public DisponibilidadRepartidor getDisponibilidadRepartidor() {
