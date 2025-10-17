@@ -3,15 +3,10 @@ package co.edu.uniquindio.pr2.proyectofinal.model;
 import java.util.List;
 
 public class Repartidor extends Persona {
-
     private String cedula;
-
     private String idRepartidor;
-
     private DisponibilidadRepartidor disponibilidadRepartidor;
-
     private String zonaCobertura;
-
     private List<Envio> enviosAsignados;
 
     public Repartidor(String nombre,

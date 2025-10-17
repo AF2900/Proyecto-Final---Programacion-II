@@ -29,7 +29,6 @@ public class RepartidorController {
     @FXML
     private TextField txtCedula, txtIdRepartidor, txtNombre, txtPassword, txtTelefono;
 
-    // Datos
     private final ModelFactory modelFactory = ModelFactory.getInstance();
     private ObservableList<Repartidor> listaRepartidores;
 
@@ -60,7 +59,6 @@ public class RepartidorController {
                     .zonaCobertura("No definida")
                     .build();
 
-            nuevo.setCedula(txtCedula.getText());
             modelFactory.getEmpresaLogistica().getRepartidores().add(nuevo);
             listaRepartidores.add(nuevo);
             limpiarCampos();
@@ -97,11 +95,23 @@ public class RepartidorController {
             return;
         }
 
-        modelFactory.getEmpresaLogistica().getRepartidores().remove(seleccionado);
-        listaRepartidores.remove(seleccionado);
-        limpiarCampos();
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmación de eliminación");
+        confirmacion.setHeaderText(null);
+        confirmacion.setContentText("¿Estás seguro de que deseas eliminar al repartidor \"" + seleccionado.getNombre() + "\"?");
 
-        mostrarAlerta("Éxito", "Repartidor eliminado correctamente.", Alert.AlertType.INFORMATION);
+        ButtonType btnSi = new ButtonType("Sí", ButtonBar.ButtonData.OK_DONE);
+        ButtonType btnNo = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        confirmacion.getButtonTypes().setAll(btnSi, btnNo);
+
+        confirmacion.showAndWait().ifPresent(respuesta -> {
+            if (respuesta == btnSi) {
+                modelFactory.getEmpresaLogistica().getRepartidores().remove(seleccionado);
+                listaRepartidores.remove(seleccionado);
+                limpiarCampos();
+                mostrarAlerta("Éxito", "Repartidor eliminado correctamente.", Alert.AlertType.INFORMATION);
+            }
+        });
     }
 
     @FXML
@@ -178,5 +188,4 @@ public class RepartidorController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
-
 }

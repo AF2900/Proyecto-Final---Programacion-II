@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -141,6 +142,7 @@ public class AdminMenuController {
                 FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("usuario.fxml"));
                 usuarioView = loader.load();
             }
+            setAnchors(usuarioView);
             contentArea.getChildren().setAll(usuarioView);
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,10 +156,19 @@ public class AdminMenuController {
                 FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("repartidor.fxml"));
                 repartidorView = loader.load();
             }
+            setAnchors(repartidorView);
             contentArea.getChildren().setAll(repartidorView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void setAnchors(Parent view) {
+        if (view instanceof AnchorPane anchorPane) {
+            AnchorPane.setTopAnchor(anchorPane, 0.0);
+            AnchorPane.setBottomAnchor(anchorPane, 0.0);
+            AnchorPane.setLeftAnchor(anchorPane, 0.0);
+            AnchorPane.setRightAnchor(anchorPane, 0.0);
+        }
+    }
 }
