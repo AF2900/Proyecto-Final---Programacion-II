@@ -1,17 +1,15 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
+import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import java.io.IOException;
 
 public class UsuarioMenuController {
@@ -53,6 +51,7 @@ public class UsuarioMenuController {
             Stage stage = new Stage();
             stage.setTitle("Inicio de Sesión");
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
             Stage currentStage = (Stage) logoutBtn.getScene().getWindow();
@@ -64,41 +63,56 @@ public class UsuarioMenuController {
 
     @FXML
     void handleCreateShipment(ActionEvent event) {
-        mostrarAlerta("Crear envío", "Funcionalidad próximamente disponible.");
-    }
-
-    @FXML
-    void handleHistory(ActionEvent event) {
-        mostrarAlerta("Historial", "Mostrando historial de envíos.");
-    }
-
-    @FXML
-    void handleProfile(ActionEvent event) {
-        mostrarAlerta("Perfil", "Mostrando perfil del usuario.");
-    }
-
-    @FXML
-    void handleQuickTrack(ActionEvent event) {
-        mostrarAlerta("Seguimiento rápido", "Funcionalidad de seguimiento no disponible aún.");
+        abrirVentana("crearEnvio.fxml", "Crear Envío");
     }
 
     @FXML
     void handleQuote(ActionEvent event) {
-        mostrarAlerta("Cotización", "Funcionalidad de cotización no disponible aún.");
+        abrirVentana("cotizarEnvio.fxml", "Cotizar Envío");
     }
 
     @FXML
     void handleTrack(ActionEvent event) {
-        mostrarAlerta("Seguimiento", "Buscando envío...");
+        abrirVentana("rastrearEnvio.fxml", "Rastrear Envío");
+    }
+
+    @FXML
+    void handleHistory(ActionEvent event) {
+        mostrarAlerta("Historial", "Mostrando historial de envíos (en desarrollo).");
+    }
+
+    @FXML
+    void handleProfile(ActionEvent event) {
+        mostrarAlerta("Perfil", "Mostrando perfil del usuario (en desarrollo).");
+    }
+
+    @FXML
+    void handleQuickTrack(ActionEvent event) {
+        mostrarAlerta("Seguimiento rápido", "Funcionalidad de seguimiento rápido en desarrollo.");
     }
 
     @FXML
     void handleViewAll(ActionEvent event) {
-        mostrarAlerta("Ver todo", "Mostrando todos los envíos.");
+        mostrarAlerta("Ver todo", "Mostrando todos los envíos (en desarrollo).");
+    }
+
+    private void abrirVentana(String fxml, String titulo) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource(fxml));
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

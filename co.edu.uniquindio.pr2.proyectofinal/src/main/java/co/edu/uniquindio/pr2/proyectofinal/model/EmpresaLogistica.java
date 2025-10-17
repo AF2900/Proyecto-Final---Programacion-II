@@ -176,122 +176,92 @@ public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGest
         }
     }
 
-    public void actualizarUsuario(Usuario usuario) {
-        if (usuario != null) {
-            for (int i = 0; i < usuarios.size(); i++) {
-                if (usuarios.get(i).getIdUsuario().equals(usuario.getIdUsuario())) {
-                    usuarios.set(i, usuario);
-                    break;
-                }
+    public double calcularTarifa(String origen, String destino, double peso, double volumen, String prioridad) {
+        double base = 5000;
+        double costoPeso = peso * 1000;
+        double costoVolumen = volumen * 0.5;
+        double recargoPrioridad = switch (prioridad) {
+            case "Alta" -> 1.2;
+            case "Urgente" -> 1.5;
+            default -> 1.0;
+        };
+        return Math.round((base + costoPeso + costoVolumen) * recargoPrioridad * 100) / 100.0;
+    }
+
+    public boolean crearEnvio(String origenTexto,
+                              String destinoTexto,
+                              double peso, double volumen,
+                              String prioridad,
+                              boolean seguro,
+                              boolean fragil,
+                              boolean firma) {
+        try {
+            Direccion origen = new DireccionBuilder()
+                    .idDireccion(String.format("%05d", (int)(Math.random() * 100000)))
+                    .alias("Origen")
+                    .calle(origenTexto)
+                    .ciudad("CiudadX")
+                    .build();
+
+            Direccion destino = new DireccionBuilder()
+                    .idDireccion(String.format("%05d", (int)(Math.random() * 100000)))
+                    .alias("Destino")
+                    .calle(destinoTexto)
+                    .ciudad("CiudadY")
+                    .build();
+
+            EstadoEnvio estadoInicial;
+            if ("Urgente".equalsIgnoreCase(prioridad)) {
+                estadoInicial = EstadoEnvio.ENTREGADO;
+            } else if ("Rápida".equalsIgnoreCase(prioridad)) {
+                estadoInicial = EstadoEnvio.EN_CAMINO;
+            } else {
+                estadoInicial = EstadoEnvio.PENDIENTE;
             }
+
+            Envio envio = new EnvioBuilder()
+                    .idEnvio(String.format("%05d", (int)(Math.random() * 100000)))
+                    .origen(origen)
+                    .destino(destino)
+                    .peso(peso)
+                    .largo(1)
+                    .ancho(1)
+                    .alto(1)
+                    .fechaCreacion(java.time.LocalDate.now())
+                    .fechaEstimadaEntrega(java.time.LocalDate.now().plusDays(2))
+                    .estado(estadoInicial)
+                    .build();
+
+            if (seguro) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
+                    .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
+                    .tipoServicio("Seguro")
+                    .costoServicioAdd(3000)
+                    .build());
+
+            if (fragil) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
+                    .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
+                    .tipoServicio("Frágil")
+                    .costoServicioAdd(2000)
+                    .build());
+
+            if (firma) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
+                    .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
+                    .tipoServicio("Firma requerida")
+                    .costoServicioAdd(1500)
+                    .build());
+
+            agregarEnvio(envio);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
-    public void actualizarAdministrador(Administrador admin) {
-        if (admin != null) {
-            for (int i = 0; i < administradores.size(); i++) {
-                if (administradores.get(i).getIdAdministrador().equals(admin.getIdAdministrador())) {
-                    administradores.set(i, admin);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarRepartidor(Repartidor repartidor) {
-        if (repartidor != null) {
-            for (int i = 0; i < repartidores.size(); i++) {
-                if (repartidores.get(i).getIdRepartidor().equals(repartidor.getIdRepartidor())) {
-                    repartidores.set(i, repartidor);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarEnvio(Envio envio) {
-        if (envio != null) {
-            for (int i = 0; i < envios.size(); i++) {
-                if (envios.get(i).getIdEnvio().equals(envio.getIdEnvio())) {
-                    envios.set(i, envio);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarPago(Pago pago) {
-        if (pago != null) {
-            for (int i = 0; i < pagos.size(); i++) {
-                if (pagos.get(i).getIdPago().equals(pago.getIdPago())) {
-                    pagos.set(i, pago);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarTarifa(Tarifa tarifa) {
-        if (tarifa != null) {
-            for (int i = 0; i < tarifas.size(); i++) {
-                if (tarifas.get(i).getIdTarifa().equals(tarifa.getIdTarifa())) {
-                    tarifas.set(i, tarifa);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarIncidencia(Incidencia incidencia) {
-        if (incidencia != null) {
-            for (int i = 0; i < incidencias.size(); i++) {
-                if (incidencias.get(i).getIdIncidencia().equals(incidencia.getIdIncidencia())) {
-                    incidencias.set(i, incidencia);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void actualizarServicioAdicional(ServicioAdicional servicio) {
-        if (servicio != null) {
-            for (int i = 0; i < serviciosAdicionales.size(); i++) {
-                if (serviciosAdicionales.get(i).getIdServicioAdd().equals(servicio.getIdServicioAdd())) {
-                    serviciosAdicionales.set(i, servicio);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void eliminarUsuario(Usuario usuario) {
-        usuarios.remove(usuario);
-    }
-
-    public void eliminarAdministrador(Administrador admin) {
-        administradores.remove(admin);
-    }
-
-    public void eliminarRepartidor(Repartidor repartidor) {
-        repartidores.remove(repartidor);
-    }
-
-    public void eliminarEnvio(Envio envio) {
-        envios.remove(envio);
-    }
-
-    public void eliminarPago(Pago pago) {
-        pagos.remove(pago);
-    }
-
-    public void eliminarTarifa(Tarifa tarifa) {
-        tarifas.remove(tarifa); }
-
-    public void eliminarIncidencia(Incidencia incidencia) {
-        incidencias.remove(incidencia);
-    }
-
-    public void eliminarServicioAdicional(ServicioAdicional servicio) {
-        serviciosAdicionales.remove(servicio);
+    public String consultarEstadoEnvio(String codigo) {
+        return envios.stream()
+                .filter(e -> e.getIdEnvio().equalsIgnoreCase(codigo))
+                .map(e -> e.getEstado().name())
+                .findFirst()
+                .orElse("No encontrado");
     }
 }

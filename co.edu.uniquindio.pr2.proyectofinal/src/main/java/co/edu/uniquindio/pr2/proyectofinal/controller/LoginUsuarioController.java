@@ -57,6 +57,8 @@ public class LoginUsuarioController {
             return;
         }
 
+        modelFactory.setUsuarioActual(usuario);
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Bienvenido");
         alert.setHeaderText(null);

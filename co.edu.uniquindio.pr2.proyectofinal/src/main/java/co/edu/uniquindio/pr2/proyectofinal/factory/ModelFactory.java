@@ -76,7 +76,40 @@ public class ModelFactory {
                 .zonaCobertura("Eje Cafetero")
                 .build();
 
+        Repartidor repartidor2 = new RepartidorBuilder()
+                .nombre("Laura Sánchez")
+                .correo("laurasan@gmail.com")
+                .telefono("3015558888")
+                .idRepartidor("R002")
+                .password("ls123")
+                .disponibilidadRepartidor(DisponibilidadRepartidor.DISPONIBLE)
+                .zonaCobertura("Quindío")
+                .build();
+
+        Repartidor repartidor3 = new RepartidorBuilder()
+                .nombre("Andrés Gómez")
+                .correo("andresgomez@gmail.com")
+                .telefono("3026669999")
+                .idRepartidor("R003")
+                .password("ag456")
+                .disponibilidadRepartidor(DisponibilidadRepartidor.DISPONIBLE)
+                .zonaCobertura("Pereira - Dosquebradas")
+                .build();
+
+        Repartidor repartidor4 = new RepartidorBuilder()
+                .nombre("María Fernanda López")
+                .correo("mariafl@gmail.com")
+                .telefono("3007773333")
+                .idRepartidor("R004")
+                .password("mf789")
+                .disponibilidadRepartidor(DisponibilidadRepartidor.DISPONIBLE)
+                .zonaCobertura("Calarcá")
+                .build();
+
         empresaLogistica.getRepartidores().add(repartidor1);
+        empresaLogistica.getRepartidores().add(repartidor2);
+        empresaLogistica.getRepartidores().add(repartidor3);
+        empresaLogistica.getRepartidores().add(repartidor4);
 
         Tarifa tarifa1 = new TarifaBuilder()
                 .idTarifa("T001")
