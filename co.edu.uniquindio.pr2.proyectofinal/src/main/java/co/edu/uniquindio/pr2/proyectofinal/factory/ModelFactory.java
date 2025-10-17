@@ -68,7 +68,7 @@ public class ModelFactory {
 
         Repartidor repartidor1 = new RepartidorBuilder()
                 .nombre("Carlos Ruiz")
-                .correo("carlosru@gmail.com")
+                .cedula("1004")
                 .telefono("3001234567")
                 .idRepartidor("R001")
                 .password("22679")
@@ -78,7 +78,7 @@ public class ModelFactory {
 
         Repartidor repartidor2 = new RepartidorBuilder()
                 .nombre("Laura Sánchez")
-                .correo("laurasan@gmail.com")
+                .cedula("1003")
                 .telefono("3015558888")
                 .idRepartidor("R002")
                 .password("ls123")
@@ -88,7 +88,7 @@ public class ModelFactory {
 
         Repartidor repartidor3 = new RepartidorBuilder()
                 .nombre("Andrés Gómez")
-                .correo("andresgomez@gmail.com")
+                .cedula("1002")
                 .telefono("3026669999")
                 .idRepartidor("R003")
                 .password("ag456")
@@ -98,8 +98,8 @@ public class ModelFactory {
 
         Repartidor repartidor4 = new RepartidorBuilder()
                 .nombre("María Fernanda López")
-                .correo("mariafl@gmail.com")
-                .telefono("3007773333")
+                .cedula("1004")
+                .telefono("3026669999")
                 .idRepartidor("R004")
                 .password("mf789")
                 .disponibilidadRepartidor(DisponibilidadRepartidor.DISPONIBLE)
@@ -176,9 +176,9 @@ public class ModelFactory {
 
         Administrador administrador2 = new AdministradorBuilder()
                 .nombre("Sofia Lopez")
-                .correo("sofialop@gmail.com")
+                .correo("1")
                 .telefono("32234557432")
-                .password("admin233")
+                .password("1")
                 .idAdministrador("789")
                 .build();
 

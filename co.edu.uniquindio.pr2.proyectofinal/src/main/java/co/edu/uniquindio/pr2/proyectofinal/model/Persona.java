@@ -5,12 +5,22 @@ public class Persona {
     protected String correo;
     protected String telefono;
     protected String password;
+    protected String cedula;
 
     public Persona(String nombre, String correo, String telefono, String password) {
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
         this.password = password;
+        this.cedula = cedula;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {

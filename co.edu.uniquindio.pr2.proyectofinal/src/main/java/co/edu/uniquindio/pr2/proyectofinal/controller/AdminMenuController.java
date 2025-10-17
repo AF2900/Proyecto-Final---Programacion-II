@@ -122,11 +122,6 @@ public class AdminMenuController {
     }
 
     @FXML
-    void showDelivery(ActionEvent event) {
-        contentArea.getChildren().setAll(deliveryContent);
-    }
-
-    @FXML
     void showReports(ActionEvent event) {
         contentArea.getChildren().setAll(reportsContent);
     }
@@ -136,15 +131,33 @@ public class AdminMenuController {
         contentArea.getChildren().setAll(shipmentsContent);
     }
 
+    private Parent usuarioView;
+    private Parent repartidorView;
+
     @FXML
     void showUsers(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("usuario.fxml"));
-            Parent usuarioView = loader.load();
-
+            if (usuarioView == null) {
+                FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("usuario.fxml"));
+                usuarioView = loader.load();
+            }
             contentArea.getChildren().setAll(usuarioView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void showDelivery(ActionEvent event) {
+        try {
+            if (repartidorView == null) {
+                FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource("repartidor.fxml"));
+                repartidorView = loader.load();
+            }
+            contentArea.getChildren().setAll(repartidorView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

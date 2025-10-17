@@ -14,7 +14,7 @@ public class LogisticaApplication extends Application {
         ModelFactory.getInstance().inicializarDatos();
 
         FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+        Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Sistema de Empresa Logística");
         stage.setScene(scene);

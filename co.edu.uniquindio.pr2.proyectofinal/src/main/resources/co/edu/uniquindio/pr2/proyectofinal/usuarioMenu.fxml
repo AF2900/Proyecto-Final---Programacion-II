@@ -53,11 +53,7 @@
                                     <children>
                                         <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../images/quote-icon.png" />
-                                                    </image>
-                                                </ImageView>
+
                                                 <Label text="Cotizar Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Calcula el costo de tu envío" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
                                                 <Button fx:id="quoteBtn" mnemonicParsing="false" onAction="#handleQuote" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Cotizar" />
@@ -65,11 +61,7 @@
                                         </VBox>
                                         <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../images/create-icon.png" />
-                                                    </image>
-                                                </ImageView>
+
                                                 <Label text="Crear Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Programa tu nuevo envío" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
                                                 <Button fx:id="createBtn" mnemonicParsing="false" onAction="#handleCreateShipment" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Crear" />
@@ -77,11 +69,7 @@
                                         </VBox>
                                         <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../images/track-icon.png" />
-                                                    </image>
-                                                </ImageView>
+
                                                 <Label text="Rastrear Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Sigue el estado de tus paquetes" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
                                                 <Button fx:id="trackBtn" mnemonicParsing="false" onAction="#handleTrack" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Rastrear" />

@@ -10,13 +10,13 @@ public class Repartidor extends Persona {
     private List<Envio> enviosAsignados;
 
     public Repartidor(String nombre,
-                      String correo,
+                      String cedula,
                       String telefono,
                       String idRepartidor,
                       String password,
                       DisponibilidadRepartidor disponibilidadRepartidor,
                       String zonaCobertura) {
-        super(nombre, correo, telefono, password);
+        super(nombre, cedula, telefono, password);
         this.idRepartidor = idRepartidor;
         this.disponibilidadRepartidor = disponibilidadRepartidor;
         this.zonaCobertura = zonaCobertura;
@@ -41,14 +41,6 @@ public class Repartidor extends Persona {
 
     public void setZonaCobertura(String zonaCobertura) {
         this.zonaCobertura = zonaCobertura;
-    }
-
-    public DisponibilidadRepartidor getDisponibilidaRepartidor() {
-        return disponibilidadRepartidor;
-    }
-
-    public void setDisponibilidaRepartidor(DisponibilidadRepartidor disponibilidadRepartidor) {
-        this.disponibilidadRepartidor = disponibilidadRepartidor;
     }
 
     public String getIdRepartidor() {
