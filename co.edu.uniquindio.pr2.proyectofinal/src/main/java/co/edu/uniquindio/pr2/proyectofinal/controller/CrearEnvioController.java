@@ -1,18 +1,14 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
-import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
 import co.edu.uniquindio.pr2.proyectofinal.builder.DireccionBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.ServicioAdicionalBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.PagoBuilder;
+import co.edu.uniquindio.pr2.proyectofinal.observer.UsuarioObserver;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Random;
@@ -143,7 +139,12 @@ public class CrearEnvioController {
             if (resultado.isEmpty() || resultado.get() != ButtonType.OK) return;
 
             Usuario usuario = modelFactory.getUsuarioActual();
-            if (usuario != null) envio.setUsuario(usuario);
+            if (usuario != null) {
+                envio.setUsuario(usuario);
+                UsuarioObserver observer = new UsuarioObserver(usuario);
+                envio.agregarObserver(observer);
+                envio.setEstado(envio.getEstado());
+            }
 
             if (cbSeguro.isSelected())
                 envio.getListaServiciosAdicionales().add(

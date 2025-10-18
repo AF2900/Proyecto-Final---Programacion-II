@@ -23,78 +23,62 @@ public class EnvioBuilder {
     private List<Incidencia> listaIncidencias = new ArrayList<>();
 
     public EnvioBuilder idEnvio(String idEnvio) {
-        this.idEnvio = idEnvio;
-        return this;
+        this.idEnvio = idEnvio; return this;
     }
-
     public EnvioBuilder origen(Direccion origen) {
-        this.origen = origen;
-        return this;
+        this.origen = origen; return this;
     }
 
     public EnvioBuilder destino(Direccion destino) {
-        this.destino = destino;
-        return this;
+        this.destino = destino; return this;
     }
 
     public EnvioBuilder peso(double peso) {
-        this.peso = peso;
-        return this;
+        this.peso = peso; return this;
     }
 
     public EnvioBuilder largo(double largo) {
-        this.largo = largo;
-        return this;
+        this.largo = largo; return this;
     }
 
     public EnvioBuilder ancho(double ancho) {
-        this.ancho = ancho;
-        return this;
+        this.ancho = ancho; return this;
     }
 
     public EnvioBuilder alto(double alto) {
-        this.alto = alto;
-        return this;
+        this.alto = alto; return this;
     }
 
     public EnvioBuilder costo(double costo) {
-        this.costo = costo;
-        return this;
+        this.costo = costo; return this;
     }
 
     public EnvioBuilder fechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-        return this;
+        this.fechaCreacion = fechaCreacion; return this;
     }
 
     public EnvioBuilder fechaEstimadaEntrega(LocalDate fechaEstimadaEntrega) {
-        this.fechaEstimadaEntrega = fechaEstimadaEntrega;
-        return this;
+        this.fechaEstimadaEntrega = fechaEstimadaEntrega; return this;
     }
 
     public EnvioBuilder estado(EstadoEnvio estado) {
-        this.estado = estado;
-        return this;
+        this.estado = estado; return this;
     }
 
     public EnvioBuilder repartidor(Repartidor repartidor) {
-        this.repartidor = repartidor;
-        return this;
+        this.repartidor = repartidor; return this;
     }
 
     public EnvioBuilder usuario(Usuario usuario) {
-        this.usuario = usuario;
-        return this;
+        this.usuario = usuario; return this;
     }
 
     public EnvioBuilder listaServiciosAdicionales(List<ServicioAdicional> listaServiciosAdicionales) {
-        this.listaServiciosAdicionales = listaServiciosAdicionales;
-        return this;
+        this.listaServiciosAdicionales = listaServiciosAdicionales; return this;
     }
 
     public EnvioBuilder listaIncidencias(List<Incidencia> listaIncidencias) {
-        this.listaIncidencias = listaIncidencias;
-        return this;
+        this.listaIncidencias = listaIncidencias; return this;
     }
 
     public EnvioBuilder from(Envio e) {
@@ -115,7 +99,6 @@ public class EnvioBuilder {
         this.listaIncidencias = e.getListaIncidencias();
         return this;
     }
-
 
     public Envio build() {
         Envio envio = new Envio(

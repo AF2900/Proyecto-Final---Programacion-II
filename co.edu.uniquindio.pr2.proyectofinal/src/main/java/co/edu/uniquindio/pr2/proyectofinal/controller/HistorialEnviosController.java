@@ -7,7 +7,6 @@ import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarCSV;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarPDF;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.Exportador;
-import co.edu.uniquindio.pr2.proyectofinal.services.IExportarStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

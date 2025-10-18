@@ -58,7 +58,7 @@
                         <TextField fx:id="txtTelefono" prefWidth="400"
                                    GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
-                        <Label text="Password:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
+                        <Label text="Contraseña:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
                                GridPane.rowIndex="4" GridPane.columnIndex="0" />
                         <TextField fx:id="txtPassword" prefWidth="400"
                                    GridPane.rowIndex="4" GridPane.columnIndex="1" />
@@ -94,7 +94,7 @@
                             <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150" />
                             <TableColumn fx:id="colCedula" text="Cédula" prefWidth="150" />
                             <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="150" />
-                            <TableColumn fx:id="colPassword" text="Password" prefWidth="120" />
+                            <TableColumn fx:id="colPassword" text="Contraseña" prefWidth="120" />
                             <TableColumn fx:id="colDisponibilidad" text="Disponibilidad" prefWidth="150" />
                         </columns>
                     </TableView>

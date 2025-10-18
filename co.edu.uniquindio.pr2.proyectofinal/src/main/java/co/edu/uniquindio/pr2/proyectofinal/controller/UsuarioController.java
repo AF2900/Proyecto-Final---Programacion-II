@@ -1,5 +1,6 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
+import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import co.edu.uniquindio.pr2.proyectofinal.builder.UsuarioBuilder;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ public class UsuarioController {
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
+    @FXML private PasswordField txtPassword;
     @FXML private Button btnAgregarUsuario;
     @FXML private Button btnActualizarUsuario;
     @FXML private Button btnEliminarUsuario;
@@ -23,26 +25,27 @@ public class UsuarioController {
     @FXML private TableColumn<Usuario, String> colNombre;
     @FXML private TableColumn<Usuario, String> colCorreo;
     @FXML private TableColumn<Usuario, String> colTelefono;
+    @FXML private TableColumn<Usuario, String> colPassword;
 
     private ObservableList<Usuario> listaUsuarios;
+    private final ModelFactory modelFactory = ModelFactory.getInstance();
 
     @FXML
     public void initialize() {
-        listaUsuarios = FXCollections.observableArrayList();
-
+        listaUsuarios = FXCollections.observableArrayList(modelFactory.getEmpresaLogistica().getUsuarios());
         colIdUsuario.setCellValueFactory(new PropertyValueFactory<>("idUsuario"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         tablaUsuarios.setItems(listaUsuarios);
-
         tablaUsuarios.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
                 txtIdUsuario.setText(newSel.getIdUsuario());
                 txtNombre.setText(newSel.getNombre());
                 txtCorreo.setText(newSel.getCorreo());
                 txtTelefono.setText(newSel.getTelefono());
+                txtPassword.setText(newSel.getPassword());
             }
         });
     }
@@ -50,26 +53,28 @@ public class UsuarioController {
     @FXML
     private void OnAgregarUsuario() {
         if (camposVacios()) {
-            mostrarAlerta("Error", "Todos los campos son obligatorios.");
+            mostrarAlerta("Error", "Debe llenar todos los campos");
             return;
         }
-
+        if (!correoValido(txtCorreo.getText())) {
+            mostrarAlerta("Error", "Ingrese un correo válido.");
+            return;
+        }
         String id = txtIdUsuario.getText();
         boolean existe = listaUsuarios.stream().anyMatch(u -> u.getIdUsuario().equals(id));
         if (existe) {
             mostrarAlerta("Error", "Ya existe un usuario con el ID: " + id);
             return;
         }
-
         Usuario u = new UsuarioBuilder()
                 .idUsuario(txtIdUsuario.getText())
                 .nombre(txtNombre.getText())
                 .correo(txtCorreo.getText())
                 .telefono(txtTelefono.getText())
-                .password("1234")
+                .password(txtPassword.getText())
                 .build();
-
         listaUsuarios.add(u);
+        modelFactory.getEmpresaLogistica().getUsuarios().add(u);
         tablaUsuarios.refresh();
         OnLimpiarCampos();
         mostrarInfo("Usuario agregado correctamente.");
@@ -79,15 +84,17 @@ public class UsuarioController {
     private void OnActualizarUsuario() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
-            mostrarAlerta("Error", "Debe seleccionar un usuario para actualizar.");
+            mostrarAlerta("Error", "Debe seleccionar un usuario para actualizar");
             return;
         }
-
         if (camposVacios()) {
-            mostrarAlerta("Error", "Todos los campos son obligatorios para actualizar.");
+            mostrarAlerta("Error", "Todos los campos son obligatorios");
             return;
         }
-
+        if (!correoValido(txtCorreo.getText())) {
+            mostrarAlerta("Error", "Ingrese un correo válido.");
+            return;
+        }
         String nuevoId = txtIdUsuario.getText();
         if (!nuevoId.equals(seleccionado.getIdUsuario())) {
             boolean idExiste = listaUsuarios.stream()
@@ -97,12 +104,11 @@ public class UsuarioController {
                 return;
             }
         }
-
         seleccionado.setIdUsuario(nuevoId);
         seleccionado.setNombre(txtNombre.getText());
         seleccionado.setCorreo(txtCorreo.getText());
         seleccionado.setTelefono(txtTelefono.getText());
-
+        seleccionado.setPassword(txtPassword.getText());
         tablaUsuarios.refresh();
         OnLimpiarCampos();
         mostrarInfo("Usuario actualizado correctamente.");
@@ -112,10 +118,9 @@ public class UsuarioController {
     private void OnEliminarUsuario() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
-            mostrarAlerta("Error", "Debe seleccionar un usuario para eliminar.");
+            mostrarAlerta("Error", "Debe seleccionar un usuario para eliminar");
             return;
         }
-
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Confirmar eliminación");
         confirmacion.setHeaderText(null);
@@ -123,6 +128,7 @@ public class UsuarioController {
         confirmacion.showAndWait().ifPresent(respuesta -> {
             if (respuesta == ButtonType.OK) {
                 listaUsuarios.remove(seleccionado);
+                modelFactory.getEmpresaLogistica().getUsuarios().remove(seleccionado);
                 OnLimpiarCampos();
                 mostrarInfo("Usuario eliminado correctamente.");
             }
@@ -135,6 +141,7 @@ public class UsuarioController {
         txtNombre.clear();
         txtCorreo.clear();
         txtTelefono.clear();
+        txtPassword.clear();
         tablaUsuarios.getSelectionModel().clearSelection();
     }
 
@@ -142,7 +149,12 @@ public class UsuarioController {
         return txtIdUsuario.getText().isEmpty() ||
                 txtNombre.getText().isEmpty() ||
                 txtCorreo.getText().isEmpty() ||
-                txtTelefono.getText().isEmpty();
+                txtTelefono.getText().isEmpty() ||
+                txtPassword.getText().isEmpty();
+    }
+
+    private boolean correoValido(String correo) {
+        return correo.contains("@");
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

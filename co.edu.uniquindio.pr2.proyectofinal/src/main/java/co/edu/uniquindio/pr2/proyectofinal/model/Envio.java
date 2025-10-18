@@ -1,5 +1,6 @@
 package co.edu.uniquindio.pr2.proyectofinal.model;
 
+import co.edu.uniquindio.pr2.proyectofinal.observer.ObserverEnvio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class Envio {
     private List<ServicioAdicional> listaServiciosAdicionales;
     private List<Incidencia> listaIncidencias;
 
+    private final List<ObserverEnvio> observers = new ArrayList<>();
+
     public Envio(String idEnvio,
                  Direccion origen,
                  Direccion destino,
@@ -39,91 +42,12 @@ public class Envio {
         this.largo = largo;
         this.ancho = ancho;
         this.alto = alto;
+        this.costo = 0;
         this.fechaCreacion = fechaCreacion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.estado = estado;
         this.listaServiciosAdicionales = new ArrayList<>();
         this.listaIncidencias = new ArrayList<>();
-    }
-
-    public String getIdEnvio() {
-        return idEnvio;
-    }
-
-    public void setIdEnvio(String idEnvio) {
-        this.idEnvio = idEnvio;
-    }
-
-    public Direccion getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(Direccion origen) {
-        this.origen = origen;
-    }
-
-    public Direccion getDestino() {
-        return destino;
-    }
-
-    public void setDestino(Direccion destino) {
-        this.destino = destino;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public double getLargo() {
-        return largo;
-    }
-
-    public void setLargo(double largo) {
-        this.largo = largo;
-    }
-
-    public double getAncho() {
-        return ancho;
-    }
-
-    public void setAncho(double ancho) {
-        this.ancho = ancho;
-    }
-
-    public double getAlto() {
-        return alto;
-    }
-
-    public void setAlto(double alto) {
-        this.alto = alto;
-    }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public LocalDate getFechaEstimadaEntrega() {
-        return fechaEstimadaEntrega;
-    }
-
-    public void setFechaEstimadaEntrega(LocalDate fechaEstimadaEntrega) {
-        this.fechaEstimadaEntrega = fechaEstimadaEntrega;
     }
 
     public EstadoEnvio getEstado() {
@@ -132,6 +56,21 @@ public class Envio {
 
     public void setEstado(EstadoEnvio estado) {
         this.estado = estado;
+        notificarObservers();
+    }
+
+    public void agregarObserver(ObserverEnvio observer) {
+        observers.add(observer);
+    }
+
+    public void eliminarObserver(ObserverEnvio observer) {
+        observers.remove(observer);
+    }
+
+    private void notificarObservers() {
+        for (ObserverEnvio observer : observers) {
+            observer.actualizar(this, this.estado);
+        }
     }
 
     public Repartidor getRepartidor() {
@@ -164,6 +103,50 @@ public class Envio {
 
     public void setListaIncidencias(List<Incidencia> listaIncidencias) {
         this.listaIncidencias = listaIncidencias;
+    }
+
+    public String getIdEnvio() {
+        return idEnvio;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+
+    public Direccion getOrigen() {
+        return origen;
+    }
+
+    public Direccion getDestino() {
+        return destino;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public LocalDate getFechaEstimadaEntrega() {
+        return fechaEstimadaEntrega;
+    }
+
+    public double getLargo() {
+        return largo;
+    }
+
+    public double getAncho() {
+        return ancho;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public double getAlto() {
+        return alto;
     }
 
     @Override

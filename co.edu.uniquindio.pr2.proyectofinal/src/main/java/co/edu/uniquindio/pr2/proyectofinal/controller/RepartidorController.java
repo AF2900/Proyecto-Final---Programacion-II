@@ -42,29 +42,29 @@ public class RepartidorController {
 
     @FXML
     void OnAgregarRepartidor(ActionEvent event) {
-        if (camposValidos()) {
-            String id = txtIdRepartidor.getText();
-            if (buscarRepartidorPorId(id) != null) {
-                mostrarAlerta("Error", "Ya existe un repartidor con ese ID.", Alert.AlertType.ERROR);
-                return;
-            }
+        if (!camposValidos()) return;
 
-            Repartidor nuevo = new RepartidorBuilder()
-                    .idRepartidor(id)
-                    .nombre(txtNombre.getText())
-                    .telefono(txtTelefono.getText())
-                    .cedula(txtCedula.getText())
-                    .password(txtPassword.getText())
-                    .disponibilidadRepartidor(cbDisponibilidad.getValue())
-                    .zonaCobertura("No definida")
-                    .build();
-
-            modelFactory.getEmpresaLogistica().getRepartidores().add(nuevo);
-            listaRepartidores.add(nuevo);
-            limpiarCampos();
-
-            mostrarAlerta("Éxito", "Repartidor agregado correctamente.", Alert.AlertType.INFORMATION);
+        String id = txtIdRepartidor.getText();
+        if (buscarRepartidorPorId(id) != null) {
+            mostrarAlerta("Error", "Ya existe un repartidor con ese ID.", Alert.AlertType.ERROR);
+            return;
         }
+
+        Repartidor nuevo = new RepartidorBuilder()
+                .idRepartidor(id)
+                .nombre(txtNombre.getText())
+                .telefono(txtTelefono.getText())
+                .cedula(txtCedula.getText())
+                .password(txtPassword.getText())
+                .disponibilidadRepartidor(cbDisponibilidad.getValue())
+                .zonaCobertura("No definida")
+                .build();
+
+        modelFactory.getEmpresaLogistica().getRepartidores().add(nuevo);
+        listaRepartidores.add(nuevo);
+        limpiarCampos();
+
+        mostrarAlerta("Éxito", "Repartidor agregado correctamente.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -75,23 +75,23 @@ public class RepartidorController {
             return;
         }
 
-        if (camposValidos()) {
-            seleccionado.setNombre(txtNombre.getText());
-            seleccionado.setCedula(txtCedula.getText());
-            seleccionado.setTelefono(txtTelefono.getText());
-            seleccionado.setPassword(txtPassword.getText());
-            seleccionado.setDisponibilidadRepartidor(cbDisponibilidad.getValue());
+        if (!camposValidos()) return;
 
-            tablaRepartidores.refresh();
-            mostrarAlerta("Éxito", "Repartidor actualizado correctamente.", Alert.AlertType.INFORMATION);
-        }
+        seleccionado.setNombre(txtNombre.getText());
+        seleccionado.setCedula(txtCedula.getText());
+        seleccionado.setTelefono(txtTelefono.getText());
+        seleccionado.setPassword(txtPassword.getText());
+        seleccionado.setDisponibilidadRepartidor(cbDisponibilidad.getValue());
+
+        tablaRepartidores.refresh();
+        mostrarAlerta("Éxito", "Repartidor actualizado correctamente.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void OnEliminarRepartidor(ActionEvent event) {
         Repartidor seleccionado = tablaRepartidores.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
-            mostrarAlerta("Advertencia", "Debe seleccionar un repartidor para eliminar.", Alert.AlertType.WARNING);
+            mostrarAlerta("Error", "Debe seleccionar un repartidor para eliminar", Alert.AlertType.ERROR);
             return;
         }
 
