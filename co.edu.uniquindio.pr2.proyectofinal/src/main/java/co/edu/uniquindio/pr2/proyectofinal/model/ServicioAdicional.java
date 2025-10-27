@@ -3,11 +3,11 @@ package co.edu.uniquindio.pr2.proyectofinal.model;
 public class ServicioAdicional {
 
     private String idServicioAdd;
-    private String tipoServicio;
+    private TipoServicio tipoServicio;
     private double costoServicioAdd;
     private Envio envioAsociado;
 
-    public ServicioAdicional(String idServicioAdd, String tipoServicio, double costoServicioAdd) {
+    public ServicioAdicional(String idServicioAdd, TipoServicio tipoServicio, double costoServicioAdd) {
         this.idServicioAdd = idServicioAdd;
         this.tipoServicio = tipoServicio;
         this.costoServicioAdd = costoServicioAdd;
@@ -21,11 +21,11 @@ public class ServicioAdicional {
         this.idServicioAdd = idServicioAdd;
     }
 
-    public String getTipoServicio() {
+    public TipoServicio getTipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(String tipoServicio) {
+    public void setTipoServicio(TipoServicio tipoServicio) {
         this.tipoServicio = tipoServicio;
     }
 
@@ -49,7 +49,7 @@ public class ServicioAdicional {
     public String toString() {
         return "ServicioAdicional{" +
                 "idServicioAdd='" + idServicioAdd + '\'' +
-                ", tipoServicio='" + tipoServicio + '\'' +
+                ", tipoServicio=" + tipoServicio +
                 ", costoServicioAdd=" + costoServicioAdd +
                 ", envioAsociado=" + (envioAsociado != null ? envioAsociado.getIdEnvio() : "N/A") +
                 '}';

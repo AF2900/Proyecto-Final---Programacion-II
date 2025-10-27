@@ -3,6 +3,8 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
+import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
+import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarCSV;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarPDF;
@@ -24,6 +26,8 @@ public class HistorialEnviosController {
     @FXML private TableColumn<Envio, String> colFechaCreacion;
     @FXML private TableColumn<Envio, String> colEntrega;
     @FXML private TableColumn<Envio, String> colCosto;
+    @FXML private TableColumn<Envio, String> colIncidencias;
+    @FXML private TableColumn<Envio, String> colServicios;
     @FXML private ComboBox<String> estadoCombo;
     @FXML private TextField buscarField;
     @FXML private Button filtrarBtn;
@@ -54,6 +58,26 @@ public class HistorialEnviosController {
                 new javafx.beans.property.SimpleStringProperty(c.getValue().getFechaEstimadaEntrega().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
         colCosto.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty("$" + String.format("%.2f", c.getValue().getCosto())));
 
+        colIncidencias.setCellValueFactory(c -> {
+            List<Incidencia> incidencias = c.getValue().getListaIncidencias();
+            String texto = incidencias.isEmpty()
+                    ? "Ninguna"
+                    : incidencias.stream()
+                    .map(i -> i.getDescripcion() + " (" + i.getEstadoIncidencia() + ")")
+                    .collect(Collectors.joining(", "));
+            return new javafx.beans.property.SimpleStringProperty(texto);
+        });
+
+        colServicios.setCellValueFactory(c -> {
+            List<ServicioAdicional> servicios = c.getValue().getListaServiciosAdicionales();
+            String texto = servicios.isEmpty()
+                    ? "Ninguno"
+                    : servicios.stream()
+                    .map(s -> s.getTipoServicio() + " ($" + String.format("%.0f", s.getCostoServicioAdd()) + ")")
+                    .collect(Collectors.joining(", "));
+            return new javafx.beans.property.SimpleStringProperty(texto);
+        });
+
         tablaEnvios.setItems(listaEnvios);
         estadoCombo.getItems().add("Todos");
         for (EstadoEnvio e : EstadoEnvio.values()) {
@@ -79,22 +103,12 @@ public class HistorialEnviosController {
     private void exportarPDF() {
         exportador.setEstrategia(new ExportarPDF());
         exportador.ejecutarExportacion(tablaEnvios.getItems());
-        mostrarAlerta("Exportación", "Historial exportado en formato PDF");
     }
 
     @FXML
     private void exportarCSV() {
         exportador.setEstrategia(new ExportarCSV());
         exportador.ejecutarExportacion(tablaEnvios.getItems());
-        mostrarAlerta("Exportación", "Historial exportado en formato CSV");
-    }
-
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
     }
 
     @FXML

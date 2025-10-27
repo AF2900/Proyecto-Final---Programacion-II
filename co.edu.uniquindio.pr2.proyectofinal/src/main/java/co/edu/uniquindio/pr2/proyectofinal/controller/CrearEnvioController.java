@@ -10,36 +10,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class CrearEnvioController {
 
-    @FXML
-    private TextField txtOrigen;
-    @FXML
-    private TextField txtDestino;
-    @FXML
-    private TextField txtPeso;
-    @FXML
-    private TextField txtVolumen;
-    @FXML
-    private ChoiceBox<String> cbPrioridad;
-    @FXML
-    private ChoiceBox<MetodoPago> cbMetodoPago;
-    @FXML
-    private CheckBox cbSeguro;
-    @FXML
-    private CheckBox cbFragil;
-    @FXML
-    private CheckBox cbFirma;
-    @FXML
-    private Label lblEstado;
-    @FXML
-    private Button btnConfirmar;
-    @FXML
-    private Button btnVolver;
+    @FXML private TextField txtOrigen;
+    @FXML private TextField txtDestino;
+    @FXML private TextField txtPeso;
+    @FXML private TextField txtVolumen;
+    @FXML private ChoiceBox<String> cbPrioridad;
+    @FXML private ChoiceBox<MetodoPago> cbMetodoPago;
+    @FXML private CheckBox cbSeguro;
+    @FXML private CheckBox cbFragil;
+    @FXML private CheckBox cbFirma;
+    @FXML private Label lblEstado;
+    @FXML private Button btnConfirmar;
+    @FXML private Button btnVolver;
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
 
@@ -63,78 +49,48 @@ public class CrearEnvioController {
                 return;
             }
 
-            double peso, volumen;
-            try {
-                peso = Double.parseDouble(pesoTexto);
-                volumen = Double.parseDouble(volumenTexto);
-            } catch (NumberFormatException e) {
-                mostrarAlerta("Error de formato", "Peso y volumen deben ser valores numéricos.");
-                return;
-            }
+            double peso = Double.parseDouble(pesoTexto);
+            double volumen = Double.parseDouble(volumenTexto);
 
-            int codigo = new Random().nextInt(90000) + 10000;
-            String idEnvio = String.valueOf(codigo);
+            String idEnvio = String.valueOf(new Random().nextInt(90000) + 10000);
 
-            Direccion origen = new DireccionBuilder()
-                    .idDireccion(UUID.randomUUID().toString())
-                    .calle(origenTexto)
-                    .build();
-
-            Direccion destino = new DireccionBuilder()
-                    .idDireccion(UUID.randomUUID().toString())
-                    .calle(destinoTexto)
-                    .build();
+            Direccion origen = new DireccionBuilder().idDireccion(UUID.randomUUID().toString()).calle(origenTexto).build();
+            Direccion destino = new DireccionBuilder().idDireccion(UUID.randomUUID().toString()).calle(destinoTexto).build();
 
             LocalDate fechaCreacion = LocalDate.now();
             LocalDate fechaEstimada;
             EstadoEnvio estadoEnvio;
 
             switch (prioridad) {
-                case "Alta" -> {
-                    fechaEstimada = fechaCreacion.plusDays(1);
-                    estadoEnvio = EstadoEnvio.EN_CAMINO;
-                }
-                case "Urgente" -> {
-                    fechaEstimada = fechaCreacion;
-                    estadoEnvio = EstadoEnvio.ENTREGADO;
-                }
-                default -> {
-                    fechaEstimada = fechaCreacion.plusDays(2);
-                    estadoEnvio = EstadoEnvio.PENDIENTE;
-                }
+                case "Alta" -> { fechaEstimada = fechaCreacion.plusDays(1); estadoEnvio = EstadoEnvio.EN_CAMINO; }
+                case "Urgente" -> { fechaEstimada = fechaCreacion; estadoEnvio = EstadoEnvio.ENTREGADO; }
+                default -> { fechaEstimada = fechaCreacion.plusDays(2); estadoEnvio = EstadoEnvio.PENDIENTE; }
             }
 
             double lado = Math.cbrt(volumen);
-            double largo = Math.round(lado * 100.0) / 100.0;
-            double ancho = Math.round(lado * 100.0) / 100.0;
-            double alto = Math.round(lado * 100.0) / 100.0;
+            double dimension = Math.round(lado * 100.0) / 100.0;
 
-            Envio envio = new Envio(
-                    idEnvio,
-                    origen,
-                    destino,
-                    peso,
-                    largo,
-                    ancho,
-                    alto,
-                    fechaCreacion,
-                    fechaEstimada,
-                    estadoEnvio
-            );
-
+            Envio envio = new Envio(idEnvio, origen, destino, peso, dimension, dimension, dimension, fechaCreacion, fechaEstimada, estadoEnvio);
             double costoBase = (peso * 0.5) + (volumen * 0.02);
-            double costo;
-            switch (prioridad) {
-                case "Alta" -> costo = costoBase * 1.4;
-                case "Urgente" -> costo = costoBase * 1.8;
-                default -> costo = costoBase;
-            }
+            double costo = switch (prioridad) {
+                case "Alta" -> costoBase * 1.4;
+                case "Urgente" -> costoBase * 1.8;
+                default -> costoBase;
+            };
             envio.setCosto(costo);
+
+            if (new Random().nextDouble() < 0.2) {
+                EstadoIncidencia estadoRandom = EstadoIncidencia.values()[new Random().nextInt(EstadoIncidencia.values().length)];
+                Incidencia incidencia = new Incidencia(UUID.randomUUID().toString(), "Incidencia automática: " + estadoRandom, LocalDate.now(), estadoRandom);
+                incidencia.setEnvioAsociado(envio);
+                envio.getListaIncidencias().add(incidencia);
+                modelFactory.getEmpresaLogistica().getIncidencias().add(incidencia);
+            }
 
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
             confirmacion.setTitle("Confirmar pago");
             confirmacion.setHeaderText(null);
-            confirmacion.setContentText("El costo del envío es: $" + String.format("%.2f", costo) + "\n¿Está seguro de que desea hacer este envío?");
+            confirmacion.setContentText("El costo del envío es: $" + String.format("%.2f", costo) + "\n¿Desea confirmar?");
             Optional<ButtonType> resultado = confirmacion.showAndWait();
             if (resultado.isEmpty() || resultado.get() != ButtonType.OK) return;
 
@@ -147,30 +103,13 @@ public class CrearEnvioController {
             }
 
             if (cbSeguro.isSelected())
-                envio.getListaServiciosAdicionales().add(
-                        new ServicioAdicionalBuilder()
-                                .idServicioAdd(UUID.randomUUID().toString())
-                                .tipoServicio("Seguro")
-                                .costoServicioAdd(10000)
-                                .build());
+                envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder().idServicioAdd(UUID.randomUUID().toString()).tipoServicio(TipoServicio.SEGURO).costoServicioAdd(10000).build());
             if (cbFragil.isSelected())
-                envio.getListaServiciosAdicionales().add(
-                        new ServicioAdicionalBuilder()
-                                .idServicioAdd(UUID.randomUUID().toString())
-                                .tipoServicio("Frágil")
-                                .costoServicioAdd(5000)
-                                .build());
+                envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder().idServicioAdd(UUID.randomUUID().toString()).tipoServicio(TipoServicio.FRAGIL).costoServicioAdd(5000).build());
             if (cbFirma.isSelected())
-                envio.getListaServiciosAdicionales().add(
-                        new ServicioAdicionalBuilder()
-                                .idServicioAdd(UUID.randomUUID().toString())
-                                .tipoServicio("Firma requerida")
-                                .costoServicioAdd(3000)
-                                .build());
+                envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder().idServicioAdd(UUID.randomUUID().toString()).tipoServicio(TipoServicio.FIRMA_REQUERIDA).costoServicioAdd(3000).build());
 
-            Optional<Repartidor> repartidorDisponible = modelFactory.getEmpresaLogistica()
-                    .getRepartidores()
-                    .stream()
+            Optional<Repartidor> repartidorDisponible = modelFactory.getEmpresaLogistica().getRepartidores().stream()
                     .filter(r -> r.getDisponibilidadRepartidor() == DisponibilidadRepartidor.DISPONIBLE)
                     .findFirst();
 
@@ -198,11 +137,10 @@ public class CrearEnvioController {
             Alert exito = new Alert(Alert.AlertType.INFORMATION);
             exito.setTitle("Éxito");
             exito.setHeaderText(null);
-            exito.setContentText("Envío pagado y creado con éxito.\nCódigo de envío: " + idEnvio);
+            exito.setContentText("Envío creado exitosamente.\nCódigo: " + idEnvio);
             exito.showAndWait();
 
         } catch (Exception e) {
-            e.printStackTrace();
             mostrarAlerta("Error", "Ocurrió un error al crear el envío.");
         }
     }

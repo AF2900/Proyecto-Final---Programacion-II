@@ -2,11 +2,12 @@ package co.edu.uniquindio.pr2.proyectofinal.builder;
 
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
+import co.edu.uniquindio.pr2.proyectofinal.model.TipoServicio;
 
 public class ServicioAdicionalBuilder {
 
     private String idServicioAdd;
-    private String tipoServicio;
+    private TipoServicio tipoServicio;
     private double costoServicioAdd;
     private Envio envioAsociado;
 
@@ -15,7 +16,7 @@ public class ServicioAdicionalBuilder {
         return this;
     }
 
-    public ServicioAdicionalBuilder tipoServicio(String tipoServicio) {
+    public ServicioAdicionalBuilder tipoServicio(TipoServicio tipoServicio) {
         this.tipoServicio = tipoServicio;
         return this;
     }

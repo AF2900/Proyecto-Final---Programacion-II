@@ -8,7 +8,6 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.UsuarioMenuController">
     <top>
-        <!-- Header -->
         <HBox alignment="CENTER_LEFT" prefHeight="70.0" style="-fx-background-color: #2c3e50; -fx-padding: 0 20;">
             <children>
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -37,15 +36,13 @@
             <content>
                 <VBox spacing="20.0" style="-fx-padding: 30;">
                     <children>
-                        <!-- Welcome Section -->
                         <VBox spacing="10.0">
                             <children>
-                                <Label fx:id="welcomeLabel" text="¡Bienvenido de vuelta!" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+                                <Label fx:id="welcomeLabel" text="¡Bienvenid@ de vuelta!" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                 <Label text="Gestiona tus envíos de manera rápida y sencilla" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;" />
                             </children>
                         </VBox>
 
-                        <!-- Quick Actions -->
                         <VBox spacing="15.0">
                             <children>
                                 <Label text="Acciones Rápidas" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
@@ -80,7 +77,6 @@
                             </children>
                         </VBox>
 
-                        <!-- Recent Shipments -->
                         <VBox spacing="15.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT">
@@ -92,14 +88,12 @@
                                 </HBox>
                                 <VBox fx:id="recentShipmentsContainer" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
                                     <children>
-                                        <!-- Dynamic content will be loaded here -->
                                         <Label fx:id="noShipmentsLabel" text="No tienes envíos recientes" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" />
                                     </children>
                                 </VBox>
                             </children>
                         </VBox>
 
-                        <!-- Quick Track Section -->
                         <VBox spacing="15.0">
                             <children>
                                 <Label text="Rastreo Rápido" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
@@ -112,7 +106,6 @@
                             </children>
                         </VBox>
 
-                        <!-- Statistics Cards -->
                         <VBox spacing="15.0">
                             <children>
                                 <Label text="Resumen de Actividad" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />

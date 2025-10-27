@@ -3,14 +3,13 @@ package co.edu.uniquindio.pr2.proyectofinal.model;
 import java.time.LocalDate;
 
 public class Incidencia {
-
     private String idIncidencia;
     private String descripcion;
     private LocalDate fecha;
-    private String estadoIncidencia;
+    private EstadoIncidencia estadoIncidencia;
     private Envio envioAsociado;
 
-    public Incidencia(String idIncidencia, String descripcion, LocalDate fecha, String estadoIncidencia) {
+    public Incidencia(String idIncidencia, String descripcion, LocalDate fecha, EstadoIncidencia estadoIncidencia) {
         this.idIncidencia = idIncidencia;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -41,11 +40,11 @@ public class Incidencia {
         this.fecha = fecha;
     }
 
-    public String getEstadoIncidencia() {
+    public EstadoIncidencia getEstadoIncidencia() {
         return estadoIncidencia;
     }
 
-    public void setEstadoIncidencia(String estadoIncidencia) {
+    public void setEstadoIncidencia(EstadoIncidencia estadoIncidencia) {
         this.estadoIncidencia = estadoIncidencia;
     }
 
@@ -63,7 +62,7 @@ public class Incidencia {
                 "idIncidencia='" + idIncidencia + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", fecha=" + fecha +
-                ", estadoIncidencia='" + estadoIncidencia + '\'' +
+                ", estadoIncidencia=" + estadoIncidencia +
                 ", envioAsociado=" + (envioAsociado != null ? envioAsociado.getIdEnvio() : "N/A") +
                 '}';
     }

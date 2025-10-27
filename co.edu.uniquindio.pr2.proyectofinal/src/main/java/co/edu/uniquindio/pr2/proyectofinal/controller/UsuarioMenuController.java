@@ -4,6 +4,8 @@ import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
+import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
+import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +43,7 @@ public class UsuarioMenuController {
     private void initialize() {
         Usuario usuario = modelFactory.getUsuarioActual();
         if (usuario != null) {
-            welcomeLabel.setText("Bienvenido " + usuario.getNombre());
+            welcomeLabel.setText("Bienvenid@ " + usuario.getNombre());
             cargarEnviosRecientes(usuario);
             actualizarResumenEnvios(usuario);
         } else {
@@ -178,28 +180,39 @@ public class UsuarioMenuController {
             return;
         }
 
-        String resumen = String.format(
-                "Código de Envío: %s\n" +
-                        "Estado: %s\n" +
-                        "Costo: $%.2f\n" +
-                        "Peso: %.2f kg\n" +
-                        "Origen: %s\n" +
-                        "Destino: %s\n" +
-                        "Fecha de Creación: %s\n" +
-                        "Fecha Estimada de Entrega: %s\n" +
-                        "Repartidor: %s\n",
-                envio.getIdEnvio(),
-                envio.getEstado(),
-                envio.getCosto(),
-                envio.getPeso(),
-                envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado",
-                envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado",
-                envio.getFechaCreacion() != null ? envio.getFechaCreacion().toString() : "N/A",
-                envio.getFechaEstimadaEntrega() != null ? envio.getFechaEstimadaEntrega().toString() : "N/A",
-                envio.getRepartidor() != null ? envio.getRepartidor().getNombre() : "No asignado"
-        );
+        StringBuilder resumen = new StringBuilder();
+        resumen.append("Código de Envío: ").append(envio.getIdEnvio()).append("\n")
+                .append("Estado: ").append(envio.getEstado()).append("\n")
+                .append(String.format("Costo: $%.2f\n", envio.getCosto()))
+                .append(String.format("Peso: %.2f kg\n", envio.getPeso()))
+                .append("Origen: ").append(envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado").append("\n")
+                .append("Destino: ").append(envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado").append("\n")
+                .append("Fecha de Creación: ").append(envio.getFechaCreacion() != null ? envio.getFechaCreacion() : "N/A").append("\n")
+                .append("Fecha Estimada de Entrega: ").append(envio.getFechaEstimadaEntrega() != null ? envio.getFechaEstimadaEntrega() : "N/A").append("\n")
+                .append("Repartidor: ").append(envio.getRepartidor() != null ? envio.getRepartidor().getNombre() : "No asignado").append("\n\n");
 
-        mostrarAlerta("Resumen del envío", resumen);
+        resumen.append("Incidencias:\n");
+        if (envio.getListaIncidencias().isEmpty()) {
+            resumen.append("   - Ninguna\n\n");
+        } else {
+            for (Incidencia i : envio.getListaIncidencias()) {
+                resumen.append("   - ").append(i.getDescripcion())
+                        .append(" (").append(i.getEstadoIncidencia()).append(")\n");
+            }
+            resumen.append("\n");
+        }
+
+        resumen.append("Servicios Adicionales:\n");
+        if (envio.getListaServiciosAdicionales() == null || envio.getListaServiciosAdicionales().isEmpty()) {
+            resumen.append("   - Ninguno\n");
+        } else {
+            for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
+                resumen.append("   - ").append(s.getTipoServicio())
+                        .append(" (+$").append(String.format("%.0f", s.getCostoServicioAdd())).append(")\n");
+            }
+        }
+
+        mostrarAlerta("Resumen del envío", resumen.toString());
     }
 
     @FXML

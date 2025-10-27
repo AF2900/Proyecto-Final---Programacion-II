@@ -148,7 +148,7 @@ public class ModelFactory {
 
         ServicioAdicional servicio1 = new ServicioAdicionalBuilder()
                 .idServicioAdd("S001")
-                .tipoServicio("Empaque Premium")
+                .tipoServicio(TipoServicio.FIRMA_REQUERIDA)
                 .costoServicioAdd(5000)
                 .envioAsociado(envio1)
                 .build();
@@ -159,7 +159,7 @@ public class ModelFactory {
                 .idIncidencia("I001")
                 .descripcion("Demora por condiciones climáticas")
                 .fecha(LocalDate.now())
-                .estadoIncidencia("Media")
+                .estadoIncidencia(EstadoIncidencia.SINIESTRO)
                 .envioAsociado(envio1)
                 .build();
 

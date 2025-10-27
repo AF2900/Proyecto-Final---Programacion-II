@@ -1,18 +1,15 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
-import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
+import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
+import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -53,7 +50,6 @@ public class RastrearEnvioController {
 
     private void mostrarDetallesEnvio(Envio envio) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         lblEstado.setText("Estado: " + envio.getEstado());
         aplicarColorEstado(envio.getEstado());
 
@@ -66,24 +62,33 @@ public class RastrearEnvioController {
                 .append(String.format("Peso: %.2f kg\n", envio.getPeso()))
                 .append(String.format("Dimensiones: %.2f x %.2f x %.2f cm\n", envio.getLargo(), envio.getAncho(), envio.getAlto()))
                 .append(String.format("Volumen total: %.2f cm³\n", volumen))
-                .append(String.format("Costo: $%.2f\n\n", envio.getCosto()))
-                .append("Origen: ").append(envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado").append("\n")
-                .append("Destino: ").append(envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado").append("\n\n");
+                .append(String.format("Costo: $%.2f\n\n", envio.getCosto()));
 
-        String nombreUsuario = modelFactory.getUsuarioActual() != null
-                ? modelFactory.getUsuarioActual().getNombre()
-                : (envio.getUsuario() != null ? envio.getUsuario().getNombre() : "N/A");
-
-        detalles.append("Usuario: ").append(nombreUsuario).append("\n")
-                .append("Repartidor: ").append(envio.getRepartidor() != null ? envio.getRepartidor().getNombre() : "No asignado").append("\n\n")
-                .append("Servicios adicionales:\n");
-
-        if (envio.getListaServiciosAdicionales() == null || envio.getListaServiciosAdicionales().isEmpty()) {
-            detalles.append("   - Ninguno\n");
+        detalles.append("Incidencias:\n");
+        if (envio.getListaIncidencias().isEmpty()) {
+            detalles.append("   - Ninguna\n\n");
         } else {
-            envio.getListaServiciosAdicionales().forEach(s ->
-                    detalles.append("   - ").append(s.getTipoServicio()).append("\n"));
+            for (Incidencia i : envio.getListaIncidencias()) {
+                detalles.append("   - ").append(i.getDescripcion())
+                        .append(" (").append(i.getEstadoIncidencia()).append(")\n");
+            }
+            detalles.append("\n");
         }
+
+        detalles.append("Servicios adicionales:\n");
+        if (envio.getListaServiciosAdicionales().isEmpty()) {
+            detalles.append("   - Ninguno\n\n");
+        } else {
+            for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
+                detalles.append("   - ").append(s.getTipoServicio())
+                        .append(" (+$").append(String.format("%.0f", s.getCostoServicioAdd())).append(")\n");
+            }
+            detalles.append("\n");
+        }
+
+        detalles.append("Origen: ").append(envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado").append("\n")
+                .append("Destino: ").append(envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado").append("\n\n")
+                .append("Repartidor: ").append(envio.getRepartidor() != null ? envio.getRepartidor().getNombre() : "No asignado").append("\n");
 
         txtDetalles.setText(detalles.toString());
     }

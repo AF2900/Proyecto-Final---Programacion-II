@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.GestionEnviosController"
+            prefWidth="1100" prefHeight="600">
+
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+            <children>
+                <Label text="Gestión de Envíos" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Nuevo Envío" fx:id="btnNuevoEnvio"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"
+                        onAction="#crearEnvio"/>
+                <Button text="Eliminar" fx:id="btnEliminarEnvio"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"
+                        onAction="#eliminarEnvio"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <children>
+                <HBox spacing="10">
+                    <children>
+                        <Label text="Buscar por código:"/>
+                        <TextField fx:id="txtBuscar" promptText="Ej: 12345" prefWidth="200"/>
+                        <Button text="Buscar" onAction="#buscarEnvio" style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    </children>
+                </HBox>
+
+                <TableView fx:id="tablaEnvios" editable="true" prefHeight="500">
+                    <columns>
+                        <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
+                        <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="150"/>
+                        <TableColumn fx:id="colOrigen" text="Origen" prefWidth="150"/>
+                        <TableColumn fx:id="colDestino" text="Destino" prefWidth="150"/>
+                        <TableColumn fx:id="colPeso" text="Peso" prefWidth="80"/>
+                        <TableColumn fx:id="colVolumen" text="Volumen" prefWidth="80"/>
+                        <TableColumn fx:id="colRepartidor" text="Repartidor" prefWidth="120"/>
+                        <TableColumn fx:id="colSeguro" text="Seguro" prefWidth="80"/>
+                        <TableColumn fx:id="colFragil" text="Frágil" prefWidth="80"/>
+                        <TableColumn fx:id="colFirma" text="Firma" prefWidth="80"/>
+                        <TableColumn fx:id="colEstado" text="Estado" prefWidth="100"/>
+                        <TableColumn fx:id="colIncidencias" text="Incidencias" prefWidth="150"/>
+                        <TableColumn fx:id="colFecha" text="Fecha Creación" prefWidth="120"/>
+                        <TableColumn fx:id="colEntrega" text="Entrega Estimada" prefWidth="130"/>
+                        <TableColumn fx:id="colCosto" text="Costo" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

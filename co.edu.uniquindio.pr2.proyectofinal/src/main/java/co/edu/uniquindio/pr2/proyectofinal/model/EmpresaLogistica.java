@@ -234,19 +234,19 @@ public class EmpresaLogistica implements IGestionEnvios, IGestionUsuarios, IGest
 
             if (seguro) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
                     .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
-                    .tipoServicio("Seguro")
+                    .tipoServicio(TipoServicio.SEGURO)
                     .costoServicioAdd(3000)
                     .build());
 
             if (fragil) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
                     .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
-                    .tipoServicio("Frágil")
+                    .tipoServicio(TipoServicio.FRAGIL)
                     .costoServicioAdd(2000)
                     .build());
 
             if (firma) envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder()
                     .idServicioAdd(String.format("%05d", (int)(Math.random() * 100000)))
-                    .tipoServicio("Firma requerida")
+                    .tipoServicio(TipoServicio.FIRMA_REQUERIDA)
                     .costoServicioAdd(1500)
                     .build());
 

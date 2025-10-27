@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.HistorialEnviosController"
-            prefWidth="700" prefHeight="500">
+            prefWidth="900" prefHeight="500">
 
     <top>
         <HBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
@@ -48,11 +48,13 @@
 
                 <TableView fx:id="tablaEnvios" prefHeight="400">
                     <columns>
-                        <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
-                        <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
-                        <TableColumn fx:id="colFechaCreacion" text="Fecha Creación" prefWidth="140"/>
-                        <TableColumn fx:id="colEntrega" text="Entrega Estimada" prefWidth="140"/>
-                        <TableColumn fx:id="colCosto" text="Costo" prefWidth="120"/>
+                        <TableColumn fx:id="colCodigo" text="Código" prefWidth="80"/>
+                        <TableColumn fx:id="colEstado" text="Estado" prefWidth="100"/>
+                        <TableColumn fx:id="colFechaCreacion" text="Fecha Creación" prefWidth="120"/>
+                        <TableColumn fx:id="colEntrega" text="Entrega Estimada" prefWidth="120"/>
+                        <TableColumn fx:id="colCosto" text="Costo" prefWidth="100"/>
+                        <TableColumn fx:id="colIncidencias" text="Incidencias" prefWidth="200"/>
+                        <TableColumn fx:id="colServicios" text="Servicios Adicionales" prefWidth="220"/>
                     </columns>
                 </TableView>
 

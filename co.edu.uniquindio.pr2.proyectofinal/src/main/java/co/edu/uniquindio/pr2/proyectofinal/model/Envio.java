@@ -21,7 +21,6 @@ public class Envio {
     private Usuario usuario;
     private List<ServicioAdicional> listaServiciosAdicionales;
     private List<Incidencia> listaIncidencias;
-
     private final List<ObserverEnvio> observers = new ArrayList<>();
 
     public Envio(String idEnvio,
@@ -34,7 +33,6 @@ public class Envio {
                  LocalDate fechaCreacion,
                  LocalDate fechaEstimadaEntrega,
                  EstadoEnvio estado) {
-
         this.idEnvio = idEnvio;
         this.origen = origen;
         this.destino = destino;
@@ -147,6 +145,26 @@ public class Envio {
 
     public double getAlto() {
         return alto;
+    }
+
+    public void setLargo(double largo) {
+        this.largo = largo;
+    }
+
+    public void setAncho(double ancho) {
+        this.ancho = ancho;
+    }
+
+    public void setAlto(double alto) {
+        this.alto = alto;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public void setFechaEstimadaEntrega(LocalDate fechaEstimadaEntrega) {
+        this.fechaEstimadaEntrega = fechaEstimadaEntrega;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.pr2.proyectofinal.builder;
 
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
+import co.edu.uniquindio.pr2.proyectofinal.model.EstadoIncidencia;
 import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
 import java.time.LocalDate;
 
@@ -9,7 +10,7 @@ public class IncidenciaBuilder {
     private String idIncidencia;
     private String descripcion;
     private LocalDate fecha;
-    private String estadoIncidencia;
+    private EstadoIncidencia estadoIncidencia;
     private Envio envioAsociado;
 
     public IncidenciaBuilder idIncidencia(String idIncidencia) {
@@ -27,7 +28,7 @@ public class IncidenciaBuilder {
         return this;
     }
 
-    public IncidenciaBuilder estadoIncidencia(String estadoIncidencia) {
+    public IncidenciaBuilder estadoIncidencia(EstadoIncidencia estadoIncidencia) {
         this.estadoIncidencia = estadoIncidencia;
         return this;
     }
