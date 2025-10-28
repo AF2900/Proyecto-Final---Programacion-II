@@ -4,10 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RastrearEnvioController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.RastrearEnvioViewController">
 
-    <HBox spacing="30" alignment="CENTER" prefWidth="850" prefHeight="560" style="-fx-background-color: linear-gradient(to bottom, #f9fafb, #e9eef3);"
+    <HBox spacing="30" alignment="CENTER" prefWidth="850" prefHeight="560"
+          style="-fx-background-color: linear-gradient(to bottom, #f9fafb, #e9eef3);"
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
         <padding>
             <Insets top="25" right="25" bottom="25" left="25"/>
         </padding>
@@ -31,7 +34,7 @@
         </VBox>
     </HBox>
 
-    <Button text="Volver al menú" onAction="#volverMenuUsuario"
+    <Button fx:id="btnVolver" text="Volver al menú"
             style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"
             AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10"/>
 </AnchorPane>

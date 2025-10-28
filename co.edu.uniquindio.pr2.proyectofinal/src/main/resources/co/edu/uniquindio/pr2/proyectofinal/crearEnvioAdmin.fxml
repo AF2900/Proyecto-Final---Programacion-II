@@ -7,7 +7,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.CrearEnvioAdminController"
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.CrearEnvioAdminViewController"
             prefWidth="700" prefHeight="500">
 
     <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">

@@ -10,11 +10,12 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.LoginAdminController">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.LoginAdminViewController">
 
     <center>
         <HBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;">
             <children>
+
                 <VBox alignment="CENTER" prefHeight="600.0" prefWidth="450.0"
                       style="-fx-background-color: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);">
                     <children>
@@ -85,7 +86,7 @@
                                 </VBox>
 
                                 <Button fx:id="btnIniciarSesion" text="Iniciar Sesión"
-                                        onAction="#handleLogin" maxWidth="1.7976931348623157E308" prefHeight="45.0"
+                                        maxWidth="1.7976931348623157E308" prefHeight="45.0"
                                         style="-fx-background-color: #4b6cb7; -fx-text-fill: white; -fx-background-radius: 8;
                                                -fx-font-weight: bold; -fx-font-size: 16;">
                                     <cursor><Cursor fx:constant="HAND"/></cursor>
@@ -93,7 +94,7 @@
 
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Hyperlink fx:id="linkOlvidePassword" onAction="#handleForgotPassword"
+                                        <Hyperlink fx:id="linkOlvidePassword"
                                                    text="¿Olvidaste tu contraseña?" textFill="#4b6cb7">
                                             <font><Font size="13.0"/></font>
                                         </Hyperlink>
@@ -103,14 +104,14 @@
                                                 <Label text="¿No tienes cuenta?" textFill="#7f8c8d">
                                                     <font><Font size="13.0"/></font>
                                                 </Label>
-                                                <Hyperlink fx:id="linkRegistrarse" onAction="#handleRegister"
+                                                <Hyperlink fx:id="linkRegistrarse"
                                                            text="Regístrate aquí" textFill="#4b6cb7">
                                                     <font><Font size="13.0"/></font>
                                                 </Hyperlink>
                                             </children>
                                         </HBox>
 
-                                        <Hyperlink fx:id="linkUsuario" onAction="#handleGoToUsuarioLogin"
+                                        <Hyperlink fx:id="linkUsuario"
                                                    text="Ingresar como usuario" textFill="#0066cc">
                                             <font><Font size="13.0"/></font>
                                         </Hyperlink>

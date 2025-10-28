@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.UsuarioMenuController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.UsuarioMenuViewController">
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="70.0" style="-fx-background-color: #2c3e50; -fx-padding: 0 20;">
             <children>
@@ -23,9 +23,9 @@
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
-                        <Button fx:id="profileBtn" mnemonicParsing="false" onAction="#handleProfile" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Mi Perfil" />
-                        <Button fx:id="historyBtn" mnemonicParsing="false" onAction="#handleHistory" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Historial" />
-                        <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;" text="Cerrar Sesión" />
+                        <Button fx:id="profileBtn" text="Mi Perfil" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" onAction="#handleProfile"/>
+                        <Button fx:id="historyBtn" text="Historial" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" onAction="#handleHistory"/>
+                        <Button fx:id="logoutBtn" text="Cerrar Sesión" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;" onAction="#handleLogout"/>
                     </children>
                 </HBox>
             </children>
@@ -48,28 +48,25 @@
                                 <Label text="Acciones Rápidas" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                 <HBox spacing="20.0">
                                     <children>
-                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25;" HBox.hgrow="ALWAYS">
                                             <children>
-
                                                 <Label text="Cotizar Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Calcula el costo de tu envío" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
-                                                <Button fx:id="quoteBtn" mnemonicParsing="false" onAction="#handleQuote" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Cotizar" />
+                                                <Button fx:id="quoteBtn" text="Cotizar" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" onAction="#handleQuote"/>
                                             </children>
                                         </VBox>
-                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25;" HBox.hgrow="ALWAYS">
                                             <children>
-
                                                 <Label text="Crear Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Programa tu nuevo envío" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
-                                                <Button fx:id="createBtn" mnemonicParsing="false" onAction="#handleCreateShipment" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Crear" />
+                                                <Button fx:id="createBtn" text="Crear" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" onAction="#handleCreateShipment"/>
                                             </children>
                                         </VBox>
-                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25;" HBox.hgrow="ALWAYS">
                                             <children>
-
                                                 <Label text="Rastrear Envío" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                                 <Label text="Sigue el estado de tus paquetes" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" wrapText="true" />
-                                                <Button fx:id="trackBtn" mnemonicParsing="false" onAction="#handleTrack" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Rastrear" />
+                                                <Button fx:id="trackBtn" text="Rastrear" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" onAction="#handleTrack"/>
                                             </children>
                                         </VBox>
                                     </children>
@@ -83,10 +80,10 @@
                                     <children>
                                         <Label text="Envíos Recientes" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                         <Region HBox.hgrow="ALWAYS" />
-                                        <Button fx:id="viewAllBtn" mnemonicParsing="false" onAction="#handleViewAll" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-font-size: 14px;" text="Ver todos" />
+                                        <Button fx:id="viewAllBtn" text="Ver todos" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-font-size: 14px;" onAction="#handleViewAll"/>
                                     </children>
                                 </HBox>
-                                <VBox fx:id="recentShipmentsContainer" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                <VBox fx:id="recentShipmentsContainer" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
                                     <children>
                                         <Label fx:id="noShipmentsLabel" text="No tienes envíos recientes" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-text-alignment: center;" />
                                     </children>
@@ -97,10 +94,10 @@
                         <VBox spacing="15.0">
                             <children>
                                 <Label text="Rastreo Rápido" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
-                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
                                     <children>
                                         <TextField fx:id="trackingField" promptText="Ingresa el código de rastreo" style="-fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                                        <Button fx:id="quickTrackBtn" mnemonicParsing="false" onAction="#handleQuickTrack" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" text="Rastrear" />
+                                        <Button fx:id="quickTrackBtn" text="Rastrear" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14px;" onAction="#handleQuickTrack"/>
                                     </children>
                                 </HBox>
                             </children>
@@ -111,19 +108,19 @@
                                 <Label text="Resumen de Actividad" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
                                 <HBox spacing="20.0">
                                     <children>
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="totalShipmentsLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3498db;" />
                                                 <Label text="Total Envíos" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" />
                                             </children>
                                         </VBox>
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="activeShipmentsLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #27ae60;" />
                                                 <Label text="En Tránsito" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" />
                                             </children>
                                         </VBox>
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="deliveredShipmentsLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #f39c12;" />
                                                 <Label text="Entregados" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" />

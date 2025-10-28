@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.AdminMenuController">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.AdminMenuViewController">
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="60.0"
               style="-fx-background-color: #2c3e50; -fx-padding: 0 20;">
@@ -101,7 +101,8 @@
                                 <HBox spacing="20.0">
                                     <children>
                                         <VBox alignment="CENTER" prefWidth="200.0"
-                                              style="-fx-background-color: #3498db; -fx-background-radius: 10; -fx-padding: 24;">
+                                              style="-fx-background-color: #3498db; -fx-background-radius: 10; -fx-padding: 24;"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="totalUsersLabel" text="0" textFill="WHITE">
                                                     <font>
@@ -113,7 +114,8 @@
                                         </VBox>
 
                                         <VBox alignment="CENTER" prefWidth="200.0"
-                                              style="-fx-background-color: #2ecc71; -fx-background-radius: 10; -fx-padding: 24;">
+                                              style="-fx-background-color: #2ecc71; -fx-background-radius: 10; -fx-padding: 24;"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="activeDeliveryLabel" text="0" textFill="WHITE">
                                                     <font>
@@ -125,7 +127,8 @@
                                         </VBox>
 
                                         <VBox alignment="CENTER" prefWidth="200.0"
-                                              style="-fx-background-color: #f39c12; -fx-background-radius: 10; -fx-padding: 24;">
+                                              style="-fx-background-color: #f39c12; -fx-background-radius: 10; -fx-padding: 24;"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="pendingShipmentsLabel" text="0" textFill="WHITE">
                                                     <font>
@@ -137,7 +140,8 @@
                                         </VBox>
 
                                         <VBox alignment="CENTER" prefWidth="200.0"
-                                              style="-fx-background-color: #e74c3c; -fx-background-radius: 10; -fx-padding: 24;">
+                                              style="-fx-background-color: #e74c3c; -fx-background-radius: 10; -fx-padding: 24;"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label fx:id="incidentsLabel" text="0" textFill="WHITE">
                                                     <font>
@@ -154,7 +158,8 @@
                                     <children>
                                         <VBox prefWidth="400.0"
                                               style="-fx-background-color: white; -fx-background-radius: 10;
-                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label style="-fx-padding: 15 15 0 15;"
                                                        text="Tiempos Promedio de Entrega">
@@ -175,7 +180,8 @@
 
                                         <VBox prefWidth="400.0"
                                               style="-fx-background-color: white; -fx-background-radius: 10;
-                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label style="-fx-padding: 15 15 0 15;"
                                                        text="Ingresos por Período">
@@ -200,7 +206,8 @@
                                     <children>
                                         <VBox prefWidth="400.0"
                                               style="-fx-background-color: white; -fx-background-radius: 10;
-                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label style="-fx-padding: 15 15 0 15;"
                                                        text="Servicios Adicionales Más Usados">
@@ -214,7 +221,8 @@
 
                                         <VBox prefWidth="400.0"
                                               style="-fx-background-color: white; -fx-background-radius: 10;
-                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                                              HBox.hgrow="ALWAYS">
                                             <children>
                                                 <Label style="-fx-padding: 15 15 0 15;"
                                                        text="Actividad Reciente">

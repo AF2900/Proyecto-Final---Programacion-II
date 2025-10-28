@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RegistroUsuarioController">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.RegistroUsuarioViewController">
 
     <center>
         <HBox alignment="CENTER" style="-fx-background-color: #6178df;">
@@ -54,7 +54,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Hyperlink fx:id="loginLink" onAction="#handleGoToLogin"
+                                <Hyperlink fx:id="loginLink" onAction="#irLogin"
                                            text="Inicia sesión aquí" textFill="#667eea">
                                     <font>
                                         <Font size="14.0" />
@@ -130,7 +130,7 @@
                                         </VBox>
 
                                         <Button fx:id="registerButton" text="Crear Cuenta"
-                                                onAction="#handleRegister"
+                                                onAction="#registrarUsuario"
                                                 maxWidth="1.7976931348623157E308"
                                                 style="-fx-background-color: #667eea; -fx-text-fill: white;
                                                        -fx-background-radius: 8; -fx-padding: 15;

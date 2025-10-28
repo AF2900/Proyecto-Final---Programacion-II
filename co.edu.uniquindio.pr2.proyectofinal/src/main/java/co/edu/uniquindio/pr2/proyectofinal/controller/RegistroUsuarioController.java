@@ -5,81 +5,96 @@ import co.edu.uniquindio.pr2.proyectofinal.builder.UsuarioBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RegistroUsuarioController {
 
-    @FXML private Label confirmPasswordError, emailError, nombreError, passwordError, telefonoError;
-    @FXML private PasswordField confirmPasswordField, passwordField;
-    @FXML private TextField emailField, nombreField, telefonoField;
-    @FXML private Button registerButton;
-    @FXML private Hyperlink loginLink;
-    @FXML private Hyperlink linkAdmin;
+    private final ModelFactory modelFactory = ModelFactory.getInstance();
 
-    @FXML
-    void handleRegister(ActionEvent event) {
-        String nombre = nombreField.getText().trim();
-        String correo = emailField.getText().toLowerCase();
-        String password = passwordField.getText();
-        String confirm = confirmPasswordField.getText();
-        String telefono = telefonoField.getText();
+    public boolean registrarUsuario(String nombre,
+                                    String correo,
+                                    String telefono,
+                                    String password,
+                                    String confirm,
+                                    Label nombreError,
+                                    Label emailError,
+                                    Label telefonoError,
+                                    Label passwordError,
+                                    Label confirmPasswordError) {
+        boolean valido = true;
+        nombreError.setVisible(false);
+        emailError.setVisible(false);
+        telefonoError.setVisible(false);
+        passwordError.setVisible(false);
+        confirmPasswordError.setVisible(false);
 
-        if (nombre.isBlank() || correo.isBlank() || password.isBlank() || confirm.isBlank() || telefono.isBlank()) {
-            mostrarErrorCampos(nombre, correo, password, confirm, telefono);
-            return;
+        if (nombre.isBlank()) {
+            nombreError.setText("Campo obligatorio");
+            nombreError.setVisible(true);
+            valido = false;
         }
+        if (correo.isBlank()) {
+            emailError.setText("Campo obligatorio");
+            emailError.setVisible(true);
+            valido = false;
+        }
+        if (telefono.isBlank()) {
+            telefonoError.setText("Campo obligatorio");
+            telefonoError.setVisible(true);
+            valido = false;
+        }
+        if (password.isBlank()) {
+            passwordError.setText("Campo obligatorio");
+            passwordError.setVisible(true);
+            valido = false;
+        }
+        if (confirm.isBlank()) {
+            confirmPasswordError.setText("Campo obligatorio");
+            confirmPasswordError.setVisible(true);
+            valido = false;
+        }
+
+        if (!valido) return false;
 
         if (!correo.contains("@")) {
             emailError.setText("Inserte un correo válido");
             emailError.setVisible(true);
-            return;
+            return false;
         }
 
         if (!password.equals(confirm)) {
             confirmPasswordError.setText("Las contraseñas no coinciden");
             confirmPasswordError.setVisible(true);
-            return;
+            return false;
         }
 
-        if (ModelFactory.getInstance().getEmpresaLogistica().buscarUsuarioPorCorreo(correo) != null) {
+        if (modelFactory.getEmpresaLogistica().buscarUsuarioPorCorreo(correo) != null) {
             emailError.setText("Este correo ya está registrado");
             emailError.setVisible(true);
-            return;
+            return false;
         }
 
         Usuario nuevo = new UsuarioBuilder()
-                .idUsuario("U" + (ModelFactory.getInstance().getEmpresaLogistica().getUsuarios().size() + 1))
+                .idUsuario("U" + (modelFactory.getEmpresaLogistica().getUsuarios().size() + 1))
                 .nombre(nombre)
                 .correo(correo)
                 .telefono(telefono)
                 .password(password)
                 .build();
 
-        ModelFactory.getInstance().getEmpresaLogistica().agregarUsuario(nuevo);
-        ModelFactory.getInstance().setUsuarioActual(nuevo);
+        modelFactory.getEmpresaLogistica().agregarUsuario(nuevo);
+        modelFactory.setUsuarioActual(nuevo);
 
-        new Alert(Alert.AlertType.INFORMATION, "Usuario registrado correctamente.").showAndWait();
-        handleGoToLogin(event);
+        new Alert(AlertType.INFORMATION, "Usuario registrado correctamente.").showAndWait();
+        return true;
     }
 
-    @FXML
-    void handleGoToLogin(ActionEvent event) {
-        abrirVentana("loginUsuario.fxml", "Login Usuario");
-        ((Stage) ((Control) event.getSource()).getScene().getWindow()).close();
-    }
-
-    @FXML
-    void handleGoToRegistroAdmin(ActionEvent event) {
-        abrirVentana("registroAdmin.fxml", "Registro Administrador");
-        ((Stage) ((Control) event.getSource()).getScene().getWindow()).close();
-    }
-
-    private void abrirVentana(String fxml, String titulo) {
+    public void abrirVentana(String fxml, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(LogisticaApplication.class.getResource(fxml));
             Scene scene = new Scene(loader.load());
@@ -93,11 +108,7 @@ public class RegistroUsuarioController {
         }
     }
 
-    private void mostrarErrorCampos(String n, String c, String p, String pc, String t) {
-        nombreError.setVisible(n.isBlank());
-        emailError.setVisible(c.isBlank());
-        passwordError.setVisible(p.isBlank());
-        confirmPasswordError.setVisible(pc.isBlank());
-        telefonoError.setVisible(t.isBlank());
+    public void cerrarVentana(ActionEvent event) {
+        ((Stage) ((Control) event.getSource()).getScene().getWindow()).close();
     }
 }

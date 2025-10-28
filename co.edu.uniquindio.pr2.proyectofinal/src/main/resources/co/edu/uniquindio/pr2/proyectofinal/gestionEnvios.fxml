@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.GestionEnviosController"
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.GestionEnviosViewController"
             prefWidth="1100" prefHeight="600">
 
     <top>
@@ -14,11 +14,9 @@
                 <Label text="Gestión de Envíos" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button text="Nuevo Envío" fx:id="btnNuevoEnvio"
-                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"
-                        onAction="#crearEnvio"/>
-                <Button text="Eliminar" fx:id="btnEliminarEnvio"
-                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"
-                        onAction="#eliminarEnvio"/>
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                <Button text="Eliminar" fx:id="btnEliminar"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
             </children>
         </HBox>
     </top>
@@ -30,7 +28,8 @@
                     <children>
                         <Label text="Buscar por código:"/>
                         <TextField fx:id="txtBuscar" promptText="Ej: 12345" prefWidth="200"/>
-                        <Button text="Buscar" onAction="#buscarEnvio" style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                        <Button text="Buscar" fx:id="btnBuscar"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
                     </children>
                 </HBox>
 

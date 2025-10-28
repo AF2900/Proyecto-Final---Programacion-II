@@ -6,7 +6,6 @@ import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
 import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
 import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -15,14 +14,12 @@ import java.util.List;
 
 public class RastrearEnvioController {
 
-    @FXML private ListView<Envio> listaEnvios;
-    @FXML private Label lblEstado;
-    @FXML private TextArea txtDetalles;
-
+    public ListView<Envio> listaEnvios;
+    public Label lblEstado;
+    public TextArea txtDetalles;
     private final ModelFactory modelFactory = ModelFactory.getInstance();
 
-    @FXML
-    private void initialize() {
+    public void initialize() {
         List<Envio> envios = modelFactory.getEmpresaLogistica().getEnvios();
         if (envios == null || envios.isEmpty()) {
             listaEnvios.setItems(FXCollections.observableArrayList());
@@ -35,11 +32,8 @@ public class RastrearEnvioController {
             @Override
             protected void updateItem(Envio envio, boolean empty) {
                 super.updateItem(envio, empty);
-                if (empty || envio == null) {
-                    setText(null);
-                } else {
-                    setText("Envío #" + envio.getIdEnvio() + " — Estado: " + envio.getEstado());
-                }
+                if (empty || envio == null) setText(null);
+                else setText("Envío #" + envio.getIdEnvio() + " — Estado: " + envio.getEstado());
             }
         });
 
@@ -52,7 +46,6 @@ public class RastrearEnvioController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         lblEstado.setText("Estado: " + envio.getEstado());
         aplicarColorEstado(envio.getEstado());
-
         double volumen = envio.getLargo() * envio.getAncho() * envio.getAlto();
 
         StringBuilder detalles = new StringBuilder();
@@ -69,8 +62,7 @@ public class RastrearEnvioController {
             detalles.append("   - Ninguna\n\n");
         } else {
             for (Incidencia i : envio.getListaIncidencias()) {
-                detalles.append("   - ").append(i.getDescripcion())
-                        .append(" (").append(i.getEstadoIncidencia()).append(")\n");
+                detalles.append("   - ").append(i.getDescripcion()).append(" (").append(i.getEstadoIncidencia()).append(")\n");
             }
             detalles.append("\n");
         }
@@ -80,8 +72,7 @@ public class RastrearEnvioController {
             detalles.append("   - Ninguno\n\n");
         } else {
             for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
-                detalles.append("   - ").append(s.getTipoServicio())
-                        .append(" (+$").append(String.format("%.0f", s.getCostoServicioAdd())).append(")\n");
+                detalles.append("   - ").append(s.getTipoServicio()).append(" (+$").append(String.format("%.0f", s.getCostoServicioAdd())).append(")\n");
             }
             detalles.append("\n");
         }
@@ -107,8 +98,7 @@ public class RastrearEnvioController {
         }
     }
 
-    @FXML
-    void volverMenuUsuario() {
+    public void volverMenuUsuario() {
         Stage stage = (Stage) listaEnvios.getScene().getWindow();
         stage.close();
     }

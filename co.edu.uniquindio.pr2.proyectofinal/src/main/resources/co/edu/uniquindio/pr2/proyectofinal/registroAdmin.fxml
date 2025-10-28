@@ -9,13 +9,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RegistroAdminController">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.RegistroAdminViewController">
 
     <center>
         <HBox alignment="CENTER" style="-fx-background-color: #6178df;">
             <children>
                 <VBox alignment="CENTER"
-                      style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                      style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);">
                     <children>
                         <ImageView fitHeight="120.0" fitWidth="120.0" preserveRatio="true">
                             <image>
@@ -54,8 +54,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Hyperlink fx:id="linkLogin" onAction="#handleGoToLoginAdmin"
-                                           text="Inicia sesión aquí" textFill="#667eea">
+                                <Hyperlink fx:id="linkLogin" text="Inicia sesión aquí" textFill="#667eea">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -130,7 +129,6 @@
                                         </VBox>
 
                                         <Button fx:id="registerButton" text="Crear Cuenta"
-                                                onAction="#handleRegisterAdmin"
                                                 maxWidth="1.7976931348623157E308"
                                                 style="-fx-background-color: #667eea; -fx-text-fill: white;
                                                        -fx-background-radius: 8; -fx-padding: 15;
@@ -139,6 +137,24 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Button>
+
+                                        <HBox alignment="CENTER">
+                                            <children>
+                                                <Label text="¿Deseas registrarte como usuario?" textFill="#7f8c8d">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Hyperlink fx:id="linkUsuario" text="Haz clic aquí" textFill="#667eea">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Hyperlink>
+                                            </children>
+                                            <padding>
+                                                <Insets top="10" />
+                                            </padding>
+                                        </HBox>
 
                                     </children>
                                 </VBox>

@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.CrearEnvioController">
+<?import java.lang.String?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.CrearEnvioViewController">
     <VBox spacing="15" alignment="TOP_CENTER" style="-fx-background-color: #f5f7fa;"
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
@@ -14,7 +14,7 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button text="Volver al menú" onAction="#volverMenuUsuario"
+            <Button fx:id="btnVolver" text="Volver al menú"
                     style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </HBox>
 
@@ -55,20 +55,11 @@
             </VBox>
 
             <Label text="Método de pago:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-            <ChoiceBox fx:id="cbMetodoPago" GridPane.rowIndex="6" GridPane.columnIndex="1">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Efectivo"/>
-                        <String fx:value="Tarjeta"/>
-                        <String fx:value="Transferencia"/>
-                    </FXCollections>
-                </items>
-            </ChoiceBox>
+            <ChoiceBox fx:id="cbMetodoPago" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
         </GridPane>
 
         <Label fx:id="lblEstado" text="" style="-fx-text-fill: green; -fx-font-weight: bold;" />
-
-        <Button text="Crear y pagar envío" onAction="#crearEnvio"
+        <Button fx:id="btnConfirmar" text="Crear y pagar envío"
                 style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;" />
     </VBox>
 </AnchorPane>

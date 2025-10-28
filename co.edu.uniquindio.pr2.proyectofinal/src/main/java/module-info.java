@@ -10,5 +10,6 @@ module co.edu.uniquindio.pr2.proyectofinal {
     exports co.edu.uniquindio.pr2.proyectofinal;
     exports co.edu.uniquindio.pr2.proyectofinal.controller;
     opens co.edu.uniquindio.pr2.proyectofinal.controller to javafx.fxml;
+    opens co.edu.uniquindio.pr2.proyectofinal.viewcontroller to javafx.fxml;
 
 }

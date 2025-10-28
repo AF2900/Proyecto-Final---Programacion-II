@@ -5,9 +5,11 @@ import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.Administrador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -31,7 +33,7 @@ public class LoginAdminController {
     }
 
     @FXML
-    private void handleLogin() {
+    public void handleLogin() {
         String correo = txtEmail.getText().trim();
         String password = txtPassword.getText().trim();
 
@@ -68,11 +70,16 @@ public class LoginAdminController {
     private void abrirVentana(String fxml, String titulo) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource(fxml));
-            Scene scene = new Scene(fxmlLoader.load(), 1100, 700);
+            Parent root = fxmlLoader.load();
+            StackPane stackRoot = new StackPane(root);
+            Scene scene = new Scene(stackRoot);
+            stackRoot.prefWidthProperty().bind(scene.widthProperty());
+            stackRoot.prefHeightProperty().bind(scene.heightProperty());
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(scene);
-            stage.setResizable(false);
+            stage.setMaximized(true);
+            stage.setFullScreen(false);
             stage.centerOnScreen();
             stage.show();
             Stage loginStage = (Stage) btnIniciarSesion.getScene().getWindow();

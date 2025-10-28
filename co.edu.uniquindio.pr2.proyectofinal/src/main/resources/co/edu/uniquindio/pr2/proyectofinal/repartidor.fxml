@@ -5,111 +5,71 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.pr2.proyectofinal.controller.RepartidorController"
-            prefWidth="900" prefHeight="600"
-            style="-fx-background-color: transparent;">
-    <children>
-        <BorderPane fx:id="rootPane"
-                    style="-fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);"
-                    AnchorPane.topAnchor="0.0"
-                    AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0">
+            fx:controller="co.edu.uniquindio.pr2.proyectofinal.viewcontroller.RepartidorViewController"
+            style="-fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);"
+            prefWidth="1200" prefHeight="700"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-            <top>
-                <Label text="Gestión de Repartidores"
-                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d3436;"
-                       BorderPane.alignment="CENTER">
-                    <padding>
-                        <Insets top="25" right="15" bottom="20" left="15" />
-                    </padding>
-                </Label>
-            </top>
+    <VBox alignment="TOP_CENTER" spacing="20"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <padding>
+            <Insets top="25" right="35" bottom="25" left="35" />
+        </padding>
 
-            <center>
-                <VBox alignment="TOP_CENTER" spacing="25" maxWidth="700">
-                    <padding>
-                        <Insets top="25" right="20" bottom="20" left="20" />
-                    </padding>
+        <Label text="Gestión de Repartidores"
+               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d3436;" />
 
-                    <GridPane alignment="CENTER" hgap="20" vgap="15" maxWidth="700">
-                        <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" minWidth="150" />
-                            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="400" />
-                        </columnConstraints>
+        <GridPane hgap="25" vgap="18" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150" halignment="RIGHT" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
 
-                        <Label text="ID Repartidor:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtIdRepartidor" prefWidth="400"
-                                   GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label text="ID Repartidor:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="txtIdRepartidor" GridPane.rowIndex="0" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
 
-                        <Label text="Nombre:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtNombre" prefWidth="400"
-                                   GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
 
-                        <Label text="Cédula:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtCedula" prefWidth="400"
-                                   GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            <Label text="Cédula:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="txtCedula" GridPane.rowIndex="2" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
 
-                        <Label text="Teléfono:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtTelefono" prefWidth="400"
-                                   GridPane.rowIndex="3" GridPane.columnIndex="1" />
+            <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <TextField fx:id="txtTelefono" GridPane.rowIndex="3" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
 
-                        <Label text="Contraseña:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtPassword" prefWidth="400"
-                                   GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            <Label text="Contraseña:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <TextField fx:id="txtPassword" GridPane.rowIndex="4" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
 
-                        <Label text="Disponibilidad:" style="-fx-font-size: 16px; -fx-text-fill: #2d3436;"
-                               GridPane.rowIndex="5" GridPane.columnIndex="0" />
-                        <ComboBox fx:id="cbDisponibilidad" prefWidth="400"
-                                  GridPane.rowIndex="5" GridPane.columnIndex="1" />
-                    </GridPane>
+            <Label text="Disponibilidad:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <ComboBox fx:id="cbDisponibilidad" GridPane.rowIndex="5" GridPane.columnIndex="1" HBox.hgrow="ALWAYS" />
+        </GridPane>
 
-                    <HBox alignment="CENTER" spacing="18">
-                        <Button fx:id="btnAgregarRepartidor" text="Agregar"
-                                onAction="#OnAgregarRepartidor" prefWidth="110" />
-                        <Button fx:id="btnActualizarRepartidor" text="Actualizar"
-                                onAction="#OnActualizarRepartidor" prefWidth="110" />
-                        <Button fx:id="btnLimpiarCampos" text="Limpiar"
-                                onAction="#OnLimpiarCampos" prefWidth="110" />
-                    </HBox>
-                </VBox>
-            </center>
+        <HBox alignment="CENTER" spacing="25" VBox.vgrow="NEVER">
+            <Button fx:id="btnAgregarRepartidor" text="Agregar" onAction="#OnAgregarRepartidor"
+                    maxWidth="Infinity" prefWidth="160" style="-fx-font-size: 14px;" />
+            <Button fx:id="btnActualizarRepartidor" text="Actualizar" onAction="#OnActualizarRepartidor"
+                    maxWidth="Infinity" prefWidth="160" style="-fx-font-size: 14px;" />
+            <Button fx:id="btnLimpiarCampos" text="Limpiar" onAction="#OnLimpiarCampos"
+                    maxWidth="Infinity" prefWidth="160" style="-fx-font-size: 14px;" />
+        </HBox>
 
-            <bottom>
-                <VBox spacing="5" alignment="CENTER">
-                    <padding>
-                        <Insets top="5" right="25" bottom="5" left="25" />
-                    </padding>
+        <TableView fx:id="tablaRepartidores" VBox.vgrow="ALWAYS"
+                   style="-fx-font-size: 14px; -fx-background-radius: 8; -fx-border-radius: 8;">
+            <columns>
+                <TableColumn fx:id="colIdRepartidor" text="ID Repartidor" />
+                <TableColumn fx:id="colNombre" text="Nombre" />
+                <TableColumn fx:id="colCedula" text="Cédula" />
+                <TableColumn fx:id="colTelefono" text="Teléfono" />
+                <TableColumn fx:id="colPassword" text="Contraseña" />
+                <TableColumn fx:id="colDisponibilidad" text="Disponibilidad" />
+            </columns>
+        </TableView>
 
-                    <TableView fx:id="tablaRepartidores"
-                               prefHeight="180" maxWidth="720"
-                               style="-fx-font-size: 14px;">
-                        <columns>
-                            <TableColumn fx:id="colIdRepartidor" text="ID Repartidor" prefWidth="120" />
-                            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150" />
-                            <TableColumn fx:id="colCedula" text="Cédula" prefWidth="150" />
-                            <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="150" />
-                            <TableColumn fx:id="colPassword" text="Contraseña" prefWidth="120" />
-                            <TableColumn fx:id="colDisponibilidad" text="Disponibilidad" prefWidth="150" />
-                        </columns>
-                    </TableView>
-
-                    <HBox alignment="CENTER_RIGHT" maxWidth="720">
-                        <padding>
-                            <Insets top="0" right="10" bottom="0" left="0" />
-                        </padding>
-                        <Button fx:id="btnEliminarRepartidor" text="Eliminar"
-                                onAction="#OnEliminarRepartidor"
-                                prefWidth="120"
-                                style="-fx-font-size: 14px;" />
-                    </HBox>
-                </VBox>
-            </bottom>
-        </BorderPane>
-    </children>
+        <HBox alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
+            <Button fx:id="btnEliminarRepartidor" text="Eliminar" onAction="#OnEliminarRepartidor"
+                    prefWidth="150" style="-fx-font-size: 14px;" />
+        </HBox>
+    </VBox>
 </AnchorPane>
