@@ -6,6 +6,7 @@ import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarCSV;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.ExportarPDF;
 import co.edu.uniquindio.pr2.proyectofinal.strategy.Exportador;
+import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class HistorialEnviosController {
     public List<Envio> filtrarEnvios(List<Envio> base, String estadoSeleccionado, String codigoBusqueda) {
         String codigo = codigoBusqueda == null ? "" : codigoBusqueda.trim().toLowerCase(Locale.ROOT);
         return base.stream()
-                .filter(e -> estadoSeleccionado == null || estadoSeleccionado.equals("Todos") || e.getEstado().name().equalsIgnoreCase(estadoSeleccionado))
+                .filter(e -> estadoSeleccionado == null || estadoSeleccionado.equals("Todos") || e.getEstado() != null && e.getEstado().name().equalsIgnoreCase(estadoSeleccionado))
                 .filter(e -> e.getIdEnvio() != null && e.getIdEnvio().toLowerCase(Locale.ROOT).contains(codigo))
                 .collect(Collectors.toList());
     }
@@ -46,5 +47,15 @@ public class HistorialEnviosController {
     public void exportarCSV(List<Envio> envios) {
         exportador.setEstrategia(new ExportarCSV());
         exportador.ejecutarExportacion(envios);
+    }
+
+    public double calcularCostoTotalEnvio(Envio envio) {
+        if (envio == null) return 0;
+        double costoBase = envio.getCosto();
+        double servicios = envio.getListaServiciosAdicionales() == null ? 0 :
+                envio.getListaServiciosAdicionales().stream()
+                        .mapToDouble(ServicioAdicional::getCostoServicioAdd)
+                        .sum();
+        return costoBase + servicios;
     }
 }

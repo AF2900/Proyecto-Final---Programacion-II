@@ -91,14 +91,20 @@ public class GestionEnviosController {
         colDestino.setOnEditCommit(event -> event.getRowValue().getDestino().setCalle(event.getNewValue()));
         colPeso.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().getPeso()).asObject());
         colPeso.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        colPeso.setOnEditCommit(event -> event.getRowValue().setPeso(event.getNewValue()));
-        colVolumen.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(Math.pow(data.getValue().getAlto(), 3)).asObject());
+        colPeso.setOnEditCommit(event -> {
+            event.getRowValue().setPeso(event.getNewValue());
+            actualizarCosto(event.getRowValue());
+            tablaEnvios.refresh();
+        });
+        colVolumen.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().getLargo() * data.getValue().getAncho() * data.getValue().getAlto()).asObject());
         colVolumen.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colVolumen.setOnEditCommit(event -> {
             double cubica = Math.cbrt(event.getNewValue());
-            event.getRowValue().setAlto(cubica);
-            event.getRowValue().setAncho(cubica);
             event.getRowValue().setLargo(cubica);
+            event.getRowValue().setAncho(cubica);
+            event.getRowValue().setAlto(cubica);
+            actualizarCosto(event.getRowValue());
+            tablaEnvios.refresh();
         });
         colRepartidor.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getRepartidor()));
         colRepartidor.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(modelFactory.getEmpresaLogistica().getRepartidores())));
@@ -112,7 +118,7 @@ public class GestionEnviosController {
         colEstado.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getEstado()));
         colEstado.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(EstadoEnvio.values())));
         colEstado.setOnEditCommit(event -> event.getRowValue().setEstado(event.getNewValue()));
-        javafx.collections.ObservableList<EstadoIncidencia> opcionesIncidencias = FXCollections.observableArrayList(EstadoIncidencia.values());
+        ObservableList<EstadoIncidencia> opcionesIncidencias = FXCollections.observableArrayList(EstadoIncidencia.values());
         opcionesIncidencias.add(0, null);
         colIncidencias.setCellValueFactory(data -> {
             if (data.getValue().getListaIncidencias().isEmpty()) return new javafx.beans.property.SimpleObjectProperty<>(null);
@@ -135,10 +141,50 @@ public class GestionEnviosController {
         });
         colEntrega.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getFechaEstimadaEntrega()));
         colEntrega.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
-        colEntrega.setOnEditCommit(event -> event.getRowValue().setFechaEstimadaEntrega(event.getNewValue()));
-        colCosto.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().getCosto()).asObject());
+        colEntrega.setOnEditCommit(event -> {
+            event.getRowValue().setFechaEstimadaEntrega(event.getNewValue());
+            actualizarCosto(event.getRowValue());
+            tablaEnvios.refresh();
+        });
+        colCosto.setCellValueFactory(data -> {
+            double costo = calcularCosto(data.getValue());
+            data.getValue().setCosto(costo);
+            return new javafx.beans.property.SimpleDoubleProperty(costo).asObject();
+        });
         colCosto.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        colCosto.setOnEditCommit(event -> event.getRowValue().setCosto(event.getNewValue()));
+
+        for (Envio e : listaEnvios) {
+            actualizarCosto(e);
+        }
+        tablaEnvios.refresh();
+    }
+
+    private void actualizarCosto(Envio envio) {
+        double nuevoCosto = calcularCosto(envio);
+        envio.setCosto(nuevoCosto);
+    }
+
+    private double calcularCosto(Envio envio) {
+        double volumen = envio.getAlto() * envio.getAncho() * envio.getLargo();
+        double costoBase = (envio.getPeso() * 0.5) + (volumen * 0.02);
+        String prioridad = obtenerPrioridad(envio);
+        double costo;
+        switch (prioridad) {
+            case "Alta" -> costo = costoBase * 1.4;
+            case "Urgente" -> costo = costoBase * 1.8;
+            default -> costo = costoBase;
+        }
+        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.SEGURO)) costo += 10000;
+        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FRAGIL)) costo += 5000;
+        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FIRMA_REQUERIDA)) costo += 3000;
+        return Math.round(costo * 100.0) / 100.0;
+    }
+
+    private String obtenerPrioridad(Envio envio) {
+        long dias = java.time.temporal.ChronoUnit.DAYS.between(envio.getFechaCreacion(), envio.getFechaEstimadaEntrega());
+        if (dias == 0) return "Urgente";
+        if (dias == 1) return "Alta";
+        return "Normal";
     }
 
     public void crearEnvio() {
@@ -162,13 +208,13 @@ public class GestionEnviosController {
                     e.getListaIncidencias().add(incidencia);
                     modelFactory.getEmpresaLogistica().getIncidencias().add(incidencia);
                 }
+                actualizarCosto(e);
             }
             tablaEnvios.refresh();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 
     public void buscarEnvio() {
         String codigo = txtBuscar.getText().trim().toLowerCase();

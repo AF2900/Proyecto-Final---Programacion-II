@@ -47,6 +47,10 @@ public class RastrearEnvioController {
         lblEstado.setText("Estado: " + envio.getEstado());
         aplicarColorEstado(envio.getEstado());
         double volumen = envio.getLargo() * envio.getAncho() * envio.getAlto();
+        double costoTotal = envio.getCosto();
+        for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
+            costoTotal += s.getCostoServicioAdd();
+        }
 
         StringBuilder detalles = new StringBuilder();
         detalles.append("Código: ").append(envio.getIdEnvio()).append("\n")
@@ -55,7 +59,7 @@ public class RastrearEnvioController {
                 .append(String.format("Peso: %.2f kg\n", envio.getPeso()))
                 .append(String.format("Dimensiones: %.2f x %.2f x %.2f cm\n", envio.getLargo(), envio.getAncho(), envio.getAlto()))
                 .append(String.format("Volumen total: %.2f cm³\n", volumen))
-                .append(String.format("Costo: $%.2f\n\n", envio.getCosto()));
+                .append(String.format("Costo: $%.2f\n\n", costoTotal));
 
         detalles.append("Incidencias:\n");
         if (envio.getListaIncidencias().isEmpty()) {

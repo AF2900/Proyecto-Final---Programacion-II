@@ -94,6 +94,20 @@ public class CrearEnvioController {
         return envio;
     }
 
+    public double calcularCostoTotal(String prioridad, double peso, double volumen, boolean seguro, boolean fragil, boolean firma) {
+        double costoBase = (peso * 0.5) + (volumen * 0.02);
+        double costo = switch (prioridad) {
+            case "Alta" -> costoBase * 1.4;
+            case "Urgente" -> costoBase * 1.8;
+            default -> costoBase;
+        };
+        if (seguro) costo += 10000;
+        if (fragil) costo += 5000;
+        if (firma) costo += 3000;
+
+        return costo;
+    }
+
     public Usuario getUsuarioActual() {
         return modelFactory.getUsuarioActual();
     }

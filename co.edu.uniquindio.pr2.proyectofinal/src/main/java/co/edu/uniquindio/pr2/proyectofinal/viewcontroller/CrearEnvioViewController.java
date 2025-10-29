@@ -46,14 +46,16 @@ public class CrearEnvioViewController {
                 return;
             }
 
+            double peso = Double.parseDouble(pesoTxt);
+            double volumen = Double.parseDouble(volumenTxt);
+
+            double costoEstimado = controller.calcularCostoTotal(prioridad, peso, volumen, cbSeguro.isSelected(), cbFragil.isSelected(), cbFirma.isSelected());
+
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirmar envío");
             confirm.setHeaderText(null);
-            confirm.setContentText("¿Está seguro de realizar el envío?");
+            confirm.setContentText("¿Está seguro de realizar el envío?\nCosto total: $" + String.format("%.2f", costoEstimado));
             if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
-
-            double peso = Double.parseDouble(pesoTxt);
-            double volumen = Double.parseDouble(volumenTxt);
 
             EnviosViewUpdate(origen, destino, peso, volumen, prioridad, metodoPago);
 

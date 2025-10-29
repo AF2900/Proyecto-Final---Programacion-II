@@ -58,7 +58,7 @@ public class UsuarioMenuViewController {
             enviosUsuario.stream().limit(5).forEach(envio -> {
                 HBox item = new HBox();
                 item.setSpacing(10);
-                Label codigo = new Label("Código de envío: " + envio.getIdEnvio());
+                Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Costo Total: $" + String.format("%.2f", controller.calcularCostoTotalEnvio(envio)));
                 codigo.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c3e50;");
                 item.getChildren().add(codigo);
                 recentShipmentsContainer.getChildren().add(item);
@@ -158,10 +158,11 @@ public class UsuarioMenuViewController {
     }
 
     private void mostrarResumenEnvio(Envio envio) {
+        double costoTotal = controller.calcularCostoTotalEnvio(envio);
         StringBuilder resumen = new StringBuilder();
         resumen.append("Código de Envío: ").append(envio.getIdEnvio()).append("\n")
                 .append("Estado: ").append(envio.getEstado()).append("\n")
-                .append(String.format("Costo: $%.2f\n", envio.getCosto()))
+                .append(String.format("Costo Total: $%.2f\n", costoTotal))
                 .append(String.format("Peso: %.2f kg\n", envio.getPeso()))
                 .append("Origen: ").append(envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado").append("\n")
                 .append("Destino: ").append(envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado").append("\n")
@@ -197,20 +198,18 @@ public class UsuarioMenuViewController {
             mostrarAlerta("Ver todos envíos", "No hay sesión activa.");
             return;
         }
-
         List<Envio> enviosUsuario = controller.obtenerEnviosUsuario(usuario);
-
         VBox container = new VBox(10);
         container.setStyle("-fx-padding: 20; -fx-background-color: white;");
-
         if (enviosUsuario.isEmpty()) {
             Label noneLabel = new Label("No hay envíos registrados.");
             noneLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #7f8c8d;");
             container.getChildren().add(noneLabel);
         } else {
             for (Envio envio : enviosUsuario) {
+                double costoTotal = controller.calcularCostoTotalEnvio(envio);
                 HBox item = new HBox(10);
-                Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Estado: " + envio.getEstado());
+                Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Estado: " + envio.getEstado() + " | Costo Total: $" + String.format("%.2f", costoTotal));
                 codigo.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c3e50;");
                 item.setOnMouseClicked(e -> mostrarResumenEnvio(envio));
                 item.getChildren().add(codigo);
@@ -220,7 +219,6 @@ public class UsuarioMenuViewController {
         ScrollPane scrollPane = new ScrollPane(container);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background: #ecf0f1;");
-
         Stage stage = new Stage();
         stage.setTitle("Todos los Envíos");
         stage.setScene(new Scene(scrollPane, 600, 400));
