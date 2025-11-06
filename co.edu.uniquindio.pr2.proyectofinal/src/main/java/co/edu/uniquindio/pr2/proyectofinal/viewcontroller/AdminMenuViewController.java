@@ -55,9 +55,9 @@ public class AdminMenuViewController {
     public void initialize() {
         adminActual = adminController.obtenerAdminActual();
         if (adminActual != null) {
-            adminNameLabel.setText("Bienvenid@ " + adminActual.getNombre());
+            adminNameLabel.setText("Bienvenid@");
         } else {
-            adminNameLabel.setText("");
+            adminNameLabel.setText("Bienvenid@");
         }
         recentActivitiesListView.getItems().clear();
         recentActivitiesListView.getItems().add("La puedes ver en las gráficas");
@@ -71,7 +71,7 @@ public class AdminMenuViewController {
     void handleLogout(ActionEvent event) {
         adminController.cerrarSesion();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginAdmin.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);

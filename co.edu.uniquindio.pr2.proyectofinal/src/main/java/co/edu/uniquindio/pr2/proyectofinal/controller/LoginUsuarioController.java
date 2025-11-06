@@ -3,15 +3,14 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.facade.FacadeSeguridadAdmin;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -27,6 +26,7 @@ public class LoginUsuarioController {
 
     private ModelFactory modelFactory;
     private final FacadeSeguridadAdmin fachadaSeguridad = new FacadeSeguridadAdmin();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public void initialize() {
         modelFactory = ModelFactory.getInstance();

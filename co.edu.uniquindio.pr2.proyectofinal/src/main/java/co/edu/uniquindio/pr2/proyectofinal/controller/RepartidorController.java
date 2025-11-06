@@ -4,13 +4,17 @@ import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.DisponibilidadRepartidor;
 import co.edu.uniquindio.pr2.proyectofinal.model.Repartidor;
 import co.edu.uniquindio.pr2.proyectofinal.builder.RepartidorBuilder;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class RepartidorController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
     private ObservableList<Repartidor> listaRepartidores;
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public ObservableList<Repartidor> getListaRepartidores() {
         if (listaRepartidores == null) {
@@ -42,7 +46,13 @@ public class RepartidorController {
                 .build();
 
         modelFactory.getEmpresaLogistica().getRepartidores().add(nuevo);
-        listaRepartidores.add(nuevo);
+        getListaRepartidores().add(nuevo);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Repartidor agregado");
+        alert.setHeaderText(null);
+        alert.setContentText("Repartidor agregado correctamente.");
+        alert.showAndWait();
     }
 
     public void actualizarRepartidor(Repartidor repartidor, String nombre, String cedula, String telefono, String password, DisponibilidadRepartidor disponibilidad) {
@@ -51,10 +61,18 @@ public class RepartidorController {
         repartidor.setTelefono(telefono);
         repartidor.setPassword(password);
         repartidor.setDisponibilidadRepartidor(disponibilidad);
+
+        var repartidorMapped = mapping.mapFromRepartidor(repartidor);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Repartidor actualizado");
+        alert.setHeaderText(null);
+        alert.setContentText("Repartidor actualizado correctamente.");
+        alert.showAndWait();
     }
 
     public void eliminarRepartidor(Repartidor repartidor) {
         modelFactory.getEmpresaLogistica().getRepartidores().remove(repartidor);
-        listaRepartidores.remove(repartidor);
+        getListaRepartidores().remove(repartidor);
     }
 }

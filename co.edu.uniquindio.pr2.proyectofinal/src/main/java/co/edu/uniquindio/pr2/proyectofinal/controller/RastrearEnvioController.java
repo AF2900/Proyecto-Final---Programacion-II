@@ -1,6 +1,8 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
 import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
@@ -18,6 +20,7 @@ public class RastrearEnvioController {
     public Label lblEstado;
     public TextArea txtDetalles;
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public void initialize() {
         List<Envio> envios = modelFactory.getEmpresaLogistica().getEnvios();
@@ -43,47 +46,50 @@ public class RastrearEnvioController {
     }
 
     private void mostrarDetallesEnvio(Envio envio) {
+        var envioMapped = mapping.mapFromEnvio(envio);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        lblEstado.setText("Estado: " + envio.getEstado());
-        aplicarColorEstado(envio.getEstado());
-        double volumen = envio.getLargo() * envio.getAncho() * envio.getAlto();
-        double costoTotal = envio.getCosto();
-        for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
-            costoTotal += s.getCostoServicioAdd();
+        lblEstado.setText("Estado: " + envioMapped.estado());
+        aplicarColorEstado(envioMapped.estado());
+
+        double volumen = envioMapped.largo() * envioMapped.ancho() * envioMapped.alto();
+        double costoTotal = envioMapped.costo();
+        for (var s : envioMapped.listaServiciosAdicionales()) {
+            costoTotal += s.costoServicioAdd();
         }
 
         StringBuilder detalles = new StringBuilder();
-        detalles.append("Código: ").append(envio.getIdEnvio()).append("\n")
-                .append("Fecha de creación: ").append(envio.getFechaCreacion() != null ? envio.getFechaCreacion().format(formatter) : "N/A").append("\n")
-                .append("Fecha estimada de entrega: ").append(envio.getFechaEstimadaEntrega() != null ? envio.getFechaEstimadaEntrega().format(formatter) : "N/A").append("\n\n")
-                .append(String.format("Peso: %.2f kg\n", envio.getPeso()))
-                .append(String.format("Dimensiones: %.2f x %.2f x %.2f cm\n", envio.getLargo(), envio.getAncho(), envio.getAlto()))
+        detalles.append("Código: ").append(envioMapped.idEnvio()).append("\n")
+                .append("Fecha de creación: ").append(envioMapped.fechaCreacion() != null ? envioMapped.fechaCreacion().format(formatter) : "N/A").append("\n")
+                .append("Fecha estimada de entrega: ").append(envioMapped.fechaEstimadaEntrega() != null ? envioMapped.fechaEstimadaEntrega().format(formatter) : "N/A").append("\n\n")
+                .append(String.format("Peso: %.2f kg\n", envioMapped.peso()))
+                .append(String.format("Dimensiones: %.2f x %.2f x %.2f cm\n", envioMapped.largo(), envioMapped.ancho(), envioMapped.alto()))
                 .append(String.format("Volumen total: %.2f cm³\n", volumen))
                 .append(String.format("Costo: $%.2f\n\n", costoTotal));
 
         detalles.append("Incidencias:\n");
-        if (envio.getListaIncidencias().isEmpty()) {
+        if (envioMapped.listaIncidencias().isEmpty()) {
             detalles.append("   - Ninguna\n\n");
         } else {
-            for (Incidencia i : envio.getListaIncidencias()) {
-                detalles.append("   - ").append(i.getDescripcion()).append(" (").append(i.getEstadoIncidencia()).append(")\n");
+            for (var i : envioMapped.listaIncidencias()) {
+                detalles.append("   - ").append(i.descripcion()).append(" (").append(i.estadoIncidencia()).append(")\n");
             }
             detalles.append("\n");
         }
 
         detalles.append("Servicios adicionales:\n");
-        if (envio.getListaServiciosAdicionales().isEmpty()) {
+        if (envioMapped.listaServiciosAdicionales().isEmpty()) {
             detalles.append("   - Ninguno\n\n");
         } else {
-            for (ServicioAdicional s : envio.getListaServiciosAdicionales()) {
-                detalles.append("   - ").append(s.getTipoServicio()).append(" (+$").append(String.format("%.0f", s.getCostoServicioAdd())).append(")\n");
+            for (var s : envioMapped.listaServiciosAdicionales()) {
+                detalles.append("   - ").append(s.tipoServicio()).append(" (+$").append(String.format("%.0f", s.costoServicioAdd())).append(")\n");
             }
             detalles.append("\n");
         }
 
-        detalles.append("Origen: ").append(envio.getOrigen() != null ? envio.getOrigen().getCalle() : "No registrado").append("\n")
-                .append("Destino: ").append(envio.getDestino() != null ? envio.getDestino().getCalle() : "No registrado").append("\n\n")
-                .append("Repartidor: ").append(envio.getRepartidor() != null ? envio.getRepartidor().getNombre() : "No asignado").append("\n");
+        detalles.append("Origen: ").append(envioMapped.origen() != null ? envioMapped.origen().calle() : "No registrado").append("\n")
+                .append("Destino: ").append(envioMapped.destino() != null ? envioMapped.destino().calle() : "No registrado").append("\n\n")
+                .append("Repartidor: ").append(envioMapped.idRepartidor() != null ? envioMapped.idRepartidor() : "No asignado").append("\n");
 
         txtDetalles.setText(detalles.toString());
     }

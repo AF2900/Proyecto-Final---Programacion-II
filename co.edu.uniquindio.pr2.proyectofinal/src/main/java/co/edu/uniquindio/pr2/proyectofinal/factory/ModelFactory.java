@@ -2,13 +2,19 @@ package co.edu.uniquindio.pr2.proyectofinal.factory;
 
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
 import co.edu.uniquindio.pr2.proyectofinal.builder.*;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.*;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ModelFactory {
-    private EmpresaLogistica empresaLogistica;
+
+    private final ILogisticaMapping logisticaMapping;
 
     private ModelFactory() {
         this.empresaLogistica = new EmpresaLogistica();
+        this.logisticaMapping = new LogisticaMappingImpl();
     }
 
     private static class Holder {
@@ -21,6 +27,63 @@ public class ModelFactory {
 
     public EmpresaLogistica getEmpresaLogistica() {
         return empresaLogistica;
+    }
+
+    public ILogisticaMapping getLogisticaMapping() {
+        return logisticaMapping;
+    }
+
+    public List<EnvioDTO> obtenerEnviosDTO() {
+        return logisticaMapping.listaEnviosToDTO(empresaLogistica.getEnvios());
+    }
+
+    public List<RepartidorDTO> obtenerRepartidoresDTO() {
+        return empresaLogistica.getRepartidores()
+                .stream()
+                .map(logisticaMapping::repartidorToDTO)
+                .toList();
+    }
+
+    public List<UsuarioDTO> obtenerUsuariosDTO() {
+        return empresaLogistica.getUsuarios()
+                .stream()
+                .map(logisticaMapping::usuarioToDTO)
+                .toList();
+    }
+
+    public List<AdministradorDTO> obtenerAdministradoresDTO() {
+        return empresaLogistica.getAdministradores()
+                .stream()
+                .map(logisticaMapping::administradorToDTO)
+                .toList();
+    }
+
+    public List<PagoDTO> obtenerPagosDTO() {
+        return empresaLogistica.getPagos()
+                .stream()
+                .map(logisticaMapping::pagoToDTO)
+                .toList();
+    }
+
+    public List<TarifaDTO> obtenerTarifasDTO() {
+        return empresaLogistica.getTarifas()
+                .stream()
+                .map(logisticaMapping::tarifaToDTO)
+                .toList();
+    }
+
+    public List<IncidenciaDTO> obtenerIncidenciasDTO() {
+        return empresaLogistica.getIncidencias()
+                .stream()
+                .map(logisticaMapping::incidenciaToDTO)
+                .toList();
+    }
+
+    public List<ServicioAdicionalDTO> obtenerServiciosAdicionalesDTO() {
+        return empresaLogistica.getServiciosAdicionales()
+                .stream()
+                .map(logisticaMapping::servicioAdicionalToDTO)
+                .toList();
     }
 
     public void inicializarDatos() {
@@ -176,9 +239,9 @@ public class ModelFactory {
 
         Administrador administrador2 = new AdministradorBuilder()
                 .nombre("Sofia Lopez")
-                .correo("1")
+                .correo("sof23@gmail.com")
                 .telefono("32234557432")
-                .password("1")
+                .password("sofia123")
                 .idAdministrador("789")
                 .build();
 
@@ -187,24 +250,13 @@ public class ModelFactory {
     }
 
     private Usuario usuarioActual;
-
-    public Usuario getUsuarioActual() {
-        return usuarioActual;
-    }
-
-    public void setUsuarioActual(Usuario usuarioActual) {
-        this.usuarioActual = usuarioActual;
-    }
+    public Usuario getUsuarioActual() { return usuarioActual; }
+    public void setUsuarioActual(Usuario usuarioActual) { this.usuarioActual = usuarioActual; }
+    private final EmpresaLogistica empresaLogistica;
 
     private Administrador administradorActual;
-
-    public Administrador getAdministradorActual() {
-        return administradorActual;
-    }
-
-    public void setAdministradorActual(Administrador administradorActual) {
-        this.administradorActual = administradorActual;
-    }
+    public Administrador getAdministradorActual() { return administradorActual; }
+    public void setAdministradorActual(Administrador administradorActual) { this.administradorActual = administradorActual; }
 
     public void resetAll() {
         empresaLogistica.getUsuarios().clear();

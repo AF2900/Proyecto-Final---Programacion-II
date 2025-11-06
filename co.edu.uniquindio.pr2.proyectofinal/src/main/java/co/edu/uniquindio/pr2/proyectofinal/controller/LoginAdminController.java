@@ -2,6 +2,8 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Administrador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,7 @@ public class LoginAdminController {
     @FXML private PasswordField txtPassword;
 
     private ModelFactory modelFactory;
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     @FXML
     private void initialize() {
@@ -56,6 +59,8 @@ public class LoginAdminController {
             alert.showAndWait();
             return;
         }
+
+        var adminMapped = mapping.mapFromAdministrador(admin);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Bienvenido Administrador");
@@ -126,7 +131,7 @@ public class LoginAdminController {
     @FXML
     public void handleGoToUsuarioLogin() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("loginUsuario.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LogisticaApplication.class.getResource("LoginUsuario.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
             Stage stage = new Stage();
             stage.setTitle("Login Usuario");

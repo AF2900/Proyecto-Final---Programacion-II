@@ -2,16 +2,20 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdminMenuController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapper = modelFactory.getLogisticaMapping();
 
     public void actualizarReportes(Label totalUsersLabel, Label pendingShipmentsLabel, Label activeDeliveryLabel,
                                    Label incidentsLabel, BarChart<String, Number> revenueChart,
@@ -75,6 +79,10 @@ public class AdminMenuController {
         });
 
         deliveryTimesChart.getData().add(lineSeries);
+    }
+
+    public List<EnvioDTO> obtenerEnviosDTO() {
+        return modelFactory.obtenerEnviosDTO();
     }
 
     public Administrador obtenerAdminActual() {

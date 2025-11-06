@@ -2,7 +2,11 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.builder.IncidenciaBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
+import co.edu.uniquindio.pr2.proyectofinal.viewcontroller.GestionEnviosViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +24,13 @@ import java.util.stream.Collectors;
 public class GestionEnviosController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
+
+    private GestionEnviosViewController viewController;
+    public void setViewController(GestionEnviosViewController viewController) {
+        this.viewController = viewController;
+    }
+
     private TableView<Envio> tablaEnvios;
     private TableColumn<Envio, String> colCodigo;
     private TableColumn<Envio, String> colUsuario;
@@ -73,6 +84,12 @@ public class GestionEnviosController {
         this.colCosto = colCosto;
         this.colFecha = colFecha;
         this.txtBuscar = txtBuscar;
+    }
+
+    public List<EnvioDTO> obtenerEnviosDTO() {
+        return listaEnvios.stream()
+                .map(mapping::mapFromEnvio)
+                .collect(Collectors.toList());
     }
 
     public void inicializarTabla() {

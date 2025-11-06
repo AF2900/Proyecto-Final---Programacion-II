@@ -86,6 +86,7 @@ public class CrearEnvioAdminViewController {
 
         } catch (Exception e) {
             mostrarAlerta("Error", "Ocurrió un error al crear el envío.");
+            e.printStackTrace();
         }
     }
 

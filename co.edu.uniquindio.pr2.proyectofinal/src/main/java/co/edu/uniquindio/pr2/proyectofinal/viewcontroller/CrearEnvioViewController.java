@@ -1,6 +1,7 @@
 package co.edu.uniquindio.pr2.proyectofinal.viewcontroller;
 
 import co.edu.uniquindio.pr2.proyectofinal.controller.CrearEnvioController;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
 import co.edu.uniquindio.pr2.proyectofinal.model.MetodoPago;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
@@ -67,7 +68,6 @@ public class CrearEnvioViewController {
     private void EnviosViewUpdate(String origen, String destino, double peso, double volumen, String prioridad, MetodoPago metodoPago) {
         Envio envio = controller.crearEnvio(origen, destino, peso, volumen, prioridad,
                 cbSeguro.isSelected(), cbFragil.isSelected(), cbFirma.isSelected(), metodoPago);
-
         if (envio.getRepartidor() != null)
             lblEstado.setText("Envío creado y asignado a: " + envio.getRepartidor().getNombre());
         else

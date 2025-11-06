@@ -3,6 +3,8 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.builder.AdministradorBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Administrador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class RegistroAdminController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public void registrarAdministrador(String nombre, String correo, String telefono, String password, String confirm, ActionEvent event) {
         if (nombre.isBlank() || correo.isBlank() || password.isBlank() || confirm.isBlank() || telefono.isBlank()) {
@@ -47,6 +50,8 @@ public class RegistroAdminController {
 
         modelFactory.getEmpresaLogistica().agregarAdministrador(nuevo);
         modelFactory.setAdministradorActual(nuevo);
+
+        var adminMapped = mapping.mapFromAdministrador(nuevo);
 
         new Alert(Alert.AlertType.INFORMATION, "Administrador registrado correctamente.").showAndWait();
         abrirVentana("loginAdmin.fxml", "Login Administrador");

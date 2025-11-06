@@ -1,6 +1,8 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
 import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 public class UsuarioMenuController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public List<Envio> obtenerEnviosUsuario(Usuario usuario) {
         return modelFactory.getEmpresaLogistica().getEnvios().stream()
@@ -53,5 +56,13 @@ public class UsuarioMenuController {
 
     public Usuario getUsuarioActual() {
         return modelFactory.getUsuarioActual();
+    }
+
+    public void mapearUsuarioActual() {
+        Usuario usuario = getUsuarioActual();
+        if (usuario != null) {
+            var mapped = mapping.mapFromUsuario(usuario);
+            System.out.println("Usuario mapeado: " + mapped);
+        }
     }
 }

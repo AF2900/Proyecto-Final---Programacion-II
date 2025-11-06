@@ -1,6 +1,9 @@
 package co.edu.uniquindio.pr2.proyectofinal.viewcontroller;
 
 import co.edu.uniquindio.pr2.proyectofinal.controller.HistorialEnviosController;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.Incidencia;
 import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
@@ -30,43 +33,51 @@ public class HistorialEnviosViewController {
     @FXML private Button exportarCSVBtn;
 
     private final HistorialEnviosController controller = new HistorialEnviosController();
+    private final ILogisticaMapping mapper = new LogisticaMappingImpl();
     private List<Envio> listaBase;
     private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     private void initialize() {
         listaBase = controller.obtenerEnviosUsuarioActual();
+
         colCodigo.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getIdEnvio()));
         colEstado.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getEstado() != null ? c.getValue().getEstado().name() : "N/A"));
         colFechaCreacion.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getFechaCreacion() != null ? c.getValue().getFechaCreacion().format(fmt) : "N/A"));
         colEntrega.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getFechaEstimadaEntrega() != null ? c.getValue().getFechaEstimadaEntrega().format(fmt) : "N/A"));
         colCosto.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty("$" + String.format("%.2f", controller.calcularCostoTotalEnvio(c.getValue()))));
+
         colIncidencias.setCellValueFactory(c -> {
             List<Incidencia> incidencias = c.getValue().getListaIncidencias();
             String texto = incidencias == null || incidencias.isEmpty()
                     ? "Ninguna"
-                    : incidencias.stream().map(i -> i.getDescripcion() + " (" + i.getEstadoIncidencia() + ")").collect(Collectors.joining(", "));
+                    : incidencias.stream()
+                    .map(i -> i.getDescripcion() + " (" + i.getEstadoIncidencia() + ")")
+                    .collect(Collectors.joining(", "));
             return new javafx.beans.property.SimpleStringProperty(texto);
         });
+
         colServicios.setCellValueFactory(c -> {
             List<ServicioAdicional> servicios = c.getValue().getListaServiciosAdicionales();
             String texto = servicios == null || servicios.isEmpty()
                     ? "Ninguno"
-                    : servicios.stream().map(s -> s.getTipoServicio() + " ($" + String.format("%.0f", s.getCostoServicioAdd()) + ")").collect(Collectors.joining(", "));
+                    : servicios.stream()
+                    .map(s -> s.getTipoServicio() + " ($" + String.format("%.0f", s.getCostoServicioAdd()) + ")")
+                    .collect(Collectors.joining(", "));
             return new javafx.beans.property.SimpleStringProperty(texto);
         });
+
         tablaEnvios.setItems(FXCollections.observableArrayList(listaBase));
+
         estadoCombo.getItems().clear();
         estadoCombo.getItems().add("Todos");
         estadoCombo.getItems().addAll(controller.obtenerNombresEstados());
         estadoCombo.setValue("Todos");
+
         filtrarBtn.setOnAction(e -> onFiltrar());
         exportarPDFBtn.setOnAction(e -> controller.exportarPDF(tablaEnvios.getItems()));
         exportarCSVBtn.setOnAction(e -> controller.exportarCSV(tablaEnvios.getItems()));
-        closeBtn.setOnAction(e -> {
-            Stage stage = (Stage) closeBtn.getScene().getWindow();
-            stage.close();
-        });
+        closeBtn.setOnAction(e -> ((Stage) closeBtn.getScene().getWindow()).close());
     }
 
     private void onFiltrar() {

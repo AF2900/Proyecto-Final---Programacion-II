@@ -1,17 +1,21 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.PagoDTO;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.ServicioAdicionalDTO;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
 import co.edu.uniquindio.pr2.proyectofinal.builder.DireccionBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.ServicioAdicionalBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.PagoBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.observer.UsuarioObserver;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
 import java.time.LocalDate;
 import java.util.*;
 
 public class CrearEnvioController {
-
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapper = modelFactory.getLogisticaMapping();
 
     public Optional<String> validarCampos(String origen, String destino, String peso, String volumen, String prioridad, MetodoPago metodoPago) {
         if (origen.isEmpty() || destino.isEmpty() || peso.isEmpty() || volumen.isEmpty() || prioridad == null || metodoPago == null)
@@ -67,6 +71,7 @@ public class CrearEnvioController {
             envio.setUsuario(usuario);
             UsuarioObserver observer = new UsuarioObserver(usuario);
             envio.agregarObserver(observer);
+            envio.setUsuario(usuario);
             envio.setEstado(envio.getEstado());
         }
 
@@ -91,6 +96,12 @@ public class CrearEnvioController {
         modelFactory.getEmpresaLogistica().getPagos().add(pago);
         modelFactory.getEmpresaLogistica().getEnvios().add(envio);
 
+        try {
+            EnvioDTO envioDTO = mapper.envioToDTO(envio);
+            PagoDTO pagoDTO = mapper.pagoToDTO(pago);
+        } catch (Exception ignored) {
+        }
+
         return envio;
     }
 
@@ -110,5 +121,14 @@ public class CrearEnvioController {
 
     public Usuario getUsuarioActual() {
         return modelFactory.getUsuarioActual();
+    }
+
+    public List<EnvioDTO> obtenerEnviosDTODelUsuarioActual() {
+        Usuario usuario = modelFactory.getUsuarioActual();
+        if (usuario == null) return Collections.emptyList();
+        return modelFactory.getEmpresaLogistica().getEnvios().stream()
+                .filter(e -> e.getUsuario() != null && e.getUsuario().equals(usuario))
+                .map(mapper::envioToDTO)
+                .toList();
     }
 }

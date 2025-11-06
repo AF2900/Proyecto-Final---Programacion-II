@@ -3,7 +3,6 @@ package co.edu.uniquindio.pr2.proyectofinal.viewcontroller;
 import co.edu.uniquindio.pr2.proyectofinal.controller.LoginUsuarioController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
 

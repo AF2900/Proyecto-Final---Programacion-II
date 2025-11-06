@@ -3,13 +3,17 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.builder.DireccionBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.ServicioAdicionalBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
+
 import java.time.LocalDate;
 import java.util.*;
 
 public class CrearEnvioAdminController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapper = modelFactory.getLogisticaMapping();
 
     public List<Usuario> obtenerUsuarios() {
         return modelFactory.getEmpresaLogistica().getUsuarios();
@@ -56,6 +60,10 @@ public class CrearEnvioAdminController {
                     .costoServicioAdd(3000).build());
 
         modelFactory.getEmpresaLogistica().getEnvios().add(envio);
+
+        EnvioDTO envioDTO = mapper.mapFromEnvio(envio);
+        System.out.println("DTO generado (solo para mapping): " + envioDTO);
+
         return envio;
     }
 

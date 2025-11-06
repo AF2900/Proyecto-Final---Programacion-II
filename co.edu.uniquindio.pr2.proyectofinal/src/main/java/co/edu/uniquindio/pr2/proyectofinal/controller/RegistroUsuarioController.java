@@ -3,6 +3,8 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.LogisticaApplication;
 import co.edu.uniquindio.pr2.proyectofinal.builder.UsuarioBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class RegistroUsuarioController {
 
     private final ModelFactory modelFactory = ModelFactory.getInstance();
+    private final ILogisticaMapping mapping = new LogisticaMappingImpl();
 
     public boolean registrarUsuario(String nombre,
                                     String correo,
@@ -90,7 +93,9 @@ public class RegistroUsuarioController {
         modelFactory.getEmpresaLogistica().agregarUsuario(nuevo);
         modelFactory.setUsuarioActual(nuevo);
 
-        new Alert(AlertType.INFORMATION, "Usuario registrado correctamente.").showAndWait();
+        new Alert(AlertType.INFORMATION,
+                "Usuario registrado correctamente.").showAndWait();
+
         return true;
     }
 
