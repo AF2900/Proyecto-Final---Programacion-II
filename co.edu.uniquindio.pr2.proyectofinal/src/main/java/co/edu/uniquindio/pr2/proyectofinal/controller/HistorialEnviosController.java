@@ -67,13 +67,8 @@ public class HistorialEnviosController {
         exportador.ejecutarExportacion(envios);
     }
 
-    public double calcularCostoTotalEnvio(Envio envio) {
+    public double obtenerCostoDecorado(Envio envio) {
         if (envio == null) return 0;
-        double costoBase = envio.getCosto();
-        double servicios = envio.getListaServiciosAdicionales() == null ? 0 :
-                envio.getListaServiciosAdicionales().stream()
-                        .mapToDouble(ServicioAdicional::getCostoServicioAdd)
-                        .sum();
-        return costoBase + servicios;
+        return envio.getCosto();
     }
 }

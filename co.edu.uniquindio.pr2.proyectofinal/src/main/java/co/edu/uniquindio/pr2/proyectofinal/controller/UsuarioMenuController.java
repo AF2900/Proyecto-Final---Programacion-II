@@ -5,7 +5,6 @@ import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.mappers.LogisticaMappingImpl;
 import co.edu.uniquindio.pr2.proyectofinal.model.Envio;
 import co.edu.uniquindio.pr2.proyectofinal.model.EstadoEnvio;
-import co.edu.uniquindio.pr2.proyectofinal.model.ServicioAdicional;
 import co.edu.uniquindio.pr2.proyectofinal.model.Usuario;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,14 +43,9 @@ public class UsuarioMenuController {
                 .orElse(null);
     }
 
-    public double calcularCostoTotalEnvio(Envio envio) {
+    public double obtenerCostoDecorado(Envio envio) {
         if (envio == null) return 0;
-        double costoBase = envio.getCosto();
-        double servicios = envio.getListaServiciosAdicionales() == null ? 0 :
-                envio.getListaServiciosAdicionales().stream()
-                        .mapToDouble(ServicioAdicional::getCostoServicioAdd)
-                        .sum();
-        return costoBase + servicios;
+        return envio.getCosto();
     }
 
     public Usuario getUsuarioActual() {

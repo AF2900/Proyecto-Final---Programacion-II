@@ -110,31 +110,34 @@ public class GestionEnviosController {
         colPeso.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colPeso.setOnEditCommit(event -> {
             event.getRowValue().setPeso(event.getNewValue());
-            actualizarCosto(event.getRowValue());
             tablaEnvios.refresh();
         });
-        colVolumen.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().getLargo() * data.getValue().getAncho() * data.getValue().getAlto()).asObject());
+        colVolumen.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(
+                data.getValue().getLargo() * data.getValue().getAncho() * data.getValue().getAlto()).asObject());
         colVolumen.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colVolumen.setOnEditCommit(event -> {
             double cubica = Math.cbrt(event.getNewValue());
             event.getRowValue().setLargo(cubica);
             event.getRowValue().setAncho(cubica);
             event.getRowValue().setAlto(cubica);
-            actualizarCosto(event.getRowValue());
             tablaEnvios.refresh();
         });
         colRepartidor.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getRepartidor()));
         colRepartidor.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(modelFactory.getEmpresaLogistica().getRepartidores())));
         colRepartidor.setOnEditCommit(event -> event.getRowValue().setRepartidor(event.getNewValue()));
-        colSeguro.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.SEGURO)));
+        colSeguro.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(
+                data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.SEGURO)));
         colSeguro.setCellFactory(tc -> new CheckBoxTableCell<>());
-        colFragil.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FRAGIL)));
+        colFragil.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(
+                data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FRAGIL)));
         colFragil.setCellFactory(tc -> new CheckBoxTableCell<>());
-        colFirma.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FIRMA_REQUERIDA)));
+        colFirma.setCellValueFactory(data -> new javafx.beans.property.SimpleBooleanProperty(
+                data.getValue().getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FIRMA_REQUERIDA)));
         colFirma.setCellFactory(tc -> new CheckBoxTableCell<>());
         colEstado.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getEstado()));
         colEstado.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(EstadoEnvio.values())));
         colEstado.setOnEditCommit(event -> event.getRowValue().setEstado(event.getNewValue()));
+
         ObservableList<EstadoIncidencia> opcionesIncidencias = FXCollections.observableArrayList(EstadoIncidencia.values());
         opcionesIncidencias.add(0, null);
         colIncidencias.setCellValueFactory(data -> {
@@ -156,52 +159,18 @@ public class GestionEnviosController {
             }
             tablaEnvios.refresh();
         });
+
         colEntrega.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getFechaEstimadaEntrega()));
         colEntrega.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
         colEntrega.setOnEditCommit(event -> {
             event.getRowValue().setFechaEstimadaEntrega(event.getNewValue());
-            actualizarCosto(event.getRowValue());
             tablaEnvios.refresh();
         });
-        colCosto.setCellValueFactory(data -> {
-            double costo = calcularCosto(data.getValue());
-            data.getValue().setCosto(costo);
-            return new javafx.beans.property.SimpleDoubleProperty(costo).asObject();
-        });
+
+        colCosto.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().getCosto()).asObject());
         colCosto.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
-        for (Envio e : listaEnvios) {
-            actualizarCosto(e);
-        }
         tablaEnvios.refresh();
-    }
-
-    private void actualizarCosto(Envio envio) {
-        double nuevoCosto = calcularCosto(envio);
-        envio.setCosto(nuevoCosto);
-    }
-
-    private double calcularCosto(Envio envio) {
-        double volumen = envio.getAlto() * envio.getAncho() * envio.getLargo();
-        double costoBase = (envio.getPeso() * 0.5) + (volumen * 0.02);
-        String prioridad = obtenerPrioridad(envio);
-        double costo;
-        switch (prioridad) {
-            case "Alta" -> costo = costoBase * 1.4;
-            case "Urgente" -> costo = costoBase * 1.8;
-            default -> costo = costoBase;
-        }
-        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.SEGURO)) costo += 10000;
-        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FRAGIL)) costo += 5000;
-        if (envio.getListaServiciosAdicionales().stream().anyMatch(s -> s.getTipoServicio() == TipoServicio.FIRMA_REQUERIDA)) costo += 3000;
-        return Math.round(costo * 100.0) / 100.0;
-    }
-
-    private String obtenerPrioridad(Envio envio) {
-        long dias = java.time.temporal.ChronoUnit.DAYS.between(envio.getFechaCreacion(), envio.getFechaEstimadaEntrega());
-        if (dias == 0) return "Urgente";
-        if (dias == 1) return "Alta";
-        return "Normal";
     }
 
     public void crearEnvio() {
@@ -213,20 +182,6 @@ public class GestionEnviosController {
             stage.centerOnScreen();
             stage.showAndWait();
             listaEnvios.setAll(modelFactory.getEmpresaLogistica().getEnvios());
-            for (Envio e : listaEnvios) {
-                if (new Random().nextDouble() < 0.2) {
-                    EstadoIncidencia estadoRandom = EstadoIncidencia.values()[new Random().nextInt(EstadoIncidencia.values().length)];
-                    Incidencia incidencia = new IncidenciaBuilder()
-                            .descripcion("Incidencia automática: " + estadoRandom)
-                            .estadoIncidencia(estadoRandom)
-                            .fecha(LocalDate.now())
-                            .envioAsociado(e)
-                            .build();
-                    e.getListaIncidencias().add(incidencia);
-                    modelFactory.getEmpresaLogistica().getIncidencias().add(incidencia);
-                }
-                actualizarCosto(e);
-            }
             tablaEnvios.refresh();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -239,7 +194,9 @@ public class GestionEnviosController {
             tablaEnvios.setItems(listaEnvios);
             return;
         }
-        List<Envio> filtrados = listaEnvios.stream().filter(e -> e.getIdEnvio().toLowerCase().contains(codigo)).collect(Collectors.toList());
+        List<Envio> filtrados = listaEnvios.stream()
+                .filter(e -> e.getIdEnvio().toLowerCase().contains(codigo))
+                .collect(Collectors.toList());
         tablaEnvios.setItems(FXCollections.observableArrayList(filtrados));
     }
 

@@ -54,9 +54,6 @@ public class RastrearEnvioController {
 
         double volumen = envioMapped.largo() * envioMapped.ancho() * envioMapped.alto();
         double costoTotal = envioMapped.costo();
-        for (var s : envioMapped.listaServiciosAdicionales()) {
-            costoTotal += s.costoServicioAdd();
-        }
 
         StringBuilder detalles = new StringBuilder();
         detalles.append("Código: ").append(envioMapped.idEnvio()).append("\n")
@@ -65,7 +62,7 @@ public class RastrearEnvioController {
                 .append(String.format("Peso: %.2f kg\n", envioMapped.peso()))
                 .append(String.format("Dimensiones: %.2f x %.2f x %.2f cm\n", envioMapped.largo(), envioMapped.ancho(), envioMapped.alto()))
                 .append(String.format("Volumen total: %.2f cm³\n", volumen))
-                .append(String.format("Costo: $%.2f\n\n", costoTotal));
+                .append(String.format("Costo total: $%.2f\n\n", costoTotal));
 
         detalles.append("Incidencias:\n");
         if (envioMapped.listaIncidencias().isEmpty()) {

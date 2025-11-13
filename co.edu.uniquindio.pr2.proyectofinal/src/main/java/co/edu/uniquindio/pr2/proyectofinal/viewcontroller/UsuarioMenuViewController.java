@@ -58,7 +58,8 @@ public class UsuarioMenuViewController {
             enviosUsuario.stream().limit(5).forEach(envio -> {
                 HBox item = new HBox();
                 item.setSpacing(10);
-                Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Costo Total: $" + String.format("%.2f", controller.calcularCostoTotalEnvio(envio)));
+                double costoTotal = controller.obtenerCostoDecorado(envio);
+                Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Costo Total: $" + String.format("%.2f", costoTotal));
                 codigo.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c3e50;");
                 item.getChildren().add(codigo);
                 recentShipmentsContainer.getChildren().add(item);
@@ -158,7 +159,7 @@ public class UsuarioMenuViewController {
     }
 
     private void mostrarResumenEnvio(Envio envio) {
-        double costoTotal = controller.calcularCostoTotalEnvio(envio);
+        double costoTotal = controller.obtenerCostoDecorado(envio);
         StringBuilder resumen = new StringBuilder();
         resumen.append("Código de Envío: ").append(envio.getIdEnvio()).append("\n")
                 .append("Estado: ").append(envio.getEstado()).append("\n")
@@ -207,7 +208,7 @@ public class UsuarioMenuViewController {
             container.getChildren().add(noneLabel);
         } else {
             for (Envio envio : enviosUsuario) {
-                double costoTotal = controller.calcularCostoTotalEnvio(envio);
+                double costoTotal = controller.obtenerCostoDecorado(envio);
                 HBox item = new HBox(10);
                 Label codigo = new Label("Código: " + envio.getIdEnvio() + " | Estado: " + envio.getEstado() + " | Costo Total: $" + String.format("%.2f", costoTotal));
                 codigo.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c3e50;");

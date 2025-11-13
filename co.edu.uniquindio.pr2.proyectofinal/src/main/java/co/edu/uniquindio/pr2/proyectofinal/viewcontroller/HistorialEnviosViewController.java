@@ -45,7 +45,7 @@ public class HistorialEnviosViewController {
         colEstado.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getEstado() != null ? c.getValue().getEstado().name() : "N/A"));
         colFechaCreacion.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getFechaCreacion() != null ? c.getValue().getFechaCreacion().format(fmt) : "N/A"));
         colEntrega.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getFechaEstimadaEntrega() != null ? c.getValue().getFechaEstimadaEntrega().format(fmt) : "N/A"));
-        colCosto.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty("$" + String.format("%.2f", controller.calcularCostoTotalEnvio(c.getValue()))));
+        colCosto.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty("$" + String.format("%.2f", controller.obtenerCostoDecorado(c.getValue()))));
 
         colIncidencias.setCellValueFactory(c -> {
             List<Incidencia> incidencias = c.getValue().getListaIncidencias();
@@ -62,7 +62,7 @@ public class HistorialEnviosViewController {
             String texto = servicios == null || servicios.isEmpty()
                     ? "Ninguno"
                     : servicios.stream()
-                    .map(s -> s.getTipoServicio() + " ($" + String.format("%.0f", s.getCostoServicioAdd()) + ")")
+                    .map(s -> s.getTipoServicio() + " (+$" + String.format("%.0f", s.getCostoServicioAdd()) + ")")
                     .collect(Collectors.joining(", "));
             return new javafx.beans.property.SimpleStringProperty(texto);
         });

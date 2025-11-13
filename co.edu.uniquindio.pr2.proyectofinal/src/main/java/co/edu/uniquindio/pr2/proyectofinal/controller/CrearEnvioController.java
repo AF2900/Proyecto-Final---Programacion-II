@@ -3,13 +3,16 @@ package co.edu.uniquindio.pr2.proyectofinal.controller;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.PagoDTO;
-import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.ServicioAdicionalDTO;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
 import co.edu.uniquindio.pr2.proyectofinal.builder.DireccionBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.ServicioAdicionalBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.PagoBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.observer.UsuarioObserver;
 import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
+import co.edu.uniquindio.pr2.proyectofinal.command.EnvioReceiver;
+import co.edu.uniquindio.pr2.proyectofinal.command.EnvioInvoker;
+import co.edu.uniquindio.pr2.proyectofinal.command.CrearEnvioCommand;
+import co.edu.uniquindio.pr2.proyectofinal.decorator.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -50,14 +53,15 @@ public class CrearEnvioController {
         double lado = Math.cbrt(volumen);
         double dimension = Math.round(lado * 100.0) / 100.0;
 
-        Envio envio = new Envio(idEnvio, origen, destino, peso, dimension, dimension, dimension, fechaCreacion, fechaEstimada, estadoEnvio);
         double costoBase = (peso * 0.5) + (volumen * 0.02);
-        double costo = switch (prioridad) {
-            case "Alta" -> costoBase * 1.4;
-            case "Urgente" -> costoBase * 1.8;
-            default -> costoBase;
-        };
-        envio.setCosto(costo);
+        IEnvioDecorator envioDecorado = new EnvioBase(costoBase);
+        if (seguro) envioDecorado = new SeguroEnvio(envioDecorado);
+        if (fragil) envioDecorado = new EnvioFragil(envioDecorado);
+        if (firma) envioDecorado = new EnvioFirmaRequerida(envioDecorado);
+        double costoTotal = envioDecorado.calcularCosto();
+
+        Envio envio = new Envio(idEnvio, origen, destino, peso, dimension, dimension, dimension, fechaCreacion, fechaEstimada, estadoEnvio);
+        envio.setCosto(costoTotal);
 
         if (seguro)
             envio.getListaServiciosAdicionales().add(new ServicioAdicionalBuilder().idServicioAdd(UUID.randomUUID().toString()).tipoServicio(TipoServicio.SEGURO).costoServicioAdd(10000).build());
@@ -87,14 +91,19 @@ public class CrearEnvioController {
 
         Pago pago = new PagoBuilder()
                 .idPago(UUID.randomUUID().toString())
-                .monto(costo)
+                .monto(costoTotal)
                 .fecha(LocalDate.now())
                 .metodoPago(metodoPago)
                 .resultado("APROBADO")
                 .build();
 
         modelFactory.getEmpresaLogistica().getPagos().add(pago);
-        modelFactory.getEmpresaLogistica().getEnvios().add(envio);
+
+        EnvioReceiver receiver = new EnvioReceiver();
+        EnvioInvoker invoker = new EnvioInvoker();
+        CrearEnvioCommand crearEnvioCommand = new CrearEnvioCommand(receiver, envio);
+        invoker.recibirOperacion(crearEnvioCommand);
+        invoker.ejecutarOperaciones();
 
         try {
             EnvioDTO envioDTO = mapper.envioToDTO(envio);
@@ -107,16 +116,11 @@ public class CrearEnvioController {
 
     public double calcularCostoTotal(String prioridad, double peso, double volumen, boolean seguro, boolean fragil, boolean firma) {
         double costoBase = (peso * 0.5) + (volumen * 0.02);
-        double costo = switch (prioridad) {
-            case "Alta" -> costoBase * 1.4;
-            case "Urgente" -> costoBase * 1.8;
-            default -> costoBase;
-        };
-        if (seguro) costo += 10000;
-        if (fragil) costo += 5000;
-        if (firma) costo += 3000;
-
-        return costo;
+        IEnvioDecorator envioDecorado = new EnvioBase(costoBase);
+        if (seguro) envioDecorado = new SeguroEnvio(envioDecorado);
+        if (fragil) envioDecorado = new EnvioFragil(envioDecorado);
+        if (firma) envioDecorado = new EnvioFirmaRequerida(envioDecorado);
+        return envioDecorado.calcularCosto();
     }
 
     public Usuario getUsuarioActual() {
