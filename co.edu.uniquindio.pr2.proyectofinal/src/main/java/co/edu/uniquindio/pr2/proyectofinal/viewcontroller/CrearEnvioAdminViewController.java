@@ -19,6 +19,7 @@ public class CrearEnvioAdminViewController {
     @FXML private CheckBox cbSeguro;
     @FXML private CheckBox cbFragil;
     @FXML private CheckBox cbFirma;
+    @FXML private Label lblEstadoAdmin;
 
     private final CrearEnvioAdminController controller = new CrearEnvioAdminController();
 
@@ -66,6 +67,7 @@ public class CrearEnvioAdminViewController {
         try {
             Usuario usuario = cbUsuario.getValue();
             Repartidor repartidor = cbRepartidor.getValue();
+
             if (usuario == null || repartidor == null) {
                 mostrarAlerta("Error", "Debe seleccionar un usuario y un repartidor.");
                 return;
@@ -77,16 +79,31 @@ public class CrearEnvioAdminViewController {
             double volumen = Double.parseDouble(txtVolumen.getText());
             String prioridad = cbPrioridad.getValue();
 
-            controller.crearEnvio(usuario, repartidor, origenTexto, destinoTexto, peso, volumen, prioridad,
-                    cbSeguro.isSelected(), cbFragil.isSelected(), cbFirma.isSelected());
+            Envio envioCreado = controller.crearEnvio(
+                    usuario,
+                    repartidor,
+                    origenTexto,
+                    destinoTexto,
+                    peso,
+                    volumen,
+                    prioridad,
+                    cbSeguro.isSelected(),
+                    cbFragil.isSelected(),
+                    cbFirma.isSelected()
+            );
+
+            String descripcion = controller.obtenerDescripcionRepartidor(envioCreado);
+
+            lblEstadoAdmin.setText(
+                    "Envío asignado al usuario " +
+                            usuario.getNombre() +
+                            " (" + descripcion + ")"
+            );
 
             mostrarAlerta("Éxito", "Envío creado correctamente.");
-            Stage stage = (Stage) txtOrigen.getScene().getWindow();
-            stage.close();
 
         } catch (Exception e) {
             mostrarAlerta("Error", "Ocurrió un error al crear el envío.");
-            e.printStackTrace();
         }
     }
 

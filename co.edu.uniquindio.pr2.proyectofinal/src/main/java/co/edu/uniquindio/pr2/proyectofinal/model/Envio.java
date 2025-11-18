@@ -17,6 +17,7 @@ public class Envio {
     private LocalDate fechaCreacion;
     private LocalDate fechaEstimadaEntrega;
     private EstadoEnvio estado;
+    private String descripcionRepartidor;
     private Repartidor repartidor;
     private Usuario usuario;
     private List<ServicioAdicional> listaServiciosAdicionales;
@@ -32,7 +33,8 @@ public class Envio {
                  double alto,
                  LocalDate fechaCreacion,
                  LocalDate fechaEstimadaEntrega,
-                 EstadoEnvio estado) {
+                 EstadoEnvio estado,
+                 String descripcionRepartidor) {
         this.idEnvio = idEnvio;
         this.origen = origen;
         this.destino = destino;
@@ -44,6 +46,7 @@ public class Envio {
         this.fechaCreacion = fechaCreacion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.estado = estado;
+        this.descripcionRepartidor = descripcionRepartidor;
         this.listaServiciosAdicionales = new ArrayList<>();
         this.listaIncidencias = new ArrayList<>();
     }
@@ -165,6 +168,14 @@ public class Envio {
 
     public void setFechaEstimadaEntrega(LocalDate fechaEstimadaEntrega) {
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+    }
+
+    public String getDescripcionRepartidor() {
+        return descripcionRepartidor;
+    }
+
+    public void setDescripcionRepartidor(String descripcionRepartidor) {
+        this.descripcionRepartidor = descripcionRepartidor;
     }
 
     @Override

@@ -105,6 +105,7 @@ public class LogisticaMappingImpl implements ILogisticaMapping {
                 envio.getFechaCreacion(),
                 envio.getFechaEstimadaEntrega(),
                 envio.getEstado(),
+                envio.getDescripcionRepartidor(),
                 envio.getRepartidor() != null ? envio.getRepartidor().getIdRepartidor() : null,
                 envio.getUsuario() != null ? envio.getUsuario().getIdUsuario() : null,
                 envio.getListaServiciosAdicionales() != null
@@ -129,7 +130,8 @@ public class LogisticaMappingImpl implements ILogisticaMapping {
                 dto.alto(),
                 dto.fechaCreacion(),
                 dto.fechaEstimadaEntrega(),
-                dto.estado()
+                dto.estado(),
+                ""
         );
         envio.setCosto(dto.costo());
         envio.setListaServiciosAdicionales(dto.listaServiciosAdicionales().stream().map(this::dtoToServicioAdicional).toList());
@@ -213,6 +215,7 @@ public class LogisticaMappingImpl implements ILogisticaMapping {
                 envio.getFechaCreacion(),
                 envio.getFechaEstimadaEntrega(),
                 envio.getEstado(),
+                envio.getDescripcionRepartidor(),
                 envio.getRepartidor() != null ? envio.getRepartidor().getIdRepartidor() : null,
                 envio.getUsuario() != null ? envio.getUsuario().getIdUsuario() : null,
                 envio.getListaServiciosAdicionales() != null

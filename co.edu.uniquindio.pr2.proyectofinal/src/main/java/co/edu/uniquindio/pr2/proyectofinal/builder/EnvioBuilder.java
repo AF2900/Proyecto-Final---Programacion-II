@@ -17,6 +17,7 @@ public class EnvioBuilder {
     private LocalDate fechaCreacion;
     private LocalDate fechaEstimadaEntrega;
     private EstadoEnvio estado;
+    private String descripcionRepartidor;
     private Repartidor repartidor;
     private Usuario usuario;
     private List<ServicioAdicional> listaServiciosAdicionales = new ArrayList<>();
@@ -65,6 +66,10 @@ public class EnvioBuilder {
         this.estado = estado; return this;
     }
 
+    public EnvioBuilder descripcionRepartidor(String descripcionRepartidor) {
+        this.descripcionRepartidor = descripcionRepartidor; return this;
+    }
+
     public EnvioBuilder repartidor(Repartidor repartidor) {
         this.repartidor = repartidor; return this;
     }
@@ -93,6 +98,7 @@ public class EnvioBuilder {
         this.fechaCreacion = e.getFechaCreacion();
         this.fechaEstimadaEntrega = e.getFechaEstimadaEntrega();
         this.estado = e.getEstado();
+        this.descripcionRepartidor = e.getDescripcionRepartidor();
         this.repartidor = e.getRepartidor();
         this.usuario = e.getUsuario();
         this.listaServiciosAdicionales = e.getListaServiciosAdicionales();
@@ -111,7 +117,8 @@ public class EnvioBuilder {
                 alto,
                 fechaCreacion,
                 fechaEstimadaEntrega,
-                estado
+                estado,
+                descripcionRepartidor
         );
         envio.setCosto(costo);
         envio.setRepartidor(repartidor);

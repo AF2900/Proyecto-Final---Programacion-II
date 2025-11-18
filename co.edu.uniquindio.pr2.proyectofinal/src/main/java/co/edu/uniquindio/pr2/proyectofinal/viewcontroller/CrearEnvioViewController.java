@@ -68,10 +68,14 @@ public class CrearEnvioViewController {
     private void EnviosViewUpdate(String origen, String destino, double peso, double volumen, String prioridad, MetodoPago metodoPago) {
         Envio envio = controller.crearEnvio(origen, destino, peso, volumen, prioridad,
                 cbSeguro.isSelected(), cbFragil.isSelected(), cbFirma.isSelected(), metodoPago);
-        if (envio.getRepartidor() != null)
-            lblEstado.setText("Envío creado y asignado a: " + envio.getRepartidor().getNombre());
-        else
+        if (envio.getRepartidor() != null) {
+            String descripcion = controller.obtenerDescripcionRepartidor();
+            lblEstado.setText("Envío creado y asignado a: "
+                    + envio.getRepartidor().getNombre()
+                    + " (" + descripcion + ")");
+        } else {
             lblEstado.setText("Envío creado — No hay repartidores disponibles.");
+        }
 
         mostrarAlerta("Éxito", "Envío creado exitosamente. Código: " + envio.getIdEnvio());
 

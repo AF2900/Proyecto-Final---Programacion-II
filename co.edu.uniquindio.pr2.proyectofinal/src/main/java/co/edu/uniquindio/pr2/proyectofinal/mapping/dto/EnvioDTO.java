@@ -16,6 +16,7 @@ public record EnvioDTO(
         LocalDate fechaCreacion,
         LocalDate fechaEstimadaEntrega,
         EstadoEnvio estado,
+        String descripcionRepartidor,
         String idRepartidor,
         String idUsuario,
         List<ServicioAdicionalDTO> listaServiciosAdicionales,

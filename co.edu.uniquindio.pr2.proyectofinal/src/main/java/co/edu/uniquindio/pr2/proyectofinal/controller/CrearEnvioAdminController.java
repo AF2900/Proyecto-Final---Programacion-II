@@ -6,6 +6,10 @@ import co.edu.uniquindio.pr2.proyectofinal.adapter.NotificadorExterno;
 import co.edu.uniquindio.pr2.proyectofinal.builder.DireccionBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.builder.ServicioAdicionalBuilder;
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.BicicletaRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.CarroRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.MotoRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.model.IRepartidorBase;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
 import co.edu.uniquindio.pr2.proyectofinal.services.ILogisticaMapping;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
@@ -59,7 +63,8 @@ public class CrearEnvioAdminController {
                 Math.cbrt(volumen),
                 fechaCreacion,
                 fechaEstimada,
-                EstadoEnvio.PENDIENTE
+                EstadoEnvio.PENDIENTE,
+                ""
         );
         envio.setUsuario(usuario);
         envio.setRepartidor(repartidor);
@@ -87,6 +92,15 @@ public class CrearEnvioAdminController {
                     .costoServicioAdd(3000)
                     .build());
 
+        var factoria = switch (new Random().nextInt(3)) {
+            case 0 -> new MotoRepartidorFactory();
+            case 1 -> new CarroRepartidorFactory();
+            default -> new BicicletaRepartidorFactory();
+        };
+
+        IRepartidorBase rep = factoria.crearRepartidor();
+        envio.setDescripcionRepartidor(rep.getTipo());
+
         EnvioReceiver receiver = new EnvioReceiver();
         EnvioInvoker invoker = new EnvioInvoker();
         CrearEnvioCommand crearEnvioCommand = new CrearEnvioCommand(receiver, envio);
@@ -94,7 +108,6 @@ public class CrearEnvioAdminController {
         invoker.ejecutarOperaciones();
 
         EnvioDTO envioDTO = mapper.mapFromEnvio(envio);
-        System.out.println("DTO generado (solo para mapping): " + envioDTO);
 
         INotificador notificador = new NotificadorAdapter(new NotificadorExterno());
         StringBuilder servicios = new StringBuilder();
@@ -138,5 +151,20 @@ public class CrearEnvioAdminController {
         if (dias == 0) return "Urgente";
         else if (dias == 1) return "Alta";
         else return "Baja";
+    }
+
+    public String obtenerDescripcionRepartidor(Envio envio) {
+        if (envio == null) return "";
+        String desc = envio.getDescripcionRepartidor();
+        if (desc != null && !desc.isBlank()) return desc;
+        int random = new Random().nextInt(3);
+        IRepartidorBase repartidorBase = switch (random) {
+            case 0 -> new MotoRepartidorFactory().crearRepartidor();
+            case 1 -> new CarroRepartidorFactory().crearRepartidor();
+            default -> new BicicletaRepartidorFactory().crearRepartidor();
+        };
+        String tipo = repartidorBase.getTipo();
+        envio.setDescripcionRepartidor(tipo);
+        return tipo;
     }
 }

@@ -1,6 +1,10 @@
 package co.edu.uniquindio.pr2.proyectofinal.controller;
 
 import co.edu.uniquindio.pr2.proyectofinal.factory.ModelFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.BicicletaRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.CarroRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.factory.MotoRepartidorFactory;
+import co.edu.uniquindio.pr2.proyectofinal.factoryMethod.model.IRepartidorBase;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.EnvioDTO;
 import co.edu.uniquindio.pr2.proyectofinal.mapping.dto.PagoDTO;
 import co.edu.uniquindio.pr2.proyectofinal.model.*;
@@ -60,7 +64,7 @@ public class CrearEnvioController {
         if (firma) envioDecorado = new EnvioFirmaRequerida(envioDecorado);
         double costoTotal = envioDecorado.calcularCosto();
 
-        Envio envio = new Envio(idEnvio, origen, destino, peso, dimension, dimension, dimension, fechaCreacion, fechaEstimada, estadoEnvio);
+        Envio envio = new Envio(idEnvio, origen, destino, peso, dimension, dimension, dimension, fechaCreacion, fechaEstimada, estadoEnvio, "");
         envio.setCosto(costoTotal);
 
         if (seguro)
@@ -87,6 +91,15 @@ public class CrearEnvioController {
             envio.setRepartidor(r);
             r.getEnviosAsignados().add(envio);
             r.setDisponibilidadRepartidor(DisponibilidadRepartidor.OCUPADO);
+
+            var factoria = switch (new Random().nextInt(3)) {
+                case 0 -> new MotoRepartidorFactory();
+                case 1 -> new CarroRepartidorFactory();
+                default -> new BicicletaRepartidorFactory();
+            };
+
+            var tipoMovil = factoria.crearRepartidor().getTipo();
+            envio.setDescripcionRepartidor(tipoMovil);
         });
 
         Pago pago = new PagoBuilder()
@@ -112,6 +125,18 @@ public class CrearEnvioController {
         }
 
         return envio;
+    }
+
+    public String obtenerDescripcionRepartidor() {
+        int random = new Random().nextInt(3);
+
+        IRepartidorBase repartidorBase = switch (random) {
+            case 0 -> new MotoRepartidorFactory().crearRepartidor();
+            case 1 -> new CarroRepartidorFactory().crearRepartidor();
+            default -> new BicicletaRepartidorFactory().crearRepartidor();
+        };
+
+        return repartidorBase.getTipo();
     }
 
     public double calcularCostoTotal(String prioridad, double peso, double volumen, boolean seguro, boolean fragil, boolean firma) {
